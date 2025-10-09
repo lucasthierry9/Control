@@ -50,11 +50,11 @@
                             </a>
                             <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; margin-top: 15px; font-size: 14px; ">
                                 <li style="color: #2563EB; font-weight: 700; margin-left: 15px; margin-top: 5px; margin-bottom: 5px;">Cadastros</li>
-                                <li><a class="dropdown-item" href={% url 'clientes' %} style="font-weight: 500;">Clientes</a></li>
-                                <li><a class="dropdown-item" href={% url 'clientes' %} style="font-weight: 500;">Produtos</a></li>
-                                <li><a class="dropdown-item" href={% url 'clientes' %} style="font-weight: 500;">Funcionários</a></li>
-                                <li><a class="dropdown-item" href={% url 'clientes' %} style="font-weight: 500;">Vendedores</a></li>
-                                <li><a class="dropdown-item" href={% url 'clientes' %} style="font-weight: 500;">Fornecedores</a></li>
+                                <li><a class="dropdown-item" href={% url 'clientes:clientes' %} style="font-weight: 500;">Clientes</a></li>
+                                <li><a class="dropdown-item" href={% url 'clientes:clientes' %} style="font-weight: 500;">Produtos</a></li>
+                                <li><a class="dropdown-item" href={% url 'clientes:clientes' %} style="font-weight: 500;">Funcionários</a></li>
+                                <li><a class="dropdown-item" href={% url 'clientes:clientes' %} style="font-weight: 500;">Vendedores</a></li>
+                                <li><a class="dropdown-item" href={% url 'clientes:clientes' %} style="font-weight: 500;">Fornecedores</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown show">
@@ -64,9 +64,9 @@
                             </a>
                             <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; margin-top: 15px; font-size: 14px;">
                                 <li style="color: #2563EB; font-weight: 700; margin-left: 15px; margin-top: 5px;">Vendas</li>
-                                <li><a class="dropdown-item" href={% url 'clientes' %} style="font-weight: 500;">Pedidos</a></li>
-                                <li><a class="dropdown-item" href={% url 'clientes' %} style="font-weight: 500;">Histórico</a></li>
-                                <li><a class="dropdown-item" href={% url 'clientes' %} style="color: #2563EB; font-weight: 700;">Ver relatório de vendas</a></li>
+                                <li><a class="dropdown-item" href={% url 'clientes:clientes' %} style="font-weight: 500;">Pedidos</a></li>
+                                <li><a class="dropdown-item" href={% url 'clientes:clientes' %} style="font-weight: 500;">Histórico</a></li>
+                                <li><a class="dropdown-item" href={% url 'clientes:clientes' %} style="color: #2563EB; font-weight: 700;">Ver relatório de vendas</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -82,7 +82,7 @@
                         </li>
                     </ul>
                     <div class="d-flex gap-2">
-                        <a class="btn btn-link text-white d-flex align-items-center" href="#" style="color: white; font-family: Inter; font-weight: 700; text-decoration: none;">
+                        <a class="btn btn-link text-white d-flex align-items-center" href={% url 'login' %} style="color: white; font-family: Inter; font-weight: 700; text-decoration: none;">
                             <i class="bi bi-person-circle me-1"></i> Login
                         </a>
                         <a class="btn btn-criar-conta" style="background-color: white; color: #2563EB; font-family: Inter; font-weight: 700; padding: 6px 16px; border-radius: 20px;" href={% url 'login' %}>Criar conta</a>
