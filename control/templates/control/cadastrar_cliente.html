@@ -1,0 +1,12 @@
+{% extends "control/base.html" %}
+{% load static %}
+{% block title %}Cadastrar Cliente{% endblock title %}
+
+{% block content %}
+<h1 style="color: #2563EB; font-weight: 700; font-family: Inter; padding: 5px;">Cadastrar Cliente:</h1>
+<form style="margin-left: 10px;" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" style="min-width: 25%; min-height: 50px; background-color: #2563EB; font-weight: 700; font-family: Inter; border-radius: 15px; color: white; border: none; font-size: 24px">Registrar</button>
+</form>
+{% endblock content %}

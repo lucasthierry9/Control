@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from . models import Cliente
+from . forms import ClienteForm
 
 # Create your views here.
 def index(request):
@@ -6,3 +8,37 @@ def index(request):
 
 def login(request):
     return render(request, "control/login.html")
+
+def clientes(request):
+    clientes = Cliente.objects.all()
+    return render(request, "control/clientes.html", {"clientes": clientes})
+
+def cadastrar_cliente(request):
+    if request.method == "POST":
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("clientes")
+    else:
+        form = ClienteForm()
+    return render(request, "control/cadastrar_cliente.html", {"form": form})
+            
+def editar_cliente(request, id_cliente):
+    cliente = get_object_or_404(Cliente, id=id_cliente)
+    form = ClienteForm(request.POST, instance=cliente)
+    if form.is_valid():
+        form.save()
+        return redirect("clientes")
+    else:
+        form = ClienteForm(instance=cliente)
+    return render(request, "control/editar_cliente.html", {"form": form})
+
+
+def excluir_cliente(request, id_cliente=0):
+    if request.method == "POST":
+        cliente = get_object_or_404(Cliente, id=request.POST.get("id_cliente"))
+        cliente.delete()
+        return redirect('clientes')
+    else:
+        cliente = get_object_or_404(Cliente, id=id_cliente)
+        return render(request, "control/confirma.html", {"cliente": cliente})
