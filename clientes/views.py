@@ -14,7 +14,7 @@ def cadastrar_cliente(request):
         form = ClienteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("clientes")
+            return redirect("clientes:clientes")
     else:
         form = ClienteForm()
     return render(request, "clientes/cadastrar_cliente.html", {"form": form})
@@ -24,7 +24,7 @@ def editar_cliente(request, id_cliente):
     form = ClienteForm(request.POST, instance=cliente)
     if form.is_valid():
         form.save()
-        return redirect("clientes")
+        return redirect("clientes:clientes")
     else:
         form = ClienteForm(instance=cliente)
     return render(request, "clientes/editar_cliente.html", {"form": form})
@@ -34,7 +34,7 @@ def excluir_cliente(request, id_cliente=0):
     if request.method == "POST":
         cliente = get_object_or_404(Cliente, id=request.POST.get("id_cliente"))
         cliente.delete()
-        return redirect('clientes')
+        return redirect('clientes:clientes')
     else:
         cliente = get_object_or_404(Cliente, id=id_cliente)
         return render(request, "clientes/confirma.html", {"cliente": cliente})

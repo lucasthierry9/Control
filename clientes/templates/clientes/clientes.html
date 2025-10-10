@@ -8,7 +8,7 @@
     <h1 style="color: #2563EB; font-weight: 700; font-family: Inter;">Clientes</h1>
     <p style="background-color: #2563EB; color: white; border-radius: 5px; padding: 5px; margin: 15px; font-family: Inter; font-weight: 600;">Nome ------------------------------------- CPF</p>
     {% for cliente in clientes %}
-    <a href={% url 'clientes:editar_cliente' cliente.id %}><p style="background-color: lightgray; border-radius: 5px; padding: 5px; font-family: Inter; font-weight: 500; margin: 15px;">{{ cliente.nome }} | {{ cliente.cpf }} <a href={% url 'excluir_cliente' id_cliente=cliente.id %}>X</a></p></a>
+    <a href={% url 'clientes:editar_cliente' cliente.id %}><p style="background-color: lightgray; border-radius: 5px; padding: 5px; font-family: Inter; font-weight: 500; margin: 15px;">{{ cliente.nome }} | {{ cliente.cpf }} <a href={% url 'clientes:excluir_cliente' id_cliente=cliente.id %}>X</a></p></a>
     {% endfor %}
     <a href={% url 'clientes:cadastrar_cliente' %}><button type="submit" style=" font-family: Inter; min-width: 50%; min-height: 50px; padding: 5px; margin-left: 25%; font-weight: 700; background-color: #2563EB; border: none; border-radius: 15px; color: white; font-size: 24px;">Adicionar</button></a>
 </div>
