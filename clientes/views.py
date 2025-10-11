@@ -2,8 +2,7 @@ from django.shortcuts import render,get_object_or_404,redirect
 from control.models import Cliente
 from control.forms import ClienteForm
 # Create your views here.
-def login(request):
-    return render(request, "clientes/login.html")
+
 
 def clientes(request):
     clientes = Cliente.objects.all()
