@@ -18,7 +18,7 @@ def cadastrar_cliente(request):
         form = ClienteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("clientes")
+            return redirect("clientes:clientes")
     else:
         form = ClienteForm()
     return render(request, "clientes/cadastrar_cliente.html", {"form": form})
