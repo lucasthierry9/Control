@@ -1,12 +1,11 @@
 {% extends "control/base.html" %}
 {% load static %}
 {% block title %}Clientes{% endblock title %}
-
 {% block content %}
 <div class="pt-3">
-    <div class="row min-vh-100 g-0" style="height: 100vh">
+    <div class="row g-0" style="min-height: calc(100vh - 200px);">
         {% if clientes %}
-        <div class="col-12 col-lg-9 px-4">
+        <div class="col-12 col-lg-10 px-4">
             <div class="d-flex align-items-center">
                 <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
                 <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Clientes</h1>
@@ -14,12 +13,8 @@
             <form role="search">
                 <input class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
             </form>
-            <div class="">
-                <div style="display: flex; justify-content: flex-end;">
-                    <button class="p-1" style="width: 35px; height: 35px; background-color: #2563EB; border: none; border-radius: 8px; text-align: center;"><i class="fa-solid fa-trash fs-5" style="color: white; margin-top: auto; margin-bottom: auto;"></i></button>
-                </div>
-
-                <table style="width: 100%; border-collapse: separate; border-spacing: 0 8px; font-family: Inter, sans-serif; font-size: 16px;">
+            <div class="pt-2 overflow-auto"  style="">
+                <table class="" style="width: 100%; border-collapse: separate; border-spacing: 0 8px; font-family: Inter, sans-serif; font-size: 16px;">
                     <thead>
                         <tr>
                         <th style="background-color: #2563EB; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 35px;"></th>
@@ -32,7 +27,7 @@
                     </thead>
 
                     <tbody>
-                        {% for cliente in clientes %}
+                        {% for cliente in clientes|slice:":9" %}
                         <tr style="background-color: #EEEEEE;">
                         <td class="ps-2" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; text-align: center;">
                             <input type="checkbox" style="height: 100%; vertical-align: middle; transform: scale(1.4);">
@@ -68,16 +63,21 @@
             </div>
         </div>
         {% else %}
-        <div style="display: flex; min-height: 100vh; align-items: center; justify-content: center;">
-            Nenhuma notícia cadastrada.
-            <div>
-                <a href={% url 'clientes:cadastrar_cliente' %}><button type="submit" style="font-family: Inter; min-width: 75%; min-height: 50px; padding: 5px; margin-left: 25%; font-weight: 700; background-color: #2563EB; border: none; border-radius: 15px; color: white; font-size: 24px;">Adicionar</button></a>
+        <div class="col-12 col-lg-10 px-4">
+            <div class="d-flex align-items-center">
+                <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Clientes</h1>
             </div>
-        </div>
+            <div style="display: flex; min-height: 100vh; align-items: center; justify-content: center;">
+                Nenhuma notícia cadastrada. <div>
+                <a href={% url 'clientes:cadastrar_cliente' %}>Adicionar</a>
+            </div>
+            </div>
+        </div>   
         {% endif %}
-        <div class="col-12 col-lg-3 mt-4 mt-lg-0">
+        <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
             <a href={% url 'clientes:cadastrar_cliente' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Cadastrar Cliente</button></a>
-            <div class="bg-white shadow" style="height: calc(100% - 80px); margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"></div>
+            <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"><p>teste</p></div>
         </div>    
 
     </div>
