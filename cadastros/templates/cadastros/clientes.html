@@ -40,7 +40,7 @@
 
                         <!-- botão excluir -->
                         <td style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: center;">
-                            <a href="{% url 'clientes:excluir_cliente' cliente.id %}" 
+                            <a href="{% url 'cadastros:excluir_cliente' cliente.id %}" 
                             style="
                                 display: inline-flex;
                                 align-items: center;
@@ -70,13 +70,13 @@
             </div>
             <div style="display: flex; min-height: 100vh; align-items: center; justify-content: center;">
                 Nenhuma notícia cadastrada. <div>
-                <a href={% url 'clientes:cadastrar_cliente' %}>Adicionar</a>
+                <a href={% url 'cadastros:cadastrar_cliente' %}>Adicionar</a>
             </div>
             </div>
         </div>   
         {% endif %}
         <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
-            <a href={% url 'clientes:cadastrar_cliente' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Cadastrar Cliente</button></a>
+            <a href={% url 'cadastros:cadastrar_cliente' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Cadastrar Cliente</button></a>
             <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"><p>teste</p></div>
         </div>    
 

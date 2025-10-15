@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "control",
-    "clientes"
+    "cadastros"
 ]
 
 MIDDLEWARE = [
