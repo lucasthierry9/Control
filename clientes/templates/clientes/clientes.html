@@ -1,23 +1,86 @@
 {% extends "control/base.html" %}
 {% load static %}
 {% block title %}Clientes{% endblock title %}
-
 {% block content %}
-{% if clientes %}
-<div style="max-width: 75%;">
-    <h1 style="color: #2563EB; font-weight: 700; font-family: Inter;">Clientes</h1>
-    <p style="background-color: #2563EB; color: white; border-radius: 5px; padding: 5px; margin: 15px; font-family: Inter; font-weight: 600;">Nome ------------------------------------- CPF</p>
-    {% for cliente in clientes %}
-    <a href={% url 'clientes:editar_cliente' cliente.id %}><p style="background-color: lightgray; border-radius: 5px; padding: 5px; font-family: Inter; font-weight: 500; margin: 15px;">{{ cliente.nome }} | {{ cliente.cpf }} <a href={% url 'clientes:excluir_cliente' id_cliente=cliente.id %}>X</a></p></a>
-    {% endfor %}
-    <a href={% url 'clientes:cadastrar_cliente' %}><button type="submit" style=" font-family: Inter; min-width: 50%; min-height: 50px; padding: 5px; margin-left: 25%; font-weight: 700; background-color: #2563EB; border: none; border-radius: 15px; color: white; font-size: 24px;">Adicionar</button></a>
-</div>
-    {% else %}
-<div style="display: flex; min-height: 100vh; align-items: center; justify-content: center;">
-    Nenhuma notícia cadastrada.
-    <div>
-        <a href={% url 'clientes:cadastrar_cliente' %}><button type="submit" style="font-family: Inter; min-width: 75%; min-height: 50px; padding: 5px; margin-left: 25%; font-weight: 700; background-color: #2563EB; border: none; border-radius: 15px; color: white; font-size: 24px;">Adicionar</button></a>
+<div class="pt-3">
+    <div class="row g-0" style="min-height: calc(100vh - 200px);">
+        {% if clientes %}
+        <div class="col-12 col-lg-10 px-4">
+            <div class="d-flex align-items-center">
+                <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Clientes</h1>
+            </div>
+            <form role="search">
+                <input class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
+            </form>
+            <div class="pt-2 overflow-auto"  style="">
+                <table class="" style="width: 100%; border-collapse: separate; border-spacing: 0 8px; font-family: Inter, sans-serif; font-size: 16px;">
+                    <thead>
+                        <tr>
+                        <th style="background-color: #2563EB; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 35px;"></th>
+                        <th class="py-2 ps-1" style="background-color: #2563EB; color: white; text-align: left; width: 100px;">Código</th>
+                        <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Nome</th>
+                        <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">CPF/CNPJ</th>
+                        <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 350px;">Endereço</th>
+                        <th style="background-color: #2563EB; border-top-right-radius: 10px; border-bottom-right-radius: 10px; width: 50px;"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for cliente in clientes|slice:":9" %}
+                        <tr style="background-color: #EEEEEE;">
+                        <td class="ps-2" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; text-align: center;">
+                            <input type="checkbox" style="height: 100%; vertical-align: middle; transform: scale(1.4);">
+                        </td>
+
+                        <td class="py-2 ps-1 fw-medium">{{ cliente.id }}</td>
+                        <td class="py-2 ps-3 fw-medium">{{ cliente.nome }}</td>
+                        <td class="py-2 fw-medium">{{ cliente.cpf }}</td>
+                        <td class="py-2 fw-medium">{{ cliente.logradouro }}, {{ cliente.número }}</td>
+
+                        <!-- botão excluir -->
+                        <td style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: center;">
+                            <a href="{% url 'clientes:excluir_cliente' cliente.id %}" 
+                            style="
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center;
+                                width: 35px;
+                                height: 35px;
+                                background-color: red;
+                                border: none;
+                                border-radius: 8px;
+                                text-decoration: none;
+                                box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+                            ">
+                            <i class="fa-solid fa-trash fs-5" style="color: white;"></i>
+                            </a>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 col-lg-10 px-4">
+            <div class="d-flex align-items-center">
+                <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Clientes</h1>
+            </div>
+            <div style="display: flex; min-height: 100vh; align-items: center; justify-content: center;">
+                Nenhuma notícia cadastrada. <div>
+                <a href={% url 'clientes:cadastrar_cliente' %}>Adicionar</a>
+            </div>
+            </div>
+        </div>   
+        {% endif %}
+        <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
+            <a href={% url 'clientes:cadastrar_cliente' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Cadastrar Cliente</button></a>
+            <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"><p>teste</p></div>
+        </div>    
+
     </div>
 </div>
-{% endif %}
+
 {% endblock content %}
