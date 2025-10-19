@@ -1,0 +1,10 @@
+{% extends "control/base.html" %}
+{% load static %}
+{% block title %}Confirmar{% endblock title %}
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="id_funcionario" value="{{ funcionario.id }}">
+        <input type="submit" value="Confirma??">
+    </form>
+{% endblock content %}
