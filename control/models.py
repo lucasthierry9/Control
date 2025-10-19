@@ -70,7 +70,10 @@ class Email_Cliente(models.Model):
 
 class Categoria_Produto(models.Model):
     nome = models.CharField(max_length=50)
-    descricao = models.TextField(max_length=100)
+    descricao = models.TextField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.nome
 
 class Produto(models.Model):
     categoria = models.ForeignKey(Categoria_Produto, on_delete=models.CASCADE)
