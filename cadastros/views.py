@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from control.models import Cliente, Produto
-from control.forms import ClienteForm, ProdutoForm
+from control.models import Cliente, Produto, Funcionario
+from control.forms import ClienteForm, ProdutoForm, FuncionarioForm
 
 #CLIENTES
 
@@ -77,3 +77,39 @@ def excluir_produto(request, id_produto=0):
         return render(request, "cadastros/produtos/confirma.html", {"produto": produto})
 
 # ----------------------------------------------------------------------------------------
+
+# FUNCIONÁRIOS
+
+def funcionarios(request):
+    funcionarios = Funcionario.objects.all()
+    return render(request, "cadastros/funcionarios/funcionarios.html", {"funcionarios": funcionarios})
+
+def cadastrar_funcionario(request):
+    if request.method == "POST":
+        form = FuncionarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("cadastros:funcionarios")
+    else:
+        form = FuncionarioForm()
+    return render(request, "cadastros/funcionarios/cadastrar_funcionarios.html", {"form": form})
+            
+def editar_funcionario(request, id_funcionario):
+    funcionario = get_object_or_404(Produto, id=id_funcionario)
+    form = FuncionarioForm(request.POST, instance=funcionario)
+    if form.is_valid():
+        form.save()
+        return redirect("cadastros:funcionarios")
+    else:
+        form = FuncionarioForm(instance=funcionario)
+    return render(request, "cadastros/funcionarios/editar_funcionario.html", {"form": form})
+
+
+def excluir_funcionario(request, id_funcionario=0):
+    if request.method == "POST":
+        funcionario = get_object_or_404(Funcionario, id=request.POST.get("id_funcionario"))
+        funcionario.delete()
+        return redirect('cadastros:funcionarios')
+    else:
+        funcionario = get_object_or_404(Produto, id=id_funcionario)
+        return render(request, "cadastros/funcionarios/confirma.html", {"funcionario": funcionario})

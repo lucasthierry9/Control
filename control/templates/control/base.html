@@ -50,11 +50,11 @@
                                 Cadastros
                                 <i class="bi bi-chevron-down fs-6"></i>
                             </a>
-                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; margin-top: 15px; font-size: 14px; ">
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; flex-wrap: wrap; margin-top: 15px; font-size: 14px; min-width: 300px;">
                                 <li style="color: #2563EB; font-weight: 700; margin-left: 15px; margin-top: 5px; margin-bottom: 5px;">Cadastros</li>
-                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Clientes</a></li>
+                                <li style="width: 50%;"><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Clientes</a></li>
                                 <li><a class="dropdown-item" href={% url 'cadastros:produtos' %} style="font-weight: 500;">Produtos</a></li>
-                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Funcionários</a></li>
+                                <li><a class="dropdown-item" href={% url 'cadastros:funcionarios' %} style="font-weight: 500;">Funcionários</a></li>
                                 <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Vendedores</a></li>
                                 <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Fornecedores</a></li>
                             </ul>
