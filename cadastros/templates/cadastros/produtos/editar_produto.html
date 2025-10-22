@@ -3,7 +3,7 @@
 {% block title %}Editar Produto{% endblock title %}
 
 {% block content %}
-<h1 style="color: #2563EB; font-weight: 700; font-family: Inter; padding: 5px;">{{ nome.produto }}</h1>
+<h1 style="color: #2563EB; font-weight: 700; font-family: Inter; padding: 5px;">{{ fornecedor.nome }}</h1>
 <form style="margin-left: 10px;" method="post">
     {% csrf_token %}
     {{ form | crispy }}

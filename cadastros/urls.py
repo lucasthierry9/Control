@@ -14,4 +14,12 @@ urlpatterns = [
     path("cadastrar-funcionario/", views.cadastrar_funcionario, name="cadastrar_funcionario"),
     path("editar-funcionario/<int:id_funcionario>/", views.editar_funcionario, name="editar_funcionario"),
     path("excluir-funcionario/<int:id_funcionario>/", views.excluir_funcionario, name="excluir_funcionario"),
+    path("vendedores/", views.vendedores, name="vendedores"),
+    path("cadastrar-vendedor/", views.cadastrar_vendedor, name="cadastrar_vendedor"),
+    path("editar-vendedor/<int:id_vendedor>/", views.editar_vendedor, name="editar_vendedor"),
+    path("excluir-vendedor/<int:id_vendedor>/", views.excluir_vendedor, name="excluir_vendedor"),
+    path("fornecedores/", views.fornecedores, name="fornecedores"),
+    path("cadastrar-fornecedor/", views.cadastrar_fornecedor, name="cadastrar_fornecedor"),
+    path("editar-fornecedor/<int:fornecedor>/", views.editar_fornecedor, name="editar_fornecedor"),
+    path("excluir-fornecedor/<int:id_fornecedor>/", views.excluir_fornecedor, name="excluir_fornecedor"),
 ]

@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from control.models import Cliente, Produto, Funcionario
-from control.forms import ClienteForm, ProdutoForm, FuncionarioForm
+from control.models import Cliente, Produto, Funcionario, Vendedor, Fornecedor
+from control.forms import ClienteForm, ProdutoForm, FuncionarioForm, VendedorForm, FornecedorForm
 
 #CLIENTES
 
@@ -92,7 +92,7 @@ def cadastrar_funcionario(request):
             return redirect("cadastros:funcionarios")
     else:
         form = FuncionarioForm()
-    return render(request, "cadastros/funcionarios/cadastrar_funcionarios.html", {"form": form})
+    return render(request, "cadastros/funcionarios/cadastrar_funcionario.html", {"form": form})
             
 def editar_funcionario(request, id_funcionario):
     funcionario = get_object_or_404(Funcionario, id=id_funcionario)
@@ -113,3 +113,77 @@ def excluir_funcionario(request, id_funcionario=0):
     else:
         funcionario = get_object_or_404(Funcionario, id=id_funcionario)
         return render(request, "cadastros/funcionarios/confirma.html", {"funcionario": funcionario})
+
+# ----------------------------------------------------------------------------------------
+
+# VENDEDORES
+
+def vendedores(request):
+    vendedores = Vendedor.objects.all()
+    return render(request, "cadastros/vendedores/vendedores.html", {"vendedores": vendedores})
+
+def cadastrar_vendedor(request):
+    if request.method == "POST":
+        form = VendedorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("cadastros:vendedores")
+    else:
+        form = VendedorForm()
+    return render(request, "cadastros/vendedores/cadastrar_vendedor.html", {"form": form})
+            
+def editar_vendedor(request, id_vendedor):
+    vendedor = get_object_or_404(Vendedor, id=id_vendedor)
+    form = VendedorForm(request.POST, instance=vendedor)
+    if form.is_valid():
+        form.save()
+        return redirect("cadastros:vendedores")
+    else:
+        form = VendedorForm(instance=vendedores)
+    return render(request, "cadastros/vendedores/editar_vendedor.html", {"form": form})
+
+def excluir_vendedor(request, id_vendedor=0):
+    if request.method == "POST":
+        vendedor = get_object_or_404(Vendedor, id=request.POST.get("id_vendedor"))
+        vendedor.delete()
+        return redirect('cadastros:vendedores')
+    else:
+        vendedor = get_object_or_404(Vendedor, id=id_vendedor)
+        return render(request, "cadastros/vendedores/confirma.html", {"vendedor": vendedor})
+    
+# FORNECEDOR
+
+def fornecedores(request):
+    fornecedores = Fornecedor.objects.all()
+    return render(request, "cadastros/fornecedores/fornecedores.html", {"fornecedores": fornecedores})
+
+def cadastrar_fornecedor(request):
+    if request.method == "POST":
+        form = FornecedorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("cadastros:fornecedores")
+    else:
+        form = FornecedorForm()
+    return render(request, "cadastros/fornecedores/cadastrar_fornecedor.html", {"form": form})
+            
+def editar_fornecedor(request, id_fornecedor):
+    fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
+    form = FornecedorForm(request.POST, instance=fornecedor)
+    if form.is_valid():
+        form.save()
+        return redirect("cadastros:fornecedores")
+    else:
+        form = FornecedorForm(instance=fornecedores)
+    return render(request, "cadastros/fornecedores/editar_fornecedor.html", {"form": form})
+
+def excluir_fornecedor(request, id_fornecedor=0):
+    if request.method == "POST":
+        fornecedor = get_object_or_404(Fornecedor, id=request.POST.get("id_fornecedor"))
+        fornecedor.delete()
+        return redirect('cadastros:fornecedores')
+    else:
+        fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
+        return render(request, "cadastros/fornecedores/confirma.html", {"fornecedor": fornecedor})
+    
+# ----------------------------------------------------------------------------------------
