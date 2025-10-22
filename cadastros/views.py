@@ -95,7 +95,7 @@ def cadastrar_funcionario(request):
     return render(request, "cadastros/funcionarios/cadastrar_funcionarios.html", {"form": form})
             
 def editar_funcionario(request, id_funcionario):
-    funcionario = get_object_or_404(Produto, id=id_funcionario)
+    funcionario = get_object_or_404(Funcionario, id=id_funcionario)
     form = FuncionarioForm(request.POST, instance=funcionario)
     if form.is_valid():
         form.save()
@@ -111,5 +111,5 @@ def excluir_funcionario(request, id_funcionario=0):
         funcionario.delete()
         return redirect('cadastros:funcionarios')
     else:
-        funcionario = get_object_or_404(Produto, id=id_funcionario)
+        funcionario = get_object_or_404(Funcionario, id=id_funcionario)
         return render(request, "cadastros/funcionarios/confirma.html", {"funcionario": funcionario})
