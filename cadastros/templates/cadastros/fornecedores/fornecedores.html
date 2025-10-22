@@ -1,14 +1,14 @@
 {% extends "control/base.html" %}
 {% load static %}
-{% block title %}Clientes{% endblock title %}
+{% block title %}Fornecedores{% endblock title %}
 {% block content %}
 <div class="pt-3">
     <div class="row g-0" style="min-height: calc(100vh - 200px);">
-        {% if clientes %}
+        {% if fornecedores %}
         <div class="col-12 col-lg-10 px-4">
             <div class="d-flex align-items-center">
                 <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
-                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Clientes</h1>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Fornecedor</h1>
             </div>
             <form role="search">
                 <input class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
@@ -27,20 +27,20 @@
                     </thead>
 
                     <tbody>
-                        {% for cliente in clientes|slice:":9" %}
+                        {% for fornecedor in fornecedores|slice:":9" %}
                         <tr style="background-color: #EEEEEE;">
                         <td class="ps-2" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; text-align: center;">
                             <input type="checkbox" style="height: 100%; vertical-align: middle; transform: scale(1.4);">
                         </td>
 
-                        <td class="py-2 ps-1 fw-medium">{{ cliente.id }}</td>
-                        <td class="py-2 ps-3 fw-medium">{{ cliente.nome }}</td>
-                        <td class="py-2 fw-medium">{{ cliente.cpf }}</td>
-                        <td class="py-2 fw-medium">{{ cliente.logradouro }}, {{ cliente.número }}</td>
-                        
+                        <td class="py-2 ps-1 fw-medium">{{ fornecedor.id }}</td>
+                        <td class="py-2 ps-3 fw-medium">{{ fornecedor.nome }}</td>
+                        <td class="py-2 fw-medium">{{ fornecedor.cpf }}</td>
+                        <td class="py-2 fw-medium">{{ fornecedores.logradouro }}, {{ fornecedores.número }}</td>
+
                         <!-- botão excluir -->
                         <td style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: center;">
-                            <a href="{% url 'cadastros:excluir_cliente' cliente.id %}" 
+                            <a href="{% url 'cadastros:excluir_fornecedor' fornecedor.id %}" 
                             style="
                                 display: inline-flex;
                                 align-items: center;
@@ -66,17 +66,17 @@
         <div class="col-12 col-lg-10 px-4">
             <div class="d-flex align-items-center">
                 <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
-                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Clientes</h1>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Fornecedor</h1>
             </div>
             <div style="display: flex; height: 100%; align-items: center; justify-content: center;">
-                Nenhuma cliente cadastrado. <div>
-                <a href={% url 'cadastros:cadastrar_cliente' %}>Adicionar</a>
+                Nenhum fornecedor cadastrado. <div>
+                <a href={% url 'cadastros:cadastrar_fornecedor' %}>Adicionar</a>
             </div>
             </div>
         </div>   
         {% endif %}
         <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
-            <a href={% url 'cadastros:cadastrar_cliente' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Cadastrar Cliente</button></a>
+            <a href={% url 'cadastros:cadastrar_fornecedor' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Cadastrar Fornecedor</button></a>
             <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"><p>teste</p></div>
         </div>    
 
