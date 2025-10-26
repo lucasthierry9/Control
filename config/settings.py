@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "control",
-    "cadastros"
+    "cadastros",
+    "dashboard",
+    "usuarios",
+
 ]
 
 MIDDLEWARE = [
@@ -138,3 +141,7 @@ AUTH_USER_MODEL = 'control.Usuario'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+LOGIN_URL = "login"
+LOGOUT_REDIRECT_URL = "index"
+LOGIN_REDIRECT_URL = "dashboard:index"

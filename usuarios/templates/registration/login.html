@@ -1,6 +1,6 @@
-
 {% extends "control/base.html" %}
 {% block title%}Login{%endblock title%}
+{% load  crispy_forms_filters %}
 {% block content %}
 <main class="d-flex align-items-center justify-content-center min-vh-100 bg-light"
       style="background: radial-gradient(circle at top, #f5f5ff, #ffffff);">
@@ -12,21 +12,11 @@
     <h2 class="text-center fw-bold text-primary mb-4">Acesse sua conta</h2>
 
     <!-- Formulário -->
-    <form>
-      <div class="mb-3">
-        <label for="email" class="form-label fw-semibold">E-mail</label>
-        <input type="email" class="form-control rounded-pill bg-light" id="email" placeholder="Insira seu e-mail">
-      </div>
-      <div class="mb-2">
-        <label for="senha" class="form-label fw-semibold">Senha</label>
-        <input type="password" class="form-control rounded-pill bg-light" id="senha" placeholder="Insira sua senha">
-      </div>
-      <div class="mb-3 text-end">
-        <a href="#" class="text-decoration-none small text-primary fw-semibold">Esqueci minha senha</a>
-      </div>
-      <div class="d-grid mb-3">
-        <button type="submit" class="btn btn-primary rounded-pill fw-semibold shadow-sm">Entrar</button>
-      </div>
+    <form method="post">
+       {% csrf_token %}
+       {{form | crispy}}
+      <button type="submit" >Entrar</button>
+
     </form>
 
     <!-- Login social -->
