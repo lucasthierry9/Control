@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="{% static 'css/cadastros.css' %}">
     <title>{% block title %}{% endblock title %} - Control</title>
 </head>
+
+<body>
+{% block header %}
 <!-- <header class="container-fluid bg-primary text-light py-3 border-bottom sticky-top">
   <div class="row align-items-center">
     <!- Logo ->
@@ -36,8 +39,6 @@
     </div>
   </div>
 </header> -->
-<body>
-{% block header %}
     <header>
         <nav id="c2" class="navbar navbar-expand-lg" style="background-color: #2563EB; padding: 10px; height: 80px;">
             <div class="container-fluid">
@@ -49,7 +50,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="color: white; font-size: 20px; font-weight: 700; font-family: Inter;">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown show" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
-                                Cadastros
+                                Funcionalidades
                                 <i class="bi bi-chevron-down fs-6"></i>
                             </a>
                             <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; flex-wrap: wrap; margin-top: 15px; font-size: 14px; min-width: 300px;">
@@ -63,7 +64,7 @@
                         </li>
                         <li class="nav-item dropdown show">
                             <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
-                                Vendas
+                                Segmentos
                                 <i class="bi bi-chevron-down fs-6"></i>
                             </a>
                             <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; margin-top: 15px; font-size: 14px;">
@@ -75,7 +76,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
-                                Estoque
+                                Contato
                                 <i class="bi bi-chevron-down fs-6"></i>
                             </a>
                             <ul class="dropdown-menu" data-bs-popper="static">

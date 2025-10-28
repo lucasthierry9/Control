@@ -7,9 +7,11 @@ class Usuario(AbstractUser):
     cpf_cnpj = models.CharField(max_length=14, unique=True)
     email = models.EmailField(max_length=255, unique=True)
     telefone = models.CharField(max_length=11)
+    username = None
+    
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username"]
+    REQUIRED_FIELDS = [""]
 
 class Estado(models.Model):
     estado = models.CharField(max_length=50)
