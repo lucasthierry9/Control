@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 def index(request):
-    return render(request, "control/index.html" )
+    if request.user.is_authenticated:
+        return render(request, 'dashboard/base_dashboard.html')
+    else:
+        return render(request, "control/index.html" )
 
 
