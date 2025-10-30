@@ -62,6 +62,9 @@ class Fornecedor(models.Model):
     nome = models.CharField(max_length=50)
     cpf_cnpj = models.CharField(max_length=14)
 
+    class Meta:
+        verbose_name_plural = "Fornecedores"
+
     def __str__(self):
         return self.nome
 
@@ -138,6 +141,10 @@ class Estoque_Produto(models.Model):
 class Vendedor(models.Model):
     nome = models.CharField(max_length=50)
     cpf = models.CharField(max_length=11)
+    class Meta:
+        verbose_name_plural = "Vendedores"
+    def __str__(self):
+        return self.nome
 
 class Tel_Vendedor(models.Model):
     telefone = models.CharField(max_length=11)
@@ -161,6 +168,9 @@ class Funcionario(models.Model):
     nome = models.CharField(max_length=50)
     cpf = models.CharField(max_length=11)
     cargo = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nome
 
 class Tel_Funcionario(models.Model):
     telefone = models.CharField(max_length=11)
