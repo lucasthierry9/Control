@@ -20,6 +20,6 @@ urlpatterns = [
     path("excluir-vendedor/<int:id_vendedor>/", views.excluir_vendedor, name="excluir_vendedor"),
     path("fornecedores/", views.fornecedores, name="fornecedores"),
     path("cadastrar-fornecedor/", views.cadastrar_fornecedor, name="cadastrar_fornecedor"),
-    path("editar-fornecedor/<int:fornecedor>/", views.editar_fornecedor, name="editar_fornecedor"),
+    path("editar-fornecedor/<int:id_fornecedor>/", views.editar_fornecedor, name="editar_fornecedor"),
     path("excluir-fornecedor/<int:id_fornecedor>/", views.excluir_fornecedor, name="excluir_fornecedor"),
 ]

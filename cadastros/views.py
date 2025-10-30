@@ -148,7 +148,7 @@ def editar_vendedor(request, id_vendedor):
         form.save()
         return redirect("cadastros:vendedores")
     else:
-        form = VendedorForm(instance=vendedores)
+        form = VendedorForm(instance=vendedor)
     return render(request, "cadastros/vendedores/editar_vendedor.html", {"form": form})
 
 @login_required
@@ -161,7 +161,7 @@ def excluir_vendedor(request, id_vendedor=0):
         vendedor = get_object_or_404(Vendedor, id=id_vendedor)
         return render(request, "cadastros/vendedores/confirma.html", {"vendedor": vendedor})
     
-# FORNECEDOR
+# FORNECEDOR -----------------------
 @login_required
 def fornecedores(request):
     fornecedores = Fornecedor.objects.all()
@@ -186,7 +186,7 @@ def editar_fornecedor(request, id_fornecedor):
         form.save()
         return redirect("cadastros:fornecedores")
     else:
-        form = FornecedorForm(instance=fornecedores)
+        form = FornecedorForm(instance=fornecedor)
     return render(request, "cadastros/fornecedores/editar_fornecedor.html", {"form": form})
 
 @login_required
