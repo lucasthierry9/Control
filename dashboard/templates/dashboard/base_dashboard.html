@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,90 +17,89 @@
 </head>
 <body>
     {% block header %}
-<header>
-    <nav id="c2" class="navbar navbar-expand-lg" style="background-color: #2563EB; padding: 10px; height: 80px;">
-        <div class="container-fluid">
-            <!-- Toggle sidebar -->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" style="color:white;">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <!-- Logo -->
-            <a class="navbar-brand" href="{% url 'index' %}" style="color: white; font-size: 36px; font-weight: 700; font-family: Inter;">Control</a>
-
-            <!-- Navbar links -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="color: white; font-size: 20px; font-weight: 700; font-family: Inter;">
-                    
-                    <!-- Cadastros Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
-                            Cadastros
-                        </a>
-                        <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; min-width: 300px;">
-                            <li style="color: #2563EB; font-weight: 700; margin-left: 15px; margin-top: 5px; margin-bottom: 5px;">Cadastros</li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:clientes' %}">Clientes</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:produtos' %}">Produtos</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:funcionarios' %}">Funcionários</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:vendedores' %}">Vendedores</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:fornecedores' %}">Fornecedores</a></li>
-                        </ul>
-                    </li>
-
-                    <!-- Vendas Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
-                            Vendas
-                        </a>
-                        <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray;">
-                            <li style="color: #2563EB; font-weight: 700; margin-left: 15px; margin-top: 5px;">Vendas</li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:clientes' %}">Pedidos</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:clientes' %}">Histórico</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:clientes' %}" style="font-weight: 700; color: #2563EB;">Ver relatório de vendas</a></li>
-                        </ul>
-                    </li>
-
-                    <!-- Estoque Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
-                            Estoque
-                        </a>
-                        <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray;">
-                            <li style="color: #2563EB; font-weight: 700; margin-left: 15px; margin-top: 5px;">Vendas</li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:clientes' %}">Pedidos</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:clientes' %}">Histórico</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:clientes' %}" style="font-weight: 700; color: #2563EB;">Ver relatório de vendas</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-
-                <!-- Usuário Dropdown -->
-                <div class="d-flex gap-2">
-                    <div class="dropdown">
-                        <button class="btn btn-link text-white d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700; text-decoration: none;">
-                            <i class="bi bi-person-circle fs-3"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#">Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form method="POST" action="{% url 'logout' %}">
-                                    {% csrf_token %}
-                                    <button class="dropdown-item" type="submit">Sair</button>
-                                </form>
-                            </li>
-                        </ul>
+    <header>
+        <nav id="c2" class="navbar navbar-expand-lg" style="background-color: #2563EB; padding: 10px; height: 80px; z-index: 1050;">
+            <div class="container-fluid">
+                <!-- Toggle sidebar -->
+                <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" style="color:white;">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href={% url 'index' %} style="color: white; font-size: 36px; font-weight: 700; font-family: Inter;">Control</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="color: white; font-size: 20px; font-weight: 700; font-family: Inter;">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown show" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
+                                Cadastros
+                                <i class="bi bi-chevron-down fs-6"></i>
+                            </a>
+                             <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; min-width: 300px; padding: 15px 30px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Cadastros</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Clientes</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:produtos' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Produtos</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:funcionarios' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Funcionários</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:vendedores' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Vendedores</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:fornecedores' %} style="font-weight: 500; padding: 0px;">Fornecedores</a></li>
+                                    </div>
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Ferramentas</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'cadastros:categorias' %} style="font-weight: 500; margin: 0px; padding: 0px;">Categoria</a></li>
+                                    </div>
+                                </div>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown show">
+                            <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
+                                Vendas
+                                <i class="bi bi-chevron-down fs-6"></i>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; margin-top: 15px; font-size: 14px;">
+                                <li style="color: #2563EB; font-weight: 700; margin-left: 15px; margin-top: 5px;">Vendas</li>
+                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Pedidos</a></li>
+                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Histórico</a></li>
+                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="color: #2563EB; font-weight: 700;">Ver relatório de vendas</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
+                                Estoque
+                                <i class="bi bi-chevron-down fs-6"></i>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="static">
+                                <li><a class="dropdown-item" href="#">Funcional</a></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Usuário Dropdown -->
+                    <div class="d-flex gap-2">
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700; text-decoration: none;">
+                                <i class="bi bi-person-circle fs-3"></i>
+                                <span style="margin-left: 6px;">{{ request.user.empresa }}</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="POST" action="{% url 'logout' %}">
+                                        {% csrf_token %}
+                                        <button class="dropdown-item" type="submit">Sair</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-    </nav>
-</header>
-
+        </nav>
+    </header>
     {% endblock header %}
-
             <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -175,6 +174,7 @@
                 <main>
                     {% block content %}{% endblock content %}
                 </main>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{% static 'dashboard/js/scripts.js' %} "></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
