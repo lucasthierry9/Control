@@ -1,0 +1,12 @@
+{% extends "control/base.html" %}
+{% load static crispy_forms_filters %}
+{% block title %}Criar Categoria{% endblock title %}
+
+{% block content %}
+<h1>Criar Categoria</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <button type="submit">Criar</button>
+</form>
+{% endblock content %}

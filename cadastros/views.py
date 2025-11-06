@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from control.models import Cliente, Produto, Funcionario, Vendedor, Fornecedor
-from control.forms import ClienteForm, ProdutoForm, FuncionarioForm, VendedorForm, FornecedorForm
+from control.models import Cliente, Produto, Funcionario, Vendedor, Fornecedor, Categoria_Produto
+from control.forms import ClienteForm, ProdutoForm, FuncionarioForm, VendedorForm, FornecedorForm, CategoriaForm
 from django.contrib.auth.decorators import login_required
 
 #CLIENTES
@@ -198,5 +198,45 @@ def excluir_fornecedor(request, id_fornecedor=0):
     else:
         fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
         return render(request, "cadastros/fornecedores/confirma.html", {"fornecedor": fornecedor})
+    
+# ----------------------------------------------------------------------------------------
+
+# CATEGORIA ------------------------------------------------------------------------------
+@login_required
+def categorias(request):
+    categorias = Categoria_Produto.objects.all()
+    return render(request, "cadastros/categorias/categorias.html", {"categorias": categorias})
+
+@login_required
+def cadastrar_categoria(request):
+    if request.method == "POST":
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("cadastros:categorias")
+    else:
+        form = CategoriaForm()
+    return render(request, "cadastros/categorias/cadastrar_categoria.html", {"form": form})
+
+@login_required  
+def editar_categoria(request, id_categoria):
+    categoria = get_object_or_404(Categoria_Produto, id=id_categoria)
+    form = CategoriaForm(request.POST, instance=categoria)
+    if form.is_valid():
+        form.save()
+        return redirect("cadastros:categorias")
+    else:
+        form = CategoriaForm(instance=categoria)
+    return render(request, "cadastros/categorias/editar_categoria.html", {"form": form})
+
+@login_required
+def excluir_categoria(request, id_categoria=0):
+    if request.method == "POST":
+        categoria = get_object_or_404(Categoria_Produto, id=request.POST.get("id_categoria"))
+        categoria.delete()
+        return redirect('cadastros:categorias')
+    else:
+        categoria = get_object_or_404(Categoria_Produto, id=id_categoria)
+        return render(request, "cadastros/categorias/confirma.html", {"categoria": categoria})
     
 # ----------------------------------------------------------------------------------------
