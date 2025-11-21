@@ -102,14 +102,19 @@ class Categoria_Produto(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.TextField(max_length=100, blank=True)
 
+    @property
+    def quantidade(self):
+        return Produto.objects.filter(categoria=self).count()
+
     def __str__(self):
-        return self.nome
+        return f"{self.nome}"
 
 class Produto(models.Model):
     categoria = models.ForeignKey(Categoria_Produto, on_delete=models.CASCADE)
     nome = models.CharField(max_length=50)
     preco = models.DecimalField(max_digits=8, decimal_places=2)
     imagem = models.ImageField(upload_to="imagens/")
+    quantidade = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.nome
