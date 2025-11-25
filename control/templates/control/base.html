@@ -86,11 +86,11 @@
                             </ul>
                         </li>
                     </ul>
-                    <div class="d-flex gap-2">
-                        <a class="btn btn-link text-white d-flex align-items-center" href={% url 'login' %} style="color: white; font-family: Inter; font-weight: 700; text-decoration: none;">
-                            <i class="bi bi-person-circle me-1"></i> Login
-                        </a>
-                        <a class="btn btn-criar-conta" style="background-color: white; color: #2563EB; font-family: Inter; font-weight: 700; padding: 6px 16px; border-radius: 20px;" href={% url 'usuarios:register' %}>Criar conta</a>
+                        <div class="col-md-3 text-center text-md-end">
+                            <a href="{% url 'usuarios:login' %}" class="btn btn-outline-light me-2">Login</a>
+                            <a href="{% url 'usuarios:register' %}"  type="button" class="btn btn-light">Criar conta</a>
+                        </div>
+                
                     </div>
                 </div>
             </div>
