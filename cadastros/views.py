@@ -1,13 +1,15 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from control.models import Cliente, Produto, Funcionario, Vendedor, Fornecedor
-from control.forms import ClienteForm, ProdutoForm, FuncionarioForm, VendedorForm, FornecedorForm
+from control.models import Cliente, Produto, Funcionario, Vendedor, Fornecedor, Categoria_Produto
+from control.forms import ClienteForm, ProdutoForm, FuncionarioForm, VendedorForm, FornecedorForm, CategoriaForm
+from django.contrib.auth.decorators import login_required
 
 #CLIENTES
-
+@login_required
 def clientes(request):
     clientes = Cliente.objects.all()
     return render(request, "cadastros/clientes/clientes.html", {"clientes": clientes})
 
+@login_required
 def cadastrar_cliente(request):
     if request.method == "POST":
         form = ClienteForm(request.POST)
@@ -17,7 +19,8 @@ def cadastrar_cliente(request):
     else:
         form = ClienteForm()
     return render(request, "cadastros/clientes/cadastrar_cliente.html", {"form": form})
-            
+
+@login_required      
 def editar_cliente(request, id_cliente):
     cliente = get_object_or_404(Cliente, id=id_cliente)
     form = ClienteForm(request.POST, instance=cliente)
@@ -28,7 +31,7 @@ def editar_cliente(request, id_cliente):
         form = ClienteForm(instance=cliente)
     return render(request, "cadastros/clientes/editar_cliente.html", {"form": form})
 
-
+@login_required
 def excluir_cliente(request, id_cliente=0):
     if request.method == "POST":
         cliente = get_object_or_404(Cliente, id=request.POST.get("id_cliente"))
@@ -41,11 +44,12 @@ def excluir_cliente(request, id_cliente=0):
 # ----------------------------------------------------------------------------------------
 
 # PRODUTOS
-
+@login_required
 def produtos(request):
     produtos = Produto.objects.all()
     return render(request, "cadastros/produtos/produtos.html", {"produtos": produtos})
 
+@login_required
 def cadastrar_produto(request):
     if request.method == "POST":
         form = ProdutoForm(request.POST, request.FILES)
@@ -55,7 +59,8 @@ def cadastrar_produto(request):
     else:
         form = ProdutoForm()
     return render(request, "cadastros/produtos/cadastrar_produto.html", {"form": form})
-            
+
+@login_required 
 def editar_produto(request, id_produto):
     produto = get_object_or_404(Produto, id=id_produto)
     form = ProdutoForm(request.POST, instance=produto)
@@ -66,7 +71,7 @@ def editar_produto(request, id_produto):
         form = ProdutoForm(instance=produto)
     return render(request, "cadastros/produtos/editar_produto.html", {"form": form})
 
-
+@login_required
 def excluir_produto(request, id_produto=0):
     if request.method == "POST":
         produto = get_object_or_404(Produto, id=request.POST.get("id_produto"))
@@ -79,11 +84,12 @@ def excluir_produto(request, id_produto=0):
 # ----------------------------------------------------------------------------------------
 
 # FUNCIONÁRIOS
-
+@login_required
 def funcionarios(request):
     funcionarios = Funcionario.objects.all()
     return render(request, "cadastros/funcionarios/funcionarios.html", {"funcionarios": funcionarios})
 
+@login_required
 def cadastrar_funcionario(request):
     if request.method == "POST":
         form = FuncionarioForm(request.POST)
@@ -93,7 +99,8 @@ def cadastrar_funcionario(request):
     else:
         form = FuncionarioForm()
     return render(request, "cadastros/funcionarios/cadastrar_funcionario.html", {"form": form})
-            
+
+@login_required
 def editar_funcionario(request, id_funcionario):
     funcionario = get_object_or_404(Funcionario, id=id_funcionario)
     form = FuncionarioForm(request.POST, instance=funcionario)
@@ -104,7 +111,7 @@ def editar_funcionario(request, id_funcionario):
         form = FuncionarioForm(instance=funcionario)
     return render(request, "cadastros/funcionarios/editar_funcionario.html", {"form": form})
 
-
+@login_required
 def excluir_funcionario(request, id_funcionario=0):
     if request.method == "POST":
         funcionario = get_object_or_404(Funcionario, id=request.POST.get("id_funcionario"))
@@ -117,11 +124,12 @@ def excluir_funcionario(request, id_funcionario=0):
 # ----------------------------------------------------------------------------------------
 
 # VENDEDORES
-
+@login_required
 def vendedores(request):
     vendedores = Vendedor.objects.all()
     return render(request, "cadastros/vendedores/vendedores.html", {"vendedores": vendedores})
 
+@login_required
 def cadastrar_vendedor(request):
     if request.method == "POST":
         form = VendedorForm(request.POST)
@@ -131,7 +139,8 @@ def cadastrar_vendedor(request):
     else:
         form = VendedorForm()
     return render(request, "cadastros/vendedores/cadastrar_vendedor.html", {"form": form})
-            
+
+@login_required         
 def editar_vendedor(request, id_vendedor):
     vendedor = get_object_or_404(Vendedor, id=id_vendedor)
     form = VendedorForm(request.POST, instance=vendedor)
@@ -139,9 +148,10 @@ def editar_vendedor(request, id_vendedor):
         form.save()
         return redirect("cadastros:vendedores")
     else:
-        form = VendedorForm(instance=vendedores)
+        form = VendedorForm(instance=vendedor)
     return render(request, "cadastros/vendedores/editar_vendedor.html", {"form": form})
 
+@login_required
 def excluir_vendedor(request, id_vendedor=0):
     if request.method == "POST":
         vendedor = get_object_or_404(Vendedor, id=request.POST.get("id_vendedor"))
@@ -151,12 +161,13 @@ def excluir_vendedor(request, id_vendedor=0):
         vendedor = get_object_or_404(Vendedor, id=id_vendedor)
         return render(request, "cadastros/vendedores/confirma.html", {"vendedor": vendedor})
     
-# FORNECEDOR
-
+# FORNECEDOR -----------------------
+@login_required
 def fornecedores(request):
     fornecedores = Fornecedor.objects.all()
     return render(request, "cadastros/fornecedores/fornecedores.html", {"fornecedores": fornecedores})
 
+@login_required
 def cadastrar_fornecedor(request):
     if request.method == "POST":
         form = FornecedorForm(request.POST)
@@ -166,7 +177,8 @@ def cadastrar_fornecedor(request):
     else:
         form = FornecedorForm()
     return render(request, "cadastros/fornecedores/cadastrar_fornecedor.html", {"form": form})
-            
+
+@login_required  
 def editar_fornecedor(request, id_fornecedor):
     fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
     form = FornecedorForm(request.POST, instance=fornecedor)
@@ -174,9 +186,10 @@ def editar_fornecedor(request, id_fornecedor):
         form.save()
         return redirect("cadastros:fornecedores")
     else:
-        form = FornecedorForm(instance=fornecedores)
+        form = FornecedorForm(instance=fornecedor)
     return render(request, "cadastros/fornecedores/editar_fornecedor.html", {"form": form})
 
+@login_required
 def excluir_fornecedor(request, id_fornecedor=0):
     if request.method == "POST":
         fornecedor = get_object_or_404(Fornecedor, id=request.POST.get("id_fornecedor"))
@@ -185,5 +198,45 @@ def excluir_fornecedor(request, id_fornecedor=0):
     else:
         fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
         return render(request, "cadastros/fornecedores/confirma.html", {"fornecedor": fornecedor})
+    
+# ----------------------------------------------------------------------------------------
+
+# CATEGORIA ------------------------------------------------------------------------------
+@login_required
+def categorias(request):
+    categorias = Categoria_Produto.objects.all()
+    return render(request, "cadastros/categorias/categorias.html", {"categorias": categorias})
+
+@login_required
+def cadastrar_categoria(request):
+    if request.method == "POST":
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("cadastros:categorias")
+    else:
+        form = CategoriaForm()
+    return render(request, "cadastros/categorias/cadastrar_categoria.html", {"form": form})
+
+@login_required  
+def editar_categoria(request, id_categoria):
+    categoria = get_object_or_404(Categoria_Produto, id=id_categoria)
+    form = CategoriaForm(request.POST, instance=categoria)
+    if form.is_valid():
+        form.save()
+        return redirect("cadastros:categorias")
+    else:
+        form = CategoriaForm(instance=categoria)
+    return render(request, "cadastros/categorias/editar_categoria.html", {"form": form})
+
+@login_required
+def excluir_categoria(request, id_categoria=0):
+    if request.method == "POST":
+        categoria = get_object_or_404(Categoria_Produto, id=request.POST.get("id_categoria"))
+        categoria.delete()
+        return redirect('cadastros:categorias')
+    else:
+        categoria = get_object_or_404(Categoria_Produto, id=id_categoria)
+        return render(request, "cadastros/categorias/confirma.html", {"categoria": categoria})
     
 # ----------------------------------------------------------------------------------------

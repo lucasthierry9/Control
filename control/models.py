@@ -1,6 +1,29 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import BaseUserManager
+#adicionar super user pelo "/admin" no navegador
+class UsuarioManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('O campo email é obrigatório')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superusuário precisa ter is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superusuário precisa ter is_superuser=True.')
+
+        return self.create_user(email, password, **extra_fields)
+#adicionar super user pelo "/admin" no navegador
 class Usuario(AbstractUser):
     nome = models.CharField(max_length=50)
     empresa = models.CharField(max_length=50)
@@ -11,7 +34,9 @@ class Usuario(AbstractUser):
     
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = [""]
+    REQUIRED_FIELDS = []
+
+    objects = UsuarioManager()  # <---- adiciona o novo manager aqui
 
 class Estado(models.Model):
     estado = models.CharField(max_length=50)
@@ -36,6 +61,9 @@ class Bairro(models.Model):
 class Fornecedor(models.Model):
     nome = models.CharField(max_length=50)
     cpf_cnpj = models.CharField(max_length=14)
+
+    class Meta:
+        verbose_name_plural = "Fornecedores"
 
     def __str__(self):
         return self.nome
@@ -74,14 +102,22 @@ class Categoria_Produto(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.TextField(max_length=100, blank=True)
 
+    @property
+    def quantidade(self):
+        return Produto.objects.filter(categoria=self).count()
+
     def __str__(self):
-        return self.nome
+        return f"{self.nome}"
 
 class Produto(models.Model):
     categoria = models.ForeignKey(Categoria_Produto, on_delete=models.CASCADE)
     nome = models.CharField(max_length=50)
     preco = models.DecimalField(max_digits=8, decimal_places=2)
     imagem = models.ImageField(upload_to="imagens/")
+    quantidade = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.nome
 
 class Pedidos_Compra(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
@@ -110,6 +146,10 @@ class Estoque_Produto(models.Model):
 class Vendedor(models.Model):
     nome = models.CharField(max_length=50)
     cpf = models.CharField(max_length=11)
+    class Meta:
+        verbose_name_plural = "Vendedores"
+    def __str__(self):
+        return self.nome
 
 class Tel_Vendedor(models.Model):
     telefone = models.CharField(max_length=11)
@@ -133,6 +173,9 @@ class Funcionario(models.Model):
     nome = models.CharField(max_length=50)
     cpf = models.CharField(max_length=11)
     cargo = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nome
 
 class Tel_Funcionario(models.Model):
     telefone = models.CharField(max_length=11)

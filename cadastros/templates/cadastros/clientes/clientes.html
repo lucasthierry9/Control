@@ -22,7 +22,7 @@
                         <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Nome</th>
                         <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">CPF/CNPJ</th>
                         <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 350px;">Endereço</th>
-                        <th style="background-color: #2563EB; border-top-right-radius: 10px; border-bottom-right-radius: 10px; width: 50px;"></th>
+                        <th style="background-color: #2563EB; border-top-right-radius: 10px; border-bottom-right-radius: 10px; width: 10px;"></th>
                         </tr>
                     </thead>
 
@@ -38,24 +38,40 @@
                         <td class="py-2 fw-medium">{{ cliente.cpf }}</td>
                         <td class="py-2 fw-medium">{{ cliente.logradouro }}, {{ cliente.número }}</td>
                         
-                        <!-- botão excluir -->
-                        <td style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: center;">
-                            <a href="{% url 'cadastros:excluir_cliente' cliente.id %}" 
-                            style="
-                                display: inline-flex;
-                                align-items: center;
-                                justify-content: center;
-                                width: 35px;
-                                height: 35px;
-                                background-color: red;
-                                border: none;
-                                border-radius: 8px;
-                                text-decoration: none;
-                                box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-                            ">
-                            <i class="fa-solid fa-trash fs-5" style="color: white;"></i>
-                            </a>
-                        </td>
+                            <td style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: center; white-space: nowrap;">
+                                <!-- Botão Editar -->
+                                <a href="{% url 'cadastros:editar_cliente' cliente.id %}"
+                                    style="
+                                        display: inline-flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        width: 35px;
+                                        height: 35px;
+                                        background-color: #ffc107;
+                                        border-radius: 8px;
+                                        margin-right: 6px;
+                                        text-decoration: none;
+                                        vertical-align: middle;
+                                    ">
+                                    <i class="fa-solid fa-pen" style="color: white;"></i>
+                                </a>
+
+                                <!-- Botão Excluir -->
+                                <a href="{% url 'cadastros:excluir_cliente' cliente.id %}"
+                                    style="
+                                        display: inline-flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        width: 35px;
+                                        height: 35px;
+                                        background-color: red;
+                                        border-radius: 8px;
+                                        text-decoration: none;
+                                        vertical-align: middle;
+                                    ">
+                                    <i class="fa-solid fa-trash" style="color: white;"></i>
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
