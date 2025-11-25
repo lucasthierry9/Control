@@ -4,8 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class UserForm(UserCreationForm):
-    password1 = forms.CharField(widget=forms.PasswordInput, help_text=None)
-    password2 = forms.CharField(widget=forms.PasswordInput, help_text=None)
+    
     class Meta:
         model = Usuario
         fields = ['nome','email','empresa','cpf_cnpj','telefone' ]

@@ -94,32 +94,15 @@
                             </ul>
                         </li>
                     </ul>
-<<<<<<< HEAD
+
                         <div class="col-md-3 text-center text-md-end">
                             <a href="{% url 'usuarios:login' %}" class="btn btn-outline-light me-2">Login</a>
                             <a href="{% url 'usuarios:register' %}"  type="button" class="btn btn-light">Criar conta</a>
                         </div>
                 
-=======
-                    <!-- Usuário Dropdown -->
-                    <div class="d-flex gap-2">
-                        <div class="dropdown">
-                            <button class="btn btn-link text-white d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700; text-decoration: none;">
-                                <i class="bi bi-person-circle fs-3"></i>
-                                <span style="margin-left: 6px;">{{ request.user.empresa }}</span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="#">Perfil</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="POST" action="{% url 'logout' %}">
-                                        {% csrf_token %}
-                                        <button class="dropdown-item" type="submit">Sair</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
->>>>>>> main
+
+                   
+
                     </div>
                 </div>
             </div>
