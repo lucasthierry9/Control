@@ -57,9 +57,9 @@
                                 Vendas
                                 <i class="bi bi-chevron-down fs-6"></i>
                             </a>
-                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; margin-top: 15px; font-size: 14px;">
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; padding: 15px 30px;">
                                 <li style="color: #2563EB; font-weight: 700; margin-left: 15px; margin-top: 5px;">Vendas</li>
-                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Pedidos</a></li>
+                                <li><a class="dropdown-item" href={% url 'vendas:pedidos' %} style="font-weight: 500;">Pedidos</a></li>
                                 <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Histórico</a></li>
                                 <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="color: #2563EB; font-weight: 700;">Ver relatório de vendas</a></li>
                             </ul>

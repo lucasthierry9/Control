@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
+from django.utils import timezone
 #adicionar super user pelo "/admin" no navegador
 class UsuarioManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -168,6 +169,7 @@ class Pedidos_Venda(models.Model):
     logradouro = models.CharField(max_length=100)
     numero = models.CharField(max_length=7)
     pagamento = models.CharField(max_length=20)
+    data = models.DateField(default=timezone.now)
 
 class Funcionario(models.Model):
     nome = models.CharField(max_length=50)

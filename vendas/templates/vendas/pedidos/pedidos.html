@@ -1,0 +1,102 @@
+{% extends "control/base.html" %}
+{% load static %}
+{% block title %}Pedidos{% endblock title %}
+{% block content %}
+<div class="pt-3">
+    <div class="row g-0" style="min-height: calc(100vh - 200px);">
+        {% if pedidos %}
+        <div class="col-12 col-lg-10 px-4">
+            <div class="d-flex align-items-center">
+                <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Pedidos</h1>
+            </div>
+            <form role="search">
+                <input class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
+            </form>
+            <div class="pt-2 overflow-auto"  style="">
+                <table class="" style="width: 100%; border-collapse: separate; border-spacing: 0 8px; font-family: Inter, sans-serif; font-size: 16px;">
+                    <thead>
+                        <tr>
+                        <th style="background-color: #2563EB; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 35px;"></th>
+                        <th class="py-2 ps-1" style="background-color: #2563EB; color: white; text-align: left; width: 100px;">Código</th>
+                        <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Cliente</th>
+                        <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">Total</th>
+                        <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 350px;">Data</th>
+                        <th style="background-color: #2563EB; border-top-right-radius: 10px; border-bottom-right-radius: 10px; width: 10px;"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for pedido in pedidos|slice:":9" %}
+                        <tr style="background-color: #EEEEEE;">
+                        <td class="ps-2" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; text-align: center;">
+                            <input type="checkbox" style="height: 100%; vertical-align: middle; transform: scale(1.4);">
+                        </td>
+
+                        <td class="py-2 ps-1 fw-medium">{{ pedido.id }}</td>
+                        <td class="py-2 ps-3 fw-medium">{{ pedido.cliente }}</td>
+                        <td class="py-2 fw-medium">{{ pedido.vendedor }}</td>
+                        <td class="py-2 fw-medium">{{ pedido.logradouro }}, {{ pedido.número }}</td>
+                        
+                            <td style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: center; white-space: nowrap;">
+                                <!-- Botão Editar -->
+                                <a href="{% url 'vendas:editar_pedido' pedido.id %}"
+                                    style="
+                                        display: inline-flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        width: 35px;
+                                        height: 35px;
+                                        background-color: #ffc107;
+                                        border-radius: 8px;
+                                        margin-right: 6px;
+                                        text-decoration: none;
+                                        vertical-align: middle;
+                                    ">
+                                    <i class="fa-solid fa-pen" style="color: white;"></i>
+                                </a>
+
+                                <!-- Botão Excluir -->
+                                <a href="{% url 'vendas:excluir_pedido' pedido.id %}"
+                                    style="
+                                        display: inline-flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        width: 35px;
+                                        height: 35px;
+                                        background-color: red;
+                                        border-radius: 8px;
+                                        text-decoration: none;
+                                        vertical-align: middle;
+                                    ">
+                                    <i class="fa-solid fa-trash" style="color: white;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 col-lg-10 px-4">
+            <div class="d-flex align-items-center">
+                <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Pedidos</h1>
+            </div>
+            <div style="display: flex; height: 100%; align-items: center; justify-content: center;">
+                Nenhum pedido registrado. <div>
+                <a href={% url 'vendas:registrar_pedido' %}>Adicionar</a>
+            </div>
+            </div>
+        </div>   
+        {% endif %}
+        <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
+            <a href={% url 'vendas:registrar_pedido' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Registrar Pedido</button></a>
+            <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"><p>teste</p></div>
+        </div>    
+
+    </div>
+</div>
+
+{% endblock content %}
