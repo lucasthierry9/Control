@@ -129,7 +129,7 @@ class Pedidos_Venda(models.Model):
         ('concluido', 'Concluído'),
         ('cancelado', 'Cancelado'),
     )
-    
+
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
@@ -139,6 +139,7 @@ class Pedidos_Venda(models.Model):
     numero = models.CharField(max_length=7)
     pagamento = models.CharField(max_length=20)
     data = models.DateField(default=timezone.now)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='aberto')
 
 class Funcionario(models.Model):
     nome = models.CharField(max_length=50)
