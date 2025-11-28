@@ -1,9 +1,9 @@
 {% extends "control/base.html" %}
 {% load static crispy_forms_filters %}
-{% block title %}Cadastrar Cliente{% endblock title %}
+{% block title %}Registrar Pedido{% endblock title %}
 
 {% block content %}
-<h1>Cadastrar Cliente:</h1>
+<h1>Registrar Pedido:</h1>
 <form method="post">
     {% csrf_token %}
     {{ form | crispy }}
