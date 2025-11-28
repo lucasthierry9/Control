@@ -6,4 +6,6 @@ urlpatterns = [
     path("pedidos/", views.pedidos, name="pedidos"),
     path("editar-pedido/<int:id_pedido>/", views.editar_pedido, name="editar_pedido"),
     path("excluir-pedido/<int:id_pedido>/", views.excluir_pedido, name="excluir_pedido"),
+
+    path("historico/", views.historico, name="historico"),
 ]

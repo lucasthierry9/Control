@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 #PEDIDOS
 @login_required
 def pedidos(request):
-    pedidos = Pedidos_Venda.objects.all()
+    pedidos = Pedidos_Venda.objects.filter(status__in=['aberto', 'processando'])
     return render(request, "vendas/pedidos/pedidos.html", {"pedidos": pedidos})
 
 @login_required
@@ -42,3 +42,8 @@ def excluir_pedido(request, id_pedido=0):
         pedido = get_object_or_404(Pedidos_Venda, id=id_pedido)
         return render(request, "vendas/pedidos/confirma.html", {"pedido": pedido})
     
+#HISTÓRICO
+@login_required
+def historico(request):
+    pedidos = Pedidos_Venda.objects.filter(status__in=['concluido', 'cancelado'])
+    return render(request, "vendas/historico/historico.html", {"pedidos": pedidos})
