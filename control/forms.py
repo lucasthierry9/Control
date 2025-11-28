@@ -1,13 +1,5 @@
 from django import forms
-from . models import Cliente, Produto, Funcionario, Vendedor, Fornecedor, Usuario, Categoria_Produto, Pedidos_Venda
-from django.contrib.auth.forms import UserCreationForm
-
-
-class UserForm(UserCreationForm):
-    class Meta:
-        model = Usuario
-        fields = ['nome','email','empresa','cpf_cnpj','telefone' ]
-    
+from . models import Cliente, Produto, Funcionario, Vendedor, Fornecedor, Categoria_Produto, Pedidos_Venda
 
 class ClienteForm(forms.ModelForm):
     class Meta:

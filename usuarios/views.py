@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from control.models import Usuario
-from control.forms import UserForm
+from usuarios.models import Usuario
+from usuarios.forms import UserForm
 
 def cadastrar_usuario(request):
     if request.method == "POST":
@@ -11,4 +11,4 @@ def cadastrar_usuario(request):
     else:
         form = UserForm()
     return render(request, "registration/register.html", {"form": form})
-# Create your views here.
+
