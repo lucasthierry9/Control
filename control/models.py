@@ -138,8 +138,11 @@ class Pedidos_Venda(models.Model):
     logradouro = models.CharField(max_length=100)
     numero = models.CharField(max_length=7)
     pagamento = models.CharField(max_length=20)
-    data = models.DateField(default=timezone.now)
+    data = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='aberto')
+
+    def total(self):
+        return self.produto.preco * self.quantidade
 
 class Funcionario(models.Model):
     nome = models.CharField(max_length=50)
