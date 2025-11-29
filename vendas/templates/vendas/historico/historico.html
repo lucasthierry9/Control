@@ -17,22 +17,22 @@
                 <table class="" style="width: 100%; border-collapse: separate; border-spacing: 0 8px; font-family: Inter, sans-serif; font-size: 16px;">
                     <thead>
                         <tr>
-                            <th class="py-2 ps-3" style="background-color: #2563EB; border-top-left-radius: 10px; border-bottom-left-radius: 10px; color: white; text-align: left; width: 320px;">Produto</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; border-top-left-radius: 10px; border-bottom-left-radius: 10px; color: white; text-align: left; width: 250px;">Produto</th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Cliente</th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Vendedor</th>
                             <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">Preço</th>
-                            <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 200px;">Data</th>
+                            <th class="py-2" style="background-color: #2563EB; border-top-right-radius: 10px; border-bottom-right-radius: 10px; color: white; text-align: left; width: 200px;">Data</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {% for pedido in pedidos|slice:":9" %}
                         <tr style="background-color: #EEEEEE;">
-                        <td class="py-2 ps-1 fw-medium">{{ pedido.produto }}</td>
+                        <td class="py-2 ps-3 fw-medium" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;">{{ pedido.produto }}</td>
                         <td class="py-2 ps-3 fw-medium">{{ pedido.cliente }}</td>
-                        <td class="py-2 fw-medium">{{ pedido.vendedor }}</td>
-                        <td class="py-2 fw-medium">{{ pedido.preco }}</td>
-                        <td class="py-2 fw-medium">{{ pedido.data }}</td>
+                        <td class="py-2 ps-3 fw-medium">{{ pedido.vendedor }}</td>
+                        <td class="py-2 fw-medium">{{ pedido.produto.preco }}</td>
+                        <td class="py-2 fw-medium" style="border-top-right-radius: 10px; border-bottom-right-radius: 10px;">{{ pedido.data|date:"d/m/y" }} às {{ pedido.data|date:"H:i" }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
