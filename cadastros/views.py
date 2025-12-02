@@ -34,13 +34,13 @@ def editar_cliente(request, id_cliente):
 @login_required
 def excluir_cliente(request, id_cliente=0):
     if request.method == "POST":
-        cliente = get_object_or_404(Cliente, id=request.POST.get("id_cliente"))
-        cliente.delete()
+        ids = request.POST.getlist("ids_selecionados")
+        Cliente.objects.filter(id__in=ids).delete() 
         return redirect('cadastros:clientes')
     else:
         cliente = get_object_or_404(Cliente, id=id_cliente)
         return render(request, "cadastros/clientes/confirma.html", {"cliente": cliente})
-
+    
 # ----------------------------------------------------------------------------------------
 
 # PRODUTOS
