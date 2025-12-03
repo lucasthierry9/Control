@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect
-from usuarios.models import Usuario
 from usuarios.forms import UserForm
 
 def cadastrar_usuario(request):

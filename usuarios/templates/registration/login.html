@@ -1,6 +1,7 @@
 {% extends "control/base.html" %}
 {% block title%}Login{%endblock title%}
 {% load  crispy_forms_filters %}
+{% block header %}{% endblock header %}
 {% block content %}
 <main class="d-flex align-items-center justify-content-center min-vh-100 bg-light"
       style="background: radial-gradient(circle at top, #f5f5ff, #ffffff);">
@@ -25,7 +26,7 @@
     <!-- Rodapé -->
     <p class="text-center small mt-3 mb-0">
       Ainda não tem uma conta?
-      <a href="#" class="fw-semibold text-primary text-decoration-none">Inscreva-se agora</a>
+      <a href="{% url 'usuarios:register' %}" class="fw-semibold text-primary text-decoration-none">Inscreva-se agora</a>
     </p>
   </div>
 </main>
