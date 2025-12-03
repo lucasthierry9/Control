@@ -2,12 +2,21 @@ from django.shortcuts import render,get_object_or_404,redirect
 from control.models import Cliente, Produto, Funcionario, Vendedor, Fornecedor, Categoria_Produto
 from control.forms import ClienteForm, ProdutoForm, FuncionarioForm, VendedorForm, FornecedorForm, CategoriaForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 #CLIENTES
 @login_required
 def clientes(request):
-    clientes = Cliente.objects.all()
-    return render(request, "cadastros/clientes/clientes.html", {"clientes": clientes})
+    ordenar = request.GET.get("ordenar")
+    if ordenar:
+        clientes = Cliente.objects.all().order_by(ordenar)
+    else:
+        clientes = Cliente.objects.all().order_by('-id')
+
+    paginator = Paginator(clientes, 10)
+    numero_da_pagina = request.GET.get('p')
+    clientes_paginados = paginator.get_page(numero_da_pagina)
+    return render(request, "cadastros/clientes/clientes.html", {"clientes": clientes_paginados})
 
 @login_required
 def cadastrar_cliente(request):
@@ -46,8 +55,16 @@ def excluir_cliente(request, id_cliente=0):
 # PRODUTOS
 @login_required
 def produtos(request):
-    produtos = Produto.objects.all()
-    return render(request, "cadastros/produtos/produtos.html", {"produtos": produtos})
+    ordenar = request.GET.get("ordenar")
+    if ordenar:
+        produtos = Produto.objects.all().order_by(ordenar)
+    else:
+        produtos = Produto.objects.all().order_by('-id')
+
+    paginator = Paginator(produtos, 10)
+    numero_da_pagina = request.GET.get('p')
+    produtos_paginados = paginator.get_page(numero_da_pagina)
+    return render(request, "cadastros/produtos/produtos.html", {"produtos": produtos_paginados})
 
 @login_required
 def cadastrar_produto(request):
@@ -74,8 +91,8 @@ def editar_produto(request, id_produto):
 @login_required
 def excluir_produto(request, id_produto=0):
     if request.method == "POST":
-        produto = get_object_or_404(Produto, id=request.POST.get("id_produto"))
-        produto.delete()
+        ids = request.POST.getlist("ids_selecionados")
+        Produto.objects.filter(id__in=ids).delete() 
         return redirect('cadastros:produtos')
     else:
         produto = get_object_or_404(Produto, id=id_produto)
@@ -86,7 +103,15 @@ def excluir_produto(request, id_produto=0):
 # FUNCIONÁRIOS
 @login_required
 def funcionarios(request):
-    funcionarios = Funcionario.objects.all()
+    ordenar = request.GET.get("ordenar")
+    if ordenar:
+        funcionarios = Funcionario.objects.all().order_by(ordenar)
+    else:
+        funcionarios = Funcionario.objects.all().order_by('-id')
+
+    paginator = Paginator(funcionarios, 10)
+    numero_da_pagina = request.GET.get('p')
+    funcionarios = paginator.get_page(numero_da_pagina)
     return render(request, "cadastros/funcionarios/funcionarios.html", {"funcionarios": funcionarios})
 
 @login_required
@@ -114,8 +139,8 @@ def editar_funcionario(request, id_funcionario):
 @login_required
 def excluir_funcionario(request, id_funcionario=0):
     if request.method == "POST":
-        funcionario = get_object_or_404(Funcionario, id=request.POST.get("id_funcionario"))
-        funcionario.delete()
+        ids = request.POST.getlist("ids_selecionados")
+        Funcionario.objects.filter(id__in=ids).delete() 
         return redirect('cadastros:funcionarios')
     else:
         funcionario = get_object_or_404(Funcionario, id=id_funcionario)
@@ -126,7 +151,15 @@ def excluir_funcionario(request, id_funcionario=0):
 # VENDEDORES
 @login_required
 def vendedores(request):
-    vendedores = Vendedor.objects.all()
+    ordenar = request.GET.get("ordenar")
+    if ordenar:
+        vendedores = Vendedor.objects.all().order_by(ordenar)
+    else:
+        vendedores = Vendedor.objects.all().order_by('-id')
+
+    paginator = Paginator(vendedores, 10)
+    numero_da_pagina = request.GET.get('p')
+    vendedores = paginator.get_page(numero_da_pagina)
     return render(request, "cadastros/vendedores/vendedores.html", {"vendedores": vendedores})
 
 @login_required
@@ -154,8 +187,8 @@ def editar_vendedor(request, id_vendedor):
 @login_required
 def excluir_vendedor(request, id_vendedor=0):
     if request.method == "POST":
-        vendedor = get_object_or_404(Vendedor, id=request.POST.get("id_vendedor"))
-        vendedor.delete()
+        ids = request.POST.getlist("ids_selecionados")
+        Vendedor.objects.filter(id__in=ids).delete() 
         return redirect('cadastros:vendedores')
     else:
         vendedor = get_object_or_404(Vendedor, id=id_vendedor)
@@ -164,7 +197,15 @@ def excluir_vendedor(request, id_vendedor=0):
 # FORNECEDOR -----------------------
 @login_required
 def fornecedores(request):
-    fornecedores = Fornecedor.objects.all()
+    ordenar = request.GET.get("ordenar")
+    if ordenar:
+        fornecedores = Fornecedor.objects.all().order_by(ordenar)
+    else:
+        fornecedores = Fornecedor.objects.all().order_by('-id')
+
+    paginator = Paginator(fornecedores, 10)
+    numero_da_pagina = request.GET.get('p')
+    fornecedores = paginator.get_page(numero_da_pagina)
     return render(request, "cadastros/fornecedores/fornecedores.html", {"fornecedores": fornecedores})
 
 @login_required
@@ -192,8 +233,8 @@ def editar_fornecedor(request, id_fornecedor):
 @login_required
 def excluir_fornecedor(request, id_fornecedor=0):
     if request.method == "POST":
-        fornecedor = get_object_or_404(Fornecedor, id=request.POST.get("id_fornecedor"))
-        fornecedor.delete()
+        ids = request.POST.getlist("ids_selecionados")
+        Fornecedor.objects.filter(id__in=ids).delete() 
         return redirect('cadastros:fornecedores')
     else:
         fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
@@ -204,7 +245,15 @@ def excluir_fornecedor(request, id_fornecedor=0):
 # CATEGORIA ------------------------------------------------------------------------------
 @login_required
 def categorias(request):
-    categorias = Categoria_Produto.objects.all()
+    ordenar = request.GET.get("ordenar")
+    if ordenar:
+        categorias = Categoria_Produto.objects.all().order_by(ordenar)
+    else:
+        categorias = Categoria_Produto.objects.all().order_by('-id')
+
+    paginator = Paginator(categorias, 10)
+    numero_da_pagina = request.GET.get('p')
+    categorias = paginator.get_page(numero_da_pagina)
     return render(request, "cadastros/categorias/categorias.html", {"categorias": categorias})
 
 @login_required
@@ -232,8 +281,8 @@ def editar_categoria(request, id_categoria):
 @login_required
 def excluir_categoria(request, id_categoria=0):
     if request.method == "POST":
-        categoria = get_object_or_404(Categoria_Produto, id=request.POST.get("id_categoria"))
-        categoria.delete()
+        ids = request.POST.getlist("ids_selecionados")
+        Categoria_Produto.objects.filter(id__in=ids).delete() 
         return redirect('cadastros:categorias')
     else:
         categoria = get_object_or_404(Categoria_Produto, id=id_categoria)
