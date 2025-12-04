@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from control.models import Pedidos_Venda
-from control.forms import PedidosVendaForm
+from . forms import PedidosVendaForm
 from django.contrib.auth.decorators import login_required
 
 

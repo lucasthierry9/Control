@@ -1,0 +1,40 @@
+{% extends "control/base.html" %}
+{% load static %}
+{% block title %}Verificação de Estoque{% endblock title %}
+{% block content %}
+<div class="pt-3">
+    <div class="row g-0" style="min-height: calc(100vh - 200px);">
+        <form method="GET">
+            <div class="col-12 col-lg-10 px-4">
+                <div class="d-flex align-items-center">
+                    <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
+                    <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Verificação de Estoque</h1>
+                </div>
+                <div style="display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap;">
+                    <div style="display: flex; flex-direction: column;">
+                        <label class="fw-semibold">Depósito</label>
+                        <select name="deposito" class="form-select" style="min-width: 200px;">
+                            <option value="todos">Todos</option>
+                            {% for deposito in depositos %}
+                                <option value="{{ deposito.id }}">{{ deposito.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <label class="fw-semibold">Código do produto</label>
+                        <input name="codigo" type="text" class="form-control" style="min-width: 200px;">
+                    </div>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="{% url 'estoque:verificacao' %}" class="btn" style="border: 2px solid #2563EB; font-family: Inter; color: #2563EB; padding: 10px 25px; border-radius: 10px;">Reiniciar</a>
+
+                        <button class="btn" style="background: #2563EB; color: white; padding: 10px 25px; border-radius: 10px; font-family: Inter;">Verificar</button>
+                    </div>
+            </div>   
+            <div class="col-12 col-lg-2 mt-4 mt-lg-0">
+                <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; justify-content: flex-end;"><p>teste</p></div>
+            </div>    
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

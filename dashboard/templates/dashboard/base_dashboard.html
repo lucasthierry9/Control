@@ -69,10 +69,19 @@
                                 Estoque
                                 <i class="bi bi-chevron-down fs-6"></i>
                             </a>
-                            <ul class="dropdown-menu" data-bs-popper="static">
-                                <li><a class="dropdown-item" href="#">Funcional</a></li>
-                                <li></li>
-                                <li></li>
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; min-width: 300px; padding: 15px 30px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Estoque</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Movimentos</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:produtos' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Verificação</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:funcionarios' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Depósitos</a></li>
+                                    </div>
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px; margin-left: 5px;">Compras</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'cadastros:categorias' %} style="font-weight: 500;  margin-left: 5px; padding: 0px;">Pedidos Compra</a></li>
+                                    </div>
+                                </div>
                             </ul>
                         </li>
                     </ul>
