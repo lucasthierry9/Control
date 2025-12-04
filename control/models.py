@@ -83,10 +83,18 @@ class Produto(models.Model):
         return self.nome
 
 class Pedidos_Compra(models.Model):
+    STATUS_CHOICES = (
+        ('aberto', 'Em aberto'),
+        ('processando', 'Processando'),
+        ('concluido', 'Concluído'),
+        ('cancelado', 'Cancelado'),
+    )
+
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
     valor = models.DecimalField(max_digits=8, decimal_places=2)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='aberto')
 
 class Deposito(models.Model):
     descricao = models.CharField(max_length=50)
@@ -100,6 +108,7 @@ class Movimentacao(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     dataehora = models.DateTimeField()
     preco_custo = models.DecimalField(max_digits=8, decimal_places=2)
+    preco_compra = models.DecimalField(max_digits=8, decimal_places=2, null=True)
 
 class Estoque_Produto(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)

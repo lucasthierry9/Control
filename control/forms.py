@@ -30,8 +30,3 @@ class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categoria_Produto
         fields = "__all__"
-
-class PedidosVendaForm(forms.ModelForm):
-    class Meta:
-        model = Pedidos_Venda
-        fields = "__all__"
