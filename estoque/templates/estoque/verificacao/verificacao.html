@@ -4,37 +4,90 @@
 {% block content %}
 <div class="pt-3">
     <div class="row g-0" style="min-height: calc(100vh - 200px);">
-        <form method="GET">
-            <div class="col-12 col-lg-10 px-4">
-                <div class="d-flex align-items-center">
-                    <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
-                    <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Verificação de Estoque</h1>
+        <div class="col-12 col-lg-10 px-4">
+            <div class="d-flex align-items-center">
+                <a href="{% url 'index' %}"><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Verificação de Estoque</h1>
+            </div>
+            <form method="get" class="d-flex align-items-end gap-3 mt-3">
+                <div>
+                    <label class="form-label fw-medium" style="font-family: Inter;">Depósito</label>
+                    <select name="deposito" class="form-select rounded-3" style="background-color: #EEEEEE; min-width: 200px;">
+                        <option value="todos" {% if deposito_selecionado == "todos" %}selected{% endif %}>Todos</option>
+                        {% for dep in depositos %}
+                            <option value="{{ dep.id }}" {% if deposito_selecionado == dep.id|stringformat:"s" %}selected{% endif %}>
+                                {{ dep.descricao }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <div style="display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap;">
-                    <div style="display: flex; flex-direction: column;">
-                        <label class="fw-semibold">Depósito</label>
-                        <select name="deposito" class="form-select" style="min-width: 200px;">
-                            <option value="todos">Todos</option>
-                            {% for deposito in depositos %}
-                                <option value="{{ deposito.id }}">{{ deposito.nome }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div style="display: flex; flex-direction: column;">
-                        <label class="fw-semibold">Código do produto</label>
-                        <input name="codigo" type="text" class="form-control" style="min-width: 200px;">
-                    </div>
-                    <div style="display: flex; gap: 15px;">
-                        <a href="{% url 'estoque:verificacao' %}" class="btn" style="border: 2px solid #2563EB; font-family: Inter; color: #2563EB; padding: 10px 25px; border-radius: 10px;">Reiniciar</a>
+                <div>
+                    <label class="form-label fw-medium" style="font-family: Inter; font-weight: 700;">Código do produto</label>
+                    <input type="text" name="codigo" class="form-control rounded-3" style="background-color: #EEEEEE; min-width: 200px;" value="{{ codigo_produto }}">
+                </div>
+                <button type="submit" class="px-4" style="min-height: 38px; min-width: 150px; font-family: Inter; color: white; font-weight: 700; border-radius: 8px; background-color: #2563EB; border: none; font-size: 20px;">
+                    Verificar
+                </button>
+                <a href="{% url 'estoque:verificacao' %}" style="text-decoration: none;">
+                    <button class="px-4 d-flex align-items-center justify-content-center" style="min-height: 38px; min-width: 150px; font-family: Inter; color: #2563EB; font-weight: 700; border-radius: 8px; background-color: white; outline: 2px solid #2563EB; outline-offset: -2px; text-decoration: none; font-size: 20px;">
+                        Reiniciar
+                    </button>
+                </a>
+            </form>
 
-                        <button class="btn" style="background: #2563EB; color: white; padding: 10px 25px; border-radius: 10px; font-family: Inter;">Verificar</button>
-                    </div>
-            </div>   
-            <div class="col-12 col-lg-2 mt-4 mt-lg-0">
-                <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; justify-content: flex-end;"><p>teste</p></div>
-            </div>    
-        </form>
+            {% if resultado and resultado != "nenhum_produto" and resultado != "sem_estoque" %}
+            <div class="pt-3 overflow-auto">
+                <table style="width: 100%; border-collapse: separate; border-spacing: 0 8px; font-family: Inter, sans-serif; font-size: 16px;">
+                    <thead>
+                        <tr>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 120px;">Imagem</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 250px;">Produto</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; border-top-right-radius: 10px; border-bottom-right-radius: 10px; width: 200px;">Qtd. em Estoque</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #EEEEEE;">
+                            <td class="py-2 ps-3" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                                {% if resultado.produto.imagem %}
+                                    <img src="{{ resultado.produto.imagem.url }}" alt="{{ resultado.produto.nome }}" style="width: 48px; height: 48px; object-fit: cover; border-radius: 4px;">
+                                {% else %}
+                                    <div style="width: 48px; height: 48px; background-color: #d1d5db; border-radius: 4px;"></div>
+                                {% endif %}
+                            </td>
+                            <td class="py-2 ps-3 fw-medium">{{ resultado.produto.id }} - {{ resultado.produto.nome }}</td>
+                            <td class="py-2 ps-3 fw-medium" style="border-top-right-radius: 10px; border-bottom-right-radius: 10px;">{{ resultado.quantidade }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% elif resultado == "nenhum_produto" %}
+            <div style="display: flex; height: 300px; align-items: center; justify-content: center; font-family: Inter; font-weight: 700; color: #6b7280;">
+                    Nenhum produto encontrado.
+            </div>
+            {% elif resultado == "sem_estoque" %}
+            <div style="display: flex; height: 300px; align-items: center; justify-content: center;
+                        font-family: Inter; font-weight: 700; color: #6b7280;">
+                Produto cadastrado, porém sem estoque neste depósito.
+            </div>
+            {% else %}
+            <div style="display: flex; height: 300px; align-items: center; justify-content: center;
+                        font-family: Inter; font-weight: 700; color: #6b7280;">
+                Use os filtros acima para verificar o estoque.
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-12 col-lg-2 mt-4 mt-lg-0">
+            <div style="min-height: 60px;"></div>
+            <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; padding: 15px;">
+                <p class="fw-bold" style="font-family: Inter; color: #2563EB;">Ações Rápidas</p>
+                <a href="{% url 'estoque:verificacao' %}" class="d-block mb-2 text-decoration-none" style="color: #374151; font-family: Inter;">
+                    <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Saída de Estoque
+                </a>
+                <a href="{% url 'estoque:verificacao' %}" class="d-block text-decoration-none" style="color: #374151; font-family: Inter;">
+                    <i class="fa-solid fa-file-lines me-2"></i> Relatório
+                </a>
+            </div>
+        </div>
     </div>
 </div>
-
 {% endblock content %}
