@@ -99,6 +99,9 @@ class Pedidos_Compra(models.Model):
 class Deposito(models.Model):
     descricao = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.descricao
+
 class Tipos_Movimentacao(models.Model):
     tipo = models.CharField(max_length=50)
 
@@ -106,7 +109,7 @@ class Movimentacao(models.Model):
     tipo = models.ForeignKey(Tipos_Movimentacao, on_delete=models.CASCADE)
     deposito = models.ForeignKey(Deposito, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    dataehora = models.DateTimeField()
+    dataehora = models.DateTimeField(default=timezone.now)
     preco_custo = models.DecimalField(max_digits=8, decimal_places=2)
     preco_compra = models.DecimalField(max_digits=8, decimal_places=2, null=True)
 
