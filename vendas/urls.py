@@ -8,4 +8,6 @@ urlpatterns = [
     path("excluir-pedido/<int:id_pedido>/", views.excluir_pedido, name="excluir_pedido"),
 
     path("historico/", views.historico, name="historico"),
+
+    path("relatorio-vendas/", views.relatorio_vendas, name="relatorio_vendas"),
 ]
