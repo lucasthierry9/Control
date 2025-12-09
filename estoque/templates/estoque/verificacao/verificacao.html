@@ -40,7 +40,7 @@
                 <table style="width: 100%; border-collapse: separate; border-spacing: 0 8px; font-family: Inter, sans-serif; font-size: 16px;">
                     <thead>
                         <tr>
-                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 120px;">Imagem</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 100px;">Imagem</th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 250px;">Produto</th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; border-top-right-radius: 10px; border-bottom-right-radius: 10px; width: 200px;">Qtd. em Estoque</th>
                         </tr>
@@ -49,9 +49,9 @@
                         <tr style="background-color: #EEEEEE;">
                             <td class="py-2 ps-3" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
                                 {% if resultado.produto.imagem %}
-                                    <img src="{{ resultado.produto.imagem.url }}" alt="{{ resultado.produto.nome }}" style="width: 48px; height: 48px; object-fit: cover; border-radius: 4px;">
+                                    <img src="{{ resultado.produto.imagem.url }}" alt="{{ resultado.produto.nome }}" style="width: 100%; height: 60px; object-fit: cover; border-radius: 4px;">
                                 {% else %}
-                                    <div style="width: 48px; height: 48px; background-color: #d1d5db; border-radius: 4px;"></div>
+                                    <div style="width: 75%; height: 120px; background-color: #d1d5db; border-radius: 4px;"></div>
                                 {% endif %}
                             </td>
                             <td class="py-2 ps-3 fw-medium">{{ resultado.produto.id }} - {{ resultado.produto.nome }}</td>

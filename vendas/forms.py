@@ -13,7 +13,7 @@ class PedidosVendaForm(forms.ModelForm):
         model = Pedidos_Venda
         fields = [
             'cliente', 'vendedor', 'produto', 'quantidade',
-            'pagamento', 'status',
+            'pagamento', 'status', 'data',
             'frete', 'peso', 'valor_frete',
             'cep', 'estado', 'cidade', 'bairro', 'logradouro', 'numero', 'complemento'
         ]
@@ -35,7 +35,7 @@ class PedidosVendaForm(forms.ModelForm):
             })
         
         # Campos select
-        select_fields = ['cliente', 'vendedor', 'produto', 'pagamento', 'numero']
+        select_fields = ['cliente', 'vendedor', 'produto', 'pagamento',]
         for field_name in select_fields:
             if field_name in self.fields:
                 self.fields[field_name].widget.attrs.update({
@@ -116,7 +116,7 @@ class PedidosVendaForm(forms.ModelForm):
             Row(
                 Column('logradouro', css_class='col-12 col-md-6'),
                 Column('numero', css_class='col-6 col-md-2'),
-                Column('complemento', css_class='col-6 col-md-4'),
+                Column('data', css_class='col-6 col-md-4'),
             ),
             
             # Campo oculto para parcelas
