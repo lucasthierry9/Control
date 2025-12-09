@@ -47,37 +47,6 @@
                             
                                 <td style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: center; white-space: nowrap;">
                                     <!-- Botão Editar -->
-                                    <a href="{% url 'cadastros:editar_cliente' cliente.id %}"
-                                        style="
-                                            display: inline-flex;
-                                            align-items: center;
-                                            justify-content: center;
-                                            width: 35px;
-                                            height: 35px;
-                                            background-color: #ffc107;
-                                            border-radius: 8px;
-                                            margin-right: 6px;
-                                            text-decoration: none;
-                                            vertical-align: middle;
-                                        ">
-                                        <i class="fa-solid fa-pen" style="color: white;"></i>
-                                    </a>
-
-                                    <!-- Botão Excluir -->
-                                    <a href="{% url 'cadastros:excluir_cliente' %}"
-                                        style="
-                                            display: inline-flex;
-                                            align-items: center;
-                                            justify-content: center;
-                                            width: 35px;
-                                            height: 35px;
-                                            background-color: red;
-                                            border-radius: 8px;
-                                            text-decoration: none;
-                                            vertical-align: middle;
-                                        ">
-                                        <i class="fa-solid fa-trash" style="color: white;"></i>
-                                    </a>
                                 </td>
                             </tr>
                             {% endfor %}
