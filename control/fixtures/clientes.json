@@ -1,0 +1,267 @@
+[
+    {
+        "model": "control.Estado",
+        "pk": 1,
+        "fields": {"estado": "SP"}
+    },
+    {
+        "model": "control.Estado",
+        "pk": 2,
+        "fields": {"estado": "RJ"}
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 1,
+        "fields": {
+            "nome": "Fernando 1",
+            "cpf": "12345678901",
+            "email": "fernando1@exemplo.com",
+            "telefone": "11987654321",
+            "estado": 1,
+            "cidade": "São Paulo",
+            "bairro": "Centro",
+            "logradouro": "Rua A",
+            "numero": "101",
+            "complemento": "",
+            "cep": "01001000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 2,
+        "fields": {
+            "nome": "Maria 2",
+            "cpf": "23456789012",
+            "email": "maria2@exemplo.com",
+            "telefone": "11987654322",
+            "estado": 1,
+            "cidade": "São Paulo",
+            "bairro": "Jardim América",
+            "logradouro": "Rua B",
+            "numero": "102",
+            "complemento": "",
+            "cep": "01002000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 3,
+        "fields": {
+            "nome": "Lucas 3",
+            "cpf": "34567890123",
+            "email": "lucas3@exemplo.com",
+            "telefone": "11987654323",
+            "estado": 1,
+            "cidade": "Campinas",
+            "bairro": "Centro",
+            "logradouro": "Rua C",
+            "numero": "103",
+            "complemento": "",
+            "cep": "13010000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 4,
+        "fields": {
+            "nome": "Ana 4",
+            "cpf": "45678901234",
+            "email": "ana4@exemplo.com",
+            "telefone": "11987654324",
+            "estado": 1,
+            "cidade": "Campinas",
+            "bairro": "Jardim América",
+            "logradouro": "Avenida D",
+            "numero": "104",
+            "complemento": "",
+            "cep": "13020000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 5,
+        "fields": {
+            "nome": "João 5",
+            "cpf": "56789012345",
+            "email": "joao5@exemplo.com",
+            "telefone": "11987654325",
+            "estado": 2,
+            "cidade": "Rio de Janeiro",
+            "bairro": "Copacabana",
+            "logradouro": "Rua E",
+            "numero": "105",
+            "complemento": "",
+            "cep": "22041001"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 6,
+        "fields": {
+            "nome": "Carla 6",
+            "cpf": "67890123456",
+            "email": "carla6@exemplo.com",
+            "telefone": "11987654326",
+            "estado": 2,
+            "cidade": "Rio de Janeiro",
+            "bairro": "Icaraí",
+            "logradouro": "Rua F",
+            "numero": "106",
+            "complemento": "",
+            "cep": "22050000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 7,
+        "fields": {
+            "nome": "Pedro 7",
+            "cpf": "78901234567",
+            "email": "pedro7@exemplo.com",
+            "telefone": "11987654327",
+            "estado": 2,
+            "cidade": "Niterói",
+            "bairro": "Copacabana",
+            "logradouro": "Rua G",
+            "numero": "107",
+            "complemento": "",
+            "cep": "24230000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 8,
+        "fields": {
+            "nome": "Beatriz 8",
+            "cpf": "89012345678",
+            "email": "beatriz8@exemplo.com",
+            "telefone": "11987654328",
+            "estado": 2,
+            "cidade": "Niterói",
+            "bairro": "Icaraí",
+            "logradouro": "Rua H",
+            "numero": "108",
+            "complemento": "",
+            "cep": "24240000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 9,
+        "fields": {
+            "nome": "Rafael 9",
+            "cpf": "90123456789",
+            "email": "rafael9@exemplo.com",
+            "telefone": "11987654329",
+            "estado": 1,
+            "cidade": "São Paulo",
+            "bairro": "Centro",
+            "logradouro": "Avenida I",
+            "numero": "109",
+            "complemento": "",
+            "cep": "01003000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 10,
+        "fields": {
+            "nome": "Camila 10",
+            "cpf": "01234567890",
+            "email": "camila10@exemplo.com",
+            "telefone": "11987654330",
+            "estado": 1,
+            "cidade": "Campinas",
+            "bairro": "Jardim América",
+            "logradouro": "Rua J",
+            "numero": "110",
+            "complemento": "",
+            "cep": "13030000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 11,
+        "fields": {
+            "nome": "Fernando 11",
+            "cpf": "11234567890",
+            "email": "fernando11@exemplo.com",
+            "telefone": "11987654331",
+            "estado": 2,
+            "cidade": "Rio de Janeiro",
+            "bairro": "Copacabana",
+            "logradouro": "Rua K",
+            "numero": "111",
+            "complemento": "",
+            "cep": "22060000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 12,
+        "fields": {
+            "nome": "Maria 12",
+            "cpf": "12234567890",
+            "email": "maria12@exemplo.com",
+            "telefone": "11987654332",
+            "estado": 2,
+            "cidade": "Niterói",
+            "bairro": "Icaraí",
+            "logradouro": "Rua L",
+            "numero": "112",
+            "complemento": "",
+            "cep": "24250000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 13,
+        "fields": {
+            "nome": "Lucas 13",
+            "cpf": "13234567890",
+            "email": "lucas13@exemplo.com",
+            "telefone": "11987654333",
+            "estado": 1,
+            "cidade": "São Paulo",
+            "bairro": "Jardim América",
+            "logradouro": "Rua M",
+            "numero": "113",
+            "complemento": "",
+            "cep": "01004000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 14,
+        "fields": {
+            "nome": "Ana 14",
+            "cpf": "14234567890",
+            "email": "ana14@exemplo.com",
+            "telefone": "11987654334",
+            "estado": 1,
+            "cidade": "Campinas",
+            "bairro": "Centro",
+            "logradouro": "Rua N",
+            "numero": "114",
+            "complemento": "",
+            "cep": "13040000"
+        }
+    },
+    {
+        "model": "control.Cliente",
+        "pk": 15,
+        "fields": {
+            "nome": "João 15",
+            "cpf": "15234567890",
+            "email": "joao15@exemplo.com",
+            "telefone": "11987654335",
+            "estado": 2,
+            "cidade": "Niterói",
+            "bairro": "Copacabana",
+            "logradouro": "Rua O",
+            "numero": "115",
+            "complemento": "",
+            "cep": "24260000"
+        }
+    }
+]
