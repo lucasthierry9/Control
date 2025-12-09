@@ -10,4 +10,7 @@ urlpatterns = [
     path("historico/", views.historico, name="historico"),
 
     path("relatorio-vendas/", views.relatorio_vendas, name="relatorio_vendas"),
+    path("relatorio/export/pdf/", views.exportar_pdf, name="exportar_pdf"),
+    path("relatorio/export/excel/", views.exportar_excel, name="exportar_excel"),
+    path("relatorio/imprimir/", views.visualizar_pdf, name="visualizar_pdf"),
 ]
