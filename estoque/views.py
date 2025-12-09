@@ -24,7 +24,21 @@ def adicionar_movimentacao(request):
     if request.method == "POST":
         form = MovimentacaoForm(request.POST)
         if form.is_valid():
-            form.save()
+            mov = form.save()
+
+            # Atualiza o estoque automaticamente
+            estoque, created = Estoque_Produto.objects.get_or_create(
+                produto=mov.produto,
+                deposito=mov.deposito,
+                defaults={'quantidade': 0}
+            )
+
+            if mov.tipo == 'entrada':
+                estoque.quantidade += mov.quantidade
+            else:
+                estoque.quantidade -= mov.quantidade
+
+            estoque.save()
             return redirect("estoque:movimentacoes")
     else:
         form = MovimentacaoForm()

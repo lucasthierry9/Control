@@ -13,8 +13,8 @@ class PedidosVendaForm(forms.ModelForm):
         model = Pedidos_Venda
         fields = [
             'cliente', 'vendedor', 'produto', 'quantidade',
-            'pagamento', 'pagamento',
-            'numero', 'numero', 'numero',
+            'pagamento', 'status',
+            'frete', 'peso', 'valor_frete',
             'cep', 'estado', 'cidade', 'bairro', 'logradouro', 'numero', 'complemento'
         ]
         widgets = {
@@ -24,7 +24,9 @@ class PedidosVendaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
+
+        botao_texto = "Salvar" if self.instance and self.instance.pk else "Registrar"
+
         # Estilo padrão para todos os campos
         for field_name, field in self.fields.items():
             field.widget.attrs.update({
@@ -46,14 +48,14 @@ class PedidosVendaForm(forms.ModelForm):
         self.fields['vendedor'].empty_label = 'Selecione um vendedor'
         self.fields['produto'].empty_label = 'Selecione um produto'
         self.fields['pagamento'].empty_label = 'Selecione'
-        self.fields['numero'].empty_label = 'Selecione'
+        self.fields['frete'].empty_label = 'Selecione'
         
         # Placeholders
-        self.fields['numero'].widget.attrs['placeholder'] = 'Kg'
-        self.fields['numero'].widget.attrs['placeholder'] = 'R$'
+        self.fields['peso'].widget.attrs['placeholder'] = 'Kg'
+        self.fields['valor_frete'].widget.attrs['placeholder'] = 'R$'
         
         # Campos não obrigatórios
-        optional_fields = ['numero', 'numero', 'numero', 'cep', 'estado', 'cidade', 'bairro', 'logradouro', 'numero', 'complemento', 'numero']
+        optional_fields = ['frete', 'peso', 'valor_frete', 'cep', 'estado', 'cidade', 'bairro', 'logradouro', 'numero', 'complemento', 'numero']
         for field_name in optional_fields:
             if field_name in self.fields:
                 self.fields[field_name].required = False
@@ -95,9 +97,9 @@ class PedidosVendaForm(forms.ModelForm):
                 Column(
                     HTML('<h5 style="font-family: Inter; font-weight: 700; margin-bottom: 8px;">Transporte</h5>'),
                     Row(
-                        Column('numero', css_class='col-5'),
-                        Column('numero', css_class='col-3'),
-                        Column('numero', css_class='col-4'),
+                        Column('frete', css_class='col-5'),
+                        Column('peso', css_class='col-3'),
+                        Column('valor_frete', css_class='col-4'),
                     ),
                     css_class='col-12 col-md-6'
                 ),
@@ -118,12 +120,12 @@ class PedidosVendaForm(forms.ModelForm):
             ),
             
             # Campo oculto para parcelas
-            'numero',
+            'status',
             
             # Botão Submit
             Div(
-                Submit('submit', 'Registrar', css_class='btn', css_id='btn-registrar',
-                       style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 20px; border-radius: 10px; min-width: 300px; height: 55px;'),
+                Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
+                       style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
                 css_class='mt-4 mb-4'
             ),
         )

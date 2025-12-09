@@ -32,15 +32,17 @@ def cadastrar_cliente(request):
         form = ClienteForm()
     return render(request, "cadastros/clientes/cadastrar_cliente.html", {"form": form})
 
-@login_required      
 def editar_cliente(request, id_cliente):
     cliente = get_object_or_404(Cliente, id=id_cliente)
-    form = ClienteForm(request.POST, instance=cliente)
-    if form.is_valid():
-        form.save()
-        return redirect("cadastros:clientes")
+
+    if request.method == "POST":
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect("cadastros:clientes")
     else:
         form = ClienteForm(instance=cliente)
+
     return render(request, "cadastros/clientes/editar_cliente.html", {"form": form})
 
 @login_required
@@ -79,6 +81,19 @@ def cadastrar_produto(request):
     else:
         form = ProdutoForm()
     return render(request, "cadastros/produtos/cadastrar_produto.html", {"form": form})
+
+def editar_produto(request, id_produto):
+    produto = get_object_or_404(Produto, id=id_produto)
+
+    if request.method == "POST":
+        form = ProdutoForm(request.POST, instance=produto)
+        if form.is_valid():
+            form.save()
+            return redirect("cadastros:produtos")
+    else:
+        form = ProdutoForm(instance=produto)
+
+    return render(request, "cadastros/produtos/editar_produto.html", {"form": form})
 
 @login_required 
 def editar_produto(request, id_produto):
@@ -197,6 +212,19 @@ def cadastrar_vendedor(request):
         form = VendedorForm()
     return render(request, "cadastros/vendedores/cadastrar_vendedor.html", {"form": form})
 
+def editar_vendedor(request, id_vendedor):
+    vendedor = get_object_or_404(Vendedor, id=id_vendedor)
+
+    if request.method == "POST":
+        form = VendedorForm(request.POST, instance=vendedor)
+        if form.is_valid():
+            form.save()
+            return redirect("cadastros:vendedors")
+    else:
+        form = VendedorForm(instance=vendedor)
+
+    return render(request, "cadastros/vendedores/editar_vendedor.html", {"form": form})
+
 @login_required         
 def editar_vendedor(request, id_vendedor):
     vendedor = get_object_or_404(Vendedor, id=id_vendedor)
@@ -242,6 +270,19 @@ def cadastrar_fornecedor(request):
     else:
         form = FornecedorForm()
     return render(request, "cadastros/fornecedores/cadastrar_fornecedor.html", {"form": form})
+
+def editar_fornecedor(request, id_fornecedor):
+    fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
+
+    if request.method == "POST":
+        form = FornecedorForm(request.POST, instance=fornecedor)
+        if form.is_valid():
+            form.save()
+            return redirect("cadastro:fornecedores")
+    else:
+        form = FornecedorForm(instance=fornecedor)
+
+    return render(request, "cadastro/fornecedores/editar_fornecedor.html", {"form": form})
 
 @login_required  
 def editar_fornecedor(request, id_fornecedor):
@@ -290,6 +331,19 @@ def cadastrar_categoria(request):
     else:
         form = CategoriaForm()
     return render(request, "cadastros/categorias/cadastrar_categoria.html", {"form": form})
+
+def editar_categoria(request, id_categoria):
+    categoria = get_object_or_404(Categoria_Produto, id=id_categoria)
+
+    if request.method == "POST":
+        form = CategoriaForm(request.POST, instance=categoria)
+        if form.is_valid():
+            form.save()
+            return redirect("cadastros:categorias")
+    else:
+        form = CategoriaForm(instance=categoria)
+
+    return render(request, "cadastros/categorias/editar_categoria.html", {"form": form})
 
 @login_required  
 def editar_categoria(request, id_categoria):

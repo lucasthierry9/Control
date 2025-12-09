@@ -32,15 +32,18 @@ def registrar_pedido(request):
         form = PedidosVendaForm()
     return render(request, "vendas/pedidos/registrar_pedido.html", {"form": form})
 
-@login_required      
+@login_required
 def editar_pedido(request, id_pedido):
     pedido = get_object_or_404(Pedidos_Venda, id=id_pedido)
-    form = PedidosVendaForm(request.POST, instance=pedido)
-    if form.is_valid():
-        form.save()
-        return redirect("vendas:pedidos")
+
+    if request.method == "POST":
+        form = PedidosVendaForm(request.POST, instance=pedido)
+        if form.is_valid():
+            form.save()
+            return redirect("vendas:pedidos")
     else:
         form = PedidosVendaForm(instance=pedido)
+
     return render(request, "vendas/pedidos/editar_pedido.html", {"form": form})
 
 @login_required
@@ -66,7 +69,7 @@ def relatorio_vendas(request):
     mes = request.GET.get("mes")
     search = request.GET.get("search")
 
-    pedidos = Pedidos_Venda.objects.all()
+    pedidos = Pedidos_Venda.objects.filter(status__in=['concluido', 'cancelado'])
 
     if ano and ano.isdigit():
         pedidos = pedidos.filter(data__year=ano)
