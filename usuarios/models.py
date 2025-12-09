@@ -27,11 +27,17 @@ class UsuarioManager(BaseUserManager):
 #adicionar super user pelo "/admin" no navegador
 
 class Usuario(AbstractUser):
+    TIPO_USUARIO = (
+        ('empresa', 'Empresa'),
+        ('funcionario', 'Funcionário'),
+    )
+
     razao_social = models.CharField(max_length=50)
     nome_fantasia = models.CharField(max_length=50)
-    cnpj = models.CharField(max_length=14, unique=True)
+    cnpj = models.CharField(max_length=14, unique=True, blank=True, null=True)
     email = models.EmailField(max_length=255, unique=True)
     telefone = models.CharField(max_length=11)
+    tipo = models.CharField(max_length=20, choices=TIPO_USUARIO, default='empresa')
     username = None
     
 

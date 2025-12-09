@@ -11,10 +11,13 @@ class ProdutoForm(forms.ModelForm):
         model = Produto
         fields = "__all__"
 
-class FuncionarioForm(forms.ModelForm):
-    class Meta:
-        model = Funcionario
-        fields = "__all__"
+class FuncionarioForm(forms.Form):
+    nome = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    telefone = forms.CharField(max_length=20)
+    cpf = forms.CharField(max_length=11)
+    cargo = forms.CharField(max_length=50)
+    senha = forms.CharField(widget=forms.PasswordInput)
 
 class VendedorForm(forms.ModelForm):
     class Meta:

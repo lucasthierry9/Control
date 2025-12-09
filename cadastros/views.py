@@ -1,8 +1,11 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from control.models import Cliente, Produto, Funcionario, Vendedor, Fornecedor, Categoria_Produto
 from control.forms import ClienteForm, ProdutoForm, FuncionarioForm, VendedorForm, FornecedorForm, CategoriaForm
+from usuarios.models import Usuario
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.contrib import messages
+from django.contrib.auth.models import User
 
 #CLIENTES
 @login_required
@@ -119,10 +122,31 @@ def cadastrar_funcionario(request):
     if request.method == "POST":
         form = FuncionarioForm(request.POST)
         if form.is_valid():
-            form.save()
+
+            func_user = Usuario.objects.create_user(
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['senha'],
+                tipo='funcionario',
+                razao_social="Funcionário",
+                nome_fantasia=form.cleaned_data['nome'],
+                telefone=form.cleaned_data['telefone'],
+                cnpj=None
+            )
+
+            Funcionario.objects.create(
+                user=func_user,
+                empresa=request.user,
+                nome=form.cleaned_data['nome'],
+                cpf=form.cleaned_data['cpf'],
+                telefone=form.cleaned_data['telefone'],
+                cargo=form.cleaned_data['cargo']
+            )
+
             return redirect("cadastros:funcionarios")
+
     else:
         form = FuncionarioForm()
+
     return render(request, "cadastros/funcionarios/cadastrar_funcionario.html", {"form": form})
 
 @login_required
