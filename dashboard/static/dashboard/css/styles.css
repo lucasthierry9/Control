@@ -11240,14 +11240,4 @@ body {
   width: 20px !important;
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
-
-}
-#layoutSidenav_nav {
-    z-index: 1030; /* sidebar */
-    position: relative; /* garante stacking */
-}
-
-.navbar .dropdown-menu {
-    position: absolute;
-    z-index: 1050; /* maior que sidebar */
 }
