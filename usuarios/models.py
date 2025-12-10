@@ -38,6 +38,12 @@ class Usuario(AbstractUser):
     email = models.EmailField(max_length=255, unique=True)
     telefone = models.CharField(max_length=11)
     tipo = models.CharField(max_length=20, choices=TIPO_USUARIO, default='empresa')
+    nome_admin = models.CharField(max_length=50, blank=True)
+    email_admin = models.EmailField(max_length=255, blank=True)
+    telefone_admin = models.CharField(max_length=11, blank=True)
+    cpf_admin = models.CharField(max_length=11, blank=True)
+    endereco = models.CharField(max_length=100, blank=True)
+    imagem_perfil = models.ImageField(upload_to="perfil/", blank=True)
     username = None
     
 
