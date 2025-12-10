@@ -18,8 +18,23 @@ from reportlab.lib.pagesizes import A4
 #PEDIDOS
 @login_required
 def pedidos(request):
+    search = request.GET.get("search")
+
     pedidos = Pedidos_Venda.objects.filter(status__in=['aberto', 'processando'])
-    return render(request, "vendas/pedidos/pedidos.html", {"pedidos": pedidos})
+
+    if search:
+        pedidos = pedidos.filter(
+            Q(produto__nome__icontains=search) |
+            Q(cliente__nome__icontains=search) |
+            Q(id__icontains=search) 
+        )
+    
+    pedidos = pedidos.order_by('-data')
+
+    paginator = Paginator(pedidos, 10)
+    numero_da_pagina = request.GET.get('p')
+    pedidos_paginados = paginator.get_page(numero_da_pagina)
+    return render(request, "vendas/pedidos/pedidos.html", {"pedidos": pedidos_paginados, "search": search})
 
 @login_required
 def registrar_pedido(request):
@@ -45,12 +60,12 @@ def editar_pedido(request, id_pedido):
         form = PedidosVendaForm(instance=pedido)
 
     return render(request, "vendas/pedidos/editar_pedido.html", {"form": form})
-
+    
 @login_required
 def excluir_pedido(request, id_pedido=0):
     if request.method == "POST":
-        pedido = get_object_or_404(Pedidos_Venda, id=request.POST.get("id_pedido"))
-        pedido.delete()
+        ids = request.POST.getlist("ids_selecionados")
+        Pedidos_Venda.objects.filter(id__in=ids).delete() 
         return redirect('vendas:pedidos')
     else:
         pedido = get_object_or_404(Pedidos_Venda, id=id_pedido)
@@ -59,8 +74,22 @@ def excluir_pedido(request, id_pedido=0):
 #HISTÓRICO
 @login_required
 def historico(request):
+    search = request.GET.get("search")
+
     pedidos = Pedidos_Venda.objects.filter(status__in=['concluido', 'cancelado'])
-    return render(request, "vendas/historico/historico.html", {"pedidos": pedidos})
+
+    if search:
+        pedidos = pedidos.filter(
+            Q(produto__nome__icontains=search) |
+            Q(cliente__nome__icontains=search) 
+        )
+
+    pedidos = pedidos.order_by('-data')
+
+    paginator = Paginator(pedidos, 10)
+    numero_da_pagina = request.GET.get('p')
+    pedidos_paginados = paginator.get_page(numero_da_pagina)
+    return render(request, "vendas/historico/historico.html", {"pedidos": pedidos_paginados, "search": search})
 
 #RELATÓRIO DE VENDAS
 @login_required

@@ -4,14 +4,17 @@
 {% block content %}
 <div class="pt-3">
     <div class="row g-0" style="min-height: calc(100vh - 200px);">
-        {% if pedidos %}
+        {% if pedidos.paginator.count > 0 %}
         <div class="col-12 col-lg-10 px-4">
             <div class="d-flex align-items-center">
                 <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
                 <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Histórico de Vendas</h1>
             </div>
-            <form role="search">
-                <input class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
+            <form id="filtros-form" method="GET">
+                <input type="hidden" name="search" value="{{ search|default:'' }}">
+            </form>
+            <form method="GET">
+                <input name="search" value="{{ search|default:'' }}" class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
             </form>
             <div class="pt-2 overflow-auto"  style="">
                 <table class="" style="width: 100%; border-collapse: separate; border-spacing: 0 8px; font-family: Inter, sans-serif; font-size: 16px;">
@@ -36,8 +39,29 @@
                         </tr>
                         {% endfor %}
                     </tbody>
-                    </table>
+                </table>
             </div>
+            {% if pedidos.paginator.num_pages > 1 %}
+            <nav aria-label="paginator navigation">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item" {{  pedidos.has_previous|yesno:',disabled,disabled'  }}>
+                        <a class="page-link" href="{% if pedidos.has_previous %}{% querystring p=pedidos.previous_page_number %}{% endif %}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% for page in pedidos.paginator.page_range %}
+                    <li class="page-item">
+                        <a class="page-link {% if pedidos.number == page %}active{% endif %}" href="{% querystring p=page %}">{{page}}</a>
+                    </li>
+                    {% endfor %}
+                    <li class="page-item" {{  pedidos.has_next|yesno:',disabled,disabled'  }}>
+                        <a class="page-link" href="{% if pedidos.has_next %}{% querystring p=pedidos.next_page_number %}{% endif %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            {% endif %}
         </div>
         {% else %}
         <div class="col-12 col-lg-10 px-4">
@@ -45,9 +69,14 @@
                 <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
                 <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Histórico de Vendas</h1>
             </div>
+            <form id="filtros-form" method="GET">
+                <input type="hidden" name="search" value="{{ search|default:'' }}">
+            </form>
+            <form method="GET">
+                <input name="search" value="{{ search|default:'' }}" class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
+            </form>
             <div style="display: flex; height: 100%; align-items: center; justify-content: center; font-family: Inter; font-weight: 700;">
-                Você não possui vendas concluídas. <div>
-            </div>
+                Você não possui vendas concluídas.
             </div>
         </div>   
         {% endif %}
@@ -55,7 +84,6 @@
             <div style="min-height: 60px;"></div>
             <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"><p>teste</p></div>
         </div>    
-
     </div>
 </div>
 

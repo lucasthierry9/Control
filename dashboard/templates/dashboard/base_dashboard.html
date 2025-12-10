@@ -23,90 +23,102 @@
 </head>
 <body>
 {% block header %}
-<header>
-    <nav class="navbar navbar-expand-lg" style="background-color: #2563EB; padding: 10px; height: 80px;">
-        <div class="container-fluid">
-            <!-- Toggle sidebar -->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" style="color:white;">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <!-- Brand -->
-            <a class="navbar-brand" href="{% url 'index' %}" style="color: white; font-size: 36px; font-weight: 700; font-family: Inter;">Control</a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <!-- Menu esquerdo -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 20px; font-weight: 700; font-family: Inter;">
-
-                    <!-- CADASTROS -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Cadastros</a>
-                        <ul class="dropdown-menu p-3" style="min-width: 300px;">
-                            <li class="fw-bold text-primary mb-2">Cadastros</li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:clientes' %}">Clientes</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:produtos' %}">Produtos</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:funcionarios' %}">Funcionários</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:vendedores' %}">Vendedores</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:fornecedores' %}">Fornecedores</a></li>
-                            <li class="fw-bold text-primary mt-3 mb-2">Ferramentas</li>
-                            <li><a class="dropdown-item" href="{% url 'cadastros:categorias' %}">Categoria</a></li>
-                        </ul>
-                    </li>
-
-                    <!-- VENDAS -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Vendas</a>
-                        <ul class="dropdown-menu p-3" style="min-width: 250px;">
-                            <li class="fw-bold text-primary mb-2">Vendas</li>
-                            <li><a class="dropdown-item" href="{% url 'vendas:pedidos' %}">Pedidos</a></li>
-                            <li><a class="dropdown-item" href="{% url 'vendas:historico' %}">Histórico</a></li>
-                            <li><a class="dropdown-item fw-bold text-primary mt-2" href="{% url 'vendas:relatorio_vendas' %}">Relatório de Vendas</a></li>
-                        </ul>
-                    </li>
-
-                    <!-- ESTOQUE -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Estoque</a>
-                        <ul class="dropdown-menu p-3" style="min-width: 300px;">
-                            <li class="fw-bold text-primary mb-2">Estoque</li>
-                            <li><a class="dropdown-item" href="{% url 'estoque:movimentacoes' %}">Movimentações</a></li>
-                            <li><a class="dropdown-item" href="{% url 'estoque:verificacao' %}">Verificação</a></li>
-                            <li><a class="dropdown-item" href="{% url 'estoque:depositos' %}">Depósitos</a></li>
-                            <li class="fw-bold text-primary mt-3 mb-2">Compras</li>
-                            <li><a class="dropdown-item" href="{% url 'estoque:pedidos_compra' %}">Pedidos de Compra</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-
-                <!-- Usuário -->
-                <div class="dropdown">
-                    <button class="btn btn-link text-white dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle fs-3"></i> {{ request.user.nome_fantasia }}
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Perfil</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <form method="POST" action="{% url 'logout' %}">
-                                {% csrf_token %}
-                                <button class="dropdown-item">Sair</button>
-                            </form>
+    <header>
+        <nav id="c2" class="navbar navbar-expand-lg" style="background-color: #2563EB; padding: 10px; height: 80px; z-index: 1050;">
+            <div class="container-fluid">
+                <!-- Toggle sidebar -->
+                <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" style="color:white;">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href={% url 'index' %} style="color: white; font-size: 36px; font-weight: 700; font-family: Inter;">Control</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="color: white; font-size: 20px; font-weight: 700; font-family: Inter;">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown show" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
+                                Cadastros
+                                <i class="bi bi-chevron-down fs-6"></i>
+                            </a>
+                             <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; min-width: 300px; padding: 15px 30px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Cadastros</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Clientes</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:produtos' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Produtos</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:funcionarios' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Funcionários</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:vendedores' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Vendedores</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:fornecedores' %} style="font-weight: 500; padding: 0px;">Fornecedores</a></li>
+                                    </div>
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Ferramentas</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'cadastros:categorias' %} style="font-weight: 500; margin: 0px; padding: 0px;">Categoria</a></li>
+                                    </div>
+                                </div>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown show">
+                            <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
+                                Vendas
+                                <i class="bi bi-chevron-down fs-6"></i>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; padding: 15px 30px;">
+                                <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Vendas</li>
+                                <li><a class="dropdown-item" href={% url 'vendas:pedidos' %} style="font-weight: 500; margin: 0px; padding: 0px; margin-bottom: 5px;">Pedidos</a></li>
+                                <li><a class="dropdown-item" href={% url 'vendas:historico' %} style="font-weight: 500; margin: 0px; padding: 0px; margin-bottom: 5px;">Histórico</a></li>
+                                <li><a class="dropdown-item" href={% url 'vendas:relatorio_vendas' %} style="color: #2563EB; font-weight: 700; padding: 0px; margin-top: 10px;">Ver relatório de vendas</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
+                                Estoque
+                                <i class="bi bi-chevron-down fs-6"></i>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; min-width: 325px; padding: 15px 30px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Estoque</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'estoque:movimentacoes' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Movimentações</a></li>
+                                        <li><a class="dropdown-item" href={% url 'estoque:verificacao' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Verificação</a></li>
+                                        <li><a class="dropdown-item" href={% url 'estoque:depositos' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Depósitos</a></li>
+                                    </div>
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px; margin-left: 5px;">Compras</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'estoque:pedidos_compra' %} style="font-weight: 500;  margin-left: 5px; padding: 0px;">Pedidos Compra</a></li>
+                                    </div>
+                                </div>
+                            </ul>
                         </li>
                     </ul>
+                    <!-- Usuário Dropdown -->
+                    <div class="d-flex gap-2">
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700; text-decoration: none;">
+                                 {% if request.user.imagem_perfil %}
+                                    <img src="{{ request.user.imagem_perfil.url }}" alt="Foto de Perfil" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%; padding: 0px; margin: 0px;">
+                                {% else %}
+                                    <i class="bi bi-person-circle fs-3"></i>
+                                {% endif %}
+                                <span style="margin-left: 5px;">{{ request.user.nome_fantasia }}</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href={% url 'usuarios:perfil' %}>Perfil</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="POST" action="{% url 'logout' %}">
+                                        {% csrf_token %}
+                                        <button class="dropdown-item" type="submit">Sair</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-        </div>
-    </nav>
-</header>
-{% endblock header %}
-
+        </nav>
+    </header>
+    {% endblock header %}
 <!-- LAYOUT SIDENAV -->
 <div id="layoutSidenav">
     <!-- SIDEBAR -->

@@ -1,46 +1,59 @@
 {% extends "control/base.html" %}
 {% load static %}
-{% block title %}Pedidos{% endblock title %}
+{% block title %}Pedidos de Compra{% endblock title %}
 {% block content %}
 <div class="pt-3">
     <div class="row g-0" style="min-height: calc(100vh - 200px);">
-        {% if pedidos %}
+        {% if pedidos_compra.paginator.count > 0 %}
         <div class="col-12 col-lg-10 px-4">
             <div class="d-flex align-items-center">
                 <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
-                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Pedidos</h1>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Pedidos de Compra</h1>
             </div>
-            <form role="search">
-                <input class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
+            <form id="filtros-form" method="GET">
+                <input type="hidden" name="search" value="{{ search|default:'' }}">
             </form>
+            <div class="d-flex justify-content-between align-items-center">
+                <form method="GET" class="flex-grow-1">
+                    <input name="search" value="{{ search|default:'' }}" class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
+                </form>
+
+                <form method="POST" action="{% url 'estoque:excluir_pedido_compra' %}">
+                    {% csrf_token %}
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button class="p-0" style="min-width: 35px; max-width: 35px; min-height: 35px; max-height: 35px; background-color: #2563EB; border: none; border-radius: 8px; align-items: center; text-align: center;">
+                            <i class="fa-solid fa-trash fs-5" style="color: white;"></i>
+                        </button>
+                    </div>
+                </div>
             <div class="pt-2 overflow-auto"  style="">
                 <table class="" style="width: 100%; border-collapse: separate; border-spacing: 0 8px; font-family: Inter, sans-serif; font-size: 16px;">
                     <thead>
                         <tr>
-                        <th style="background-color: #2563EB; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 35px;"></th>
-                        <th class="py-2 ps-1" style="background-color: #2563EB; color: white; text-align: left; width: 100px;">Código</th>
-                        <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Cliente</th>
-                        <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">Total</th>
-                        <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 350px;">Situação</th>
-                        <th style="background-color: #2563EB; border-top-right-radius: 10px; border-bottom-right-radius: 10px; width: 10px;"></th>
-                        </tr>
+                            <th style="background-color: #2563EB; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 35px;"></th>
+                            <th class="py-2 ps-1" style="background-color: #2563EB; color: white; text-align: left; width: 100px;">Código</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Cliente</th>
+                            <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">Total</th>
+                            <th class="py-2" style="background-color: #2563EB; color: white; text-align: left; width: 350px;">Situação</th>
+                            <th style="background-color: #2563EB; border-top-right-radius: 10px; border-bottom-right-radius: 10px; width: 10px;"></th>
+                            </tr>
                     </thead>
 
                     <tbody>
-                        {% for pedido in pedidos_compra %}
+                        {% for pedido_compra in pedidos_compra %}
                         <tr style="background-color: #EEEEEE;">
                         <td class="ps-2" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; text-align: center;">
-                            <input type="checkbox" style="height: 100%; vertical-align: middle; transform: scale(1.4);">
+                            <input type="checkbox" name="ids_selecionados" value="{{ pedido_compra.id }}" style="height: 100%; vertical-align: middle; transform: scale(1.4);">
                         </td>
 
                         <td class="py-2 ps-1 fw-medium">{{ pedido_compra.id }}</td>
-                        <td class="py-2 ps-3 fw-medium">{{ pedidos_compra.fornecedor }}</td>
-                        <td class="py-2 fw-medium">{{ pedidos_compra.produto }}</td>
-                        <td class="py-2 fw-medium">{{ pedidos_compra.status }}</td>
+                        <td class="py-2 ps-3 fw-medium">{{ pedido_compra.fornecedor }}</td>
+                        <td class="py-2 fw-medium">{{ pedido_compra.produto }}</td>
+                        <td class="py-2 fw-medium">{{ pedido_compra.status }}</td>
                         
                             <td style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: center; white-space: nowrap;">
                                 <!-- Botão Editar -->
-                                <a href="{% url 'vendas:editar_pedido' pedido_compra.id %}"
+                                <a href="{% url 'estoque:adicionar_pedido_compra' %}"
                                     style="
                                         display: inline-flex;
                                         align-items: center;
@@ -57,7 +70,7 @@
                                 </a>
 
                                 <!-- Botão Excluir -->
-                                <a href="{% url 'vendas:excluir_pedido' pedido_compra.id %}"
+                                <a href="{% url 'estoque:adicionar_pedido_compra' %}"
                                     style="
                                         display: inline-flex;
                                         align-items: center;
@@ -75,8 +88,30 @@
                         </tr>
                         {% endfor %}
                     </tbody>
-                    </table>
+                </table>
+                </form>
             </div>
+            {% if pedidos_compra.paginator.num_pages > 1 %}
+            <nav aria-label="paginator navigation">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item" {{  pedidos_compra.has_previous|yesno:',disabled,disabled'  }}>
+                        <a class="page-link" href="{% if pedidos_compra.has_previous %}{% querystring p=pedidos_compra.previous_page_number %}{% endif %}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% for page in pedidos_compra.paginator.page_range %}
+                    <li class="page-item">
+                        <a class="page-link {% if pedidos_compra.number == page %}active{% endif %}" href="{% querystring p=page %}">{{page}}</a>
+                    </li>
+                    {% endfor %}
+                    <li class="page-item" {{  pedidos_compra.has_next|yesno:',disabled,disabled'  }}>
+                        <a class="page-link" href="{% if pedidos_compra.has_next %}{% querystring p=pedidos_compra.next_page_number %}{% endif %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            {% endif %}
         </div>
         {% else %}
         <div class="col-12 col-lg-10 px-4">
@@ -84,13 +119,21 @@
                 <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
                 <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Pedidos de Compra</h1>
             </div>
+            <form id="filtros-form" method="GET">
+                <input type="hidden" name="search" value="{{ search|default:'' }}">
+            </form>
+            <div class="d-flex justify-content-between align-items-center">
+                <form method="GET" class="flex-grow-1">
+                    <input name="search" value="{{ search|default:'' }}" class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
+                </form>
+            </div>
             <div style="display: flex; height: 100%; align-items: center; justify-content: center; font-family: Inter; font-weight: 700;">
                 Você não possui pedidos de compra ativos no momento.
             </div>
         </div>   
         {% endif %}
         <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
-            <a href={% url 'vendas:registrar_pedido' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Registrar Pedido de Compra</button></a>
+            <a href={% url 'estoque:adicionar_pedido_compra' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Registrar Pedido de Compra</button></a>
             <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"><p>teste</p></div>
         </div>    
 
