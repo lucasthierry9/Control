@@ -91,7 +91,7 @@ class ProdutoForm(forms.ModelForm):
         model = Produto
         fields = "__all__"
         labels = {
-            "nome": "Nome completo",
+            "nome": "Nome",
             "categoria": "Categoria",
             "imagem": "Imagem",
             "estado": "Estado",
@@ -108,7 +108,7 @@ class ProdutoForm(forms.ModelForm):
             if field_name == "imagem":
                 field.widget.attrs.update({
                     "class": "form-control-file",
-                    "style": "background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;",
+                    "style": "background-color: #EEEEEE; border: none; border-radius: 8px; padding-top: 10px; padding-bottom: 10px; height: auto;",
                 })
             else:
                 field.widget.attrs.update({
@@ -180,20 +180,21 @@ class FuncionarioForm(forms.Form):
             HTML('<h5 style="font-family: Inter; font-weight: 700; margin-bottom: 8px; margin-top: 10px;">Dados</h5>'),
             Row(
                 Column('nome', css_class='col-12 col-md-6'),
-                Column('cargo', css_class='col-12 col-md-6'),
+                Column('email', css_class='col-12 col-md-6'),
             ),
             Row(
                 Column('cpf', css_class='col-12 col-md-6'),
                 Column('telefone', css_class='col-12 col-md-6'),
             ),
             Row(
+                Column('cargo', css_class='col-12 col-md-6'),
                 Column('senha', css_class='col-12 col-md-6'),
             ),
             # Botão Submit
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
-                css_class='mt-4'
+                css_class='mt-2'
             ),
         )
 
@@ -241,7 +242,7 @@ class VendedorForm(forms.ModelForm):
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
-                css_class='mt-4'
+                css_class='mt-2'
             ),
         )
 

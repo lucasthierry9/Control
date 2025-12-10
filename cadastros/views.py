@@ -6,20 +6,30 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 #CLIENTES
 @login_required
 def clientes(request):
-    ordenar = request.GET.get("ordenar")
-    if ordenar:
-        clientes = Cliente.objects.all().order_by(ordenar)
-    else:
-        clientes = Cliente.objects.all().order_by('-id')
+    search = request.GET.get("search")
+
+    clientes = Cliente.objects.all()
+
+    if search:
+        filtros = (
+            Q(nome__icontains=search) |
+            Q(logradouro__icontains=search) |
+            Q(id__icontains=search) 
+        )
+        if search.isdigit() and len(search) >= 7:
+            filtros |= Q(cpf__icontains=search)
+
+        clientes = clientes.filter(filtros)
 
     paginator = Paginator(clientes, 10)
     numero_da_pagina = request.GET.get('p')
     clientes_paginados = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/clientes/clientes.html", {"clientes": clientes_paginados})
+    return render(request, "cadastros/clientes/clientes.html", {"clientes": clientes_paginados, "search": search})
 
 @login_required
 def cadastrar_cliente(request):
@@ -60,16 +70,23 @@ def excluir_cliente(request, id_cliente=0):
 # PRODUTOS
 @login_required
 def produtos(request):
-    ordenar = request.GET.get("ordenar")
-    if ordenar:
-        produtos = Produto.objects.all().order_by(ordenar)
-    else:
-        produtos = Produto.objects.all().order_by('-id')
+    search = request.GET.get("search")
+
+    produtos = Produto.objects.all()
+
+    if search:
+        produtos = produtos.filter(
+            Q(nome__icontains=search) |
+            Q(categoria__nome__icontains=search) |
+            Q(id__icontains=search) 
+        )
+    
+    produtos = produtos.order_by('-id')
 
     paginator = Paginator(produtos, 10)
     numero_da_pagina = request.GET.get('p')
     produtos_paginados = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/produtos/produtos.html", {"produtos": produtos_paginados})
+    return render(request, "cadastros/produtos/produtos.html", {"produtos": produtos_paginados, "search": search})
 
 @login_required
 def cadastrar_produto(request):
@@ -121,16 +138,25 @@ def excluir_produto(request, id_produto=0):
 # FUNCIONÁRIOS
 @login_required
 def funcionarios(request):
-    ordenar = request.GET.get("ordenar")
-    if ordenar:
-        funcionarios = Funcionario.objects.all().order_by(ordenar)
-    else:
-        funcionarios = Funcionario.objects.all().order_by('-id')
+    search = request.GET.get("search")
+
+    funcionarios = Funcionario.objects.all()
+
+    if search:
+        filtros = (
+            Q(nome__icontains=search) |
+            Q(cargo__icontains=search) |
+            Q(id__icontains=search) 
+        )
+        if search.isdigit() and len(search) >= 7:
+            filtros |= Q(cpf__icontains=search)
+
+        funcionarios = funcionarios.filter(filtros)
 
     paginator = Paginator(funcionarios, 10)
     numero_da_pagina = request.GET.get('p')
     funcionarios = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/funcionarios/funcionarios.html", {"funcionarios": funcionarios})
+    return render(request, "cadastros/funcionarios/funcionarios.html", {"funcionarios": funcionarios, "search": search})
 
 @login_required
 def cadastrar_funcionario(request):
@@ -190,16 +216,29 @@ def excluir_funcionario(request, id_funcionario=0):
 # VENDEDORES
 @login_required
 def vendedores(request):
-    ordenar = request.GET.get("ordenar")
-    if ordenar:
-        vendedores = Vendedor.objects.all().order_by(ordenar)
-    else:
-        vendedores = Vendedor.objects.all().order_by('-id')
+    search = request.GET.get("search")
+
+    vendedores = Vendedor.objects.all()
+
+    if search:
+        filtros = (
+            Q(nome__icontains=search) |
+            Q(id__icontains=search) 
+        )
+        if search.isdigit():
+            if len(search) >= 7:
+                filtros |= Q(cpf__icontains=search)
+
+            if len(search) >= 7:
+                filtros |= Q(telefone__icontains=search)
+            
+
+        vendedores = vendedores.filter(filtros)
 
     paginator = Paginator(vendedores, 10)
     numero_da_pagina = request.GET.get('p')
     vendedores = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/vendedores/vendedores.html", {"vendedores": vendedores})
+    return render(request, "cadastros/vendedores/vendedores.html", {"vendedores": vendedores, "search": search})
 
 @login_required
 def cadastrar_vendedor(request):
@@ -249,16 +288,25 @@ def excluir_vendedor(request, id_vendedor=0):
 # FORNECEDOR -----------------------
 @login_required
 def fornecedores(request):
-    ordenar = request.GET.get("ordenar")
-    if ordenar:
-        fornecedores = Fornecedor.objects.all().order_by(ordenar)
-    else:
-        fornecedores = Fornecedor.objects.all().order_by('-id')
+    search = request.GET.get("search")
+
+    fornecedores = Fornecedor.objects.all()
+
+    if search:
+        filtros = (
+            Q(nome__icontains=search) |
+            Q(logradouro__icontains=search) |
+            Q(id__icontains=search) 
+        )
+        if search.isdigit() and len(search) >= 7:
+            filtros |= Q(cpf_cnpj__icontains=search)
+
+        fornecedores = fornecedores.filter(filtros)
 
     paginator = Paginator(fornecedores, 10)
     numero_da_pagina = request.GET.get('p')
     fornecedores = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/fornecedores/fornecedores.html", {"fornecedores": fornecedores})
+    return render(request, "cadastros/fornecedores/fornecedores.html", {"fornecedores": fornecedores, "search": search})
 
 @login_required
 def cadastrar_fornecedor(request):
@@ -270,19 +318,6 @@ def cadastrar_fornecedor(request):
     else:
         form = FornecedorForm()
     return render(request, "cadastros/fornecedores/cadastrar_fornecedor.html", {"form": form})
-
-def editar_fornecedor(request, id_fornecedor):
-    fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
-
-    if request.method == "POST":
-        form = FornecedorForm(request.POST, instance=fornecedor)
-        if form.is_valid():
-            form.save()
-            return redirect("cadastro:fornecedores")
-    else:
-        form = FornecedorForm(instance=fornecedor)
-
-    return render(request, "cadastro/fornecedores/editar_fornecedor.html", {"form": form})
 
 @login_required  
 def editar_fornecedor(request, id_fornecedor):
@@ -310,16 +345,23 @@ def excluir_fornecedor(request, id_fornecedor=0):
 # CATEGORIA ------------------------------------------------------------------------------
 @login_required
 def categorias(request):
-    ordenar = request.GET.get("ordenar")
-    if ordenar:
-        categorias = Categoria_Produto.objects.all().order_by(ordenar)
-    else:
-        categorias = Categoria_Produto.objects.all().order_by('-id')
+    search = request.GET.get("search")
+
+    categorias = Categoria_Produto.objects.all()
+
+    if search:
+        categorias = categorias.filter(
+            Q(nome__icontains=search) |
+            Q(descricao__icontains=search) |
+            Q(id__icontains=search) 
+        )
+    
+    categorias = categorias.order_by('-id')
 
     paginator = Paginator(categorias, 10)
     numero_da_pagina = request.GET.get('p')
     categorias = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/categorias/categorias.html", {"categorias": categorias})
+    return render(request, "cadastros/categorias/categorias.html", {"categorias": categorias, "search": search})
 
 @login_required
 def cadastrar_categoria(request):

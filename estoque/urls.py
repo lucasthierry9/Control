@@ -12,5 +12,7 @@ urlpatterns = [
     path("excluir-deposito/", views.excluir_deposito, name="excluir_deposito"),
 
     path("pedidos-compra/", views.pedidos_compra, name="pedidos_compra"),
-    path("adicionar-pedido-compra/", views.adicionar_pedidos_compra, name="adicionar_pedido_compra"), 
+    path("adicionar-pedido-compra/", views.adicionar_pedidos_compra, name="adicionar_pedido_compra"),
+    path("editar-pedido-compra/<int:id_pedido>/", views.editar_pedido_compra, name="editar_pedido_compra"),
+    path("excluir-pedido-compra/", views.excluir_pedido_compra, name="excluir_pedido_compra"),
 ]
