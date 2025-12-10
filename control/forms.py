@@ -168,6 +168,15 @@ class FuncionarioForm(forms.Form):
                     'class': 'form-control',
                     'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;'
                 })
+        
+        # Campos select
+        select_fields = ['estado']
+        for field_name in select_fields:
+            if field_name in self.fields:
+                self.fields[field_name].widget.attrs.update({
+                    'class': 'form-select',
+                    'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;'
+                })
 
         self.helper = FormHelper()
         self.helper.form_method = 'post'
