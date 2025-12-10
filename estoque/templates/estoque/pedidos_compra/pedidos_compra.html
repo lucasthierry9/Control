@@ -4,7 +4,7 @@
 {% block content %}
 <div class="pt-3">
     <div class="row g-0" style="min-height: calc(100vh - 200px);">
-        {% if pedidos %}
+        {% if pedidos_compra %}
         <div class="col-12 col-lg-10 px-4">
             <div class="d-flex align-items-center">
                 <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
@@ -40,7 +40,7 @@
                         
                             <td style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: center; white-space: nowrap;">
                                 <!-- Botão Editar -->
-                                <a href="{% url 'vendas:editar_pedido' pedido_compra.id %}"
+                                <a href="{% url 'estoque:adicionar_pedido_compra' %}"
                                     style="
                                         display: inline-flex;
                                         align-items: center;
@@ -57,7 +57,7 @@
                                 </a>
 
                                 <!-- Botão Excluir -->
-                                <a href="{% url 'vendas:excluir_pedido' pedido_compra.id %}"
+                                <a href="{% url 'estoque:adicionar_pedido_compra' %}"
                                     style="
                                         display: inline-flex;
                                         align-items: center;
@@ -90,7 +90,7 @@
         </div>   
         {% endif %}
         <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
-            <a href={% url 'vendas:registrar_pedido' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Registrar Pedido de Compra</button></a>
+            <a href={% url 'estoque:adicionar_pedido_compra' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Registrar Pedido de Compra</button></a>
             <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"><p>teste</p></div>
         </div>    
 
