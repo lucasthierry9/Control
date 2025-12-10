@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from usuarios.forms import UserForm
 from .models import Usuario
+from control.models import Funcionario
 
 def cadastrar_usuario(request):
     if request.method == "POST":
@@ -15,28 +16,73 @@ def cadastrar_usuario(request):
 
 @login_required
 def perfil(request):
-    return render(request, "registration/perfil.html")
+    user = request.user
+    
+    # Caso seja empresa → envia apenas os dados do usuário
+    if user.tipo == 'empresa':
+        template = 'registration/perfil_empresa.html'
+        context = {
+            'user': user
+        }
+    
+    # Caso seja funcionário → envia dados de usuário + funcionário
+    else:
+        template = 'registration/perfil_funcionario.html'
+
+        try:
+            funcionario = Funcionario.objects.get(user=user)
+        except Funcionario.DoesNotExist:
+            funcionario = None
+        context = {
+            'user': user,
+            'funcionario': funcionario
+        }
+
+    return render(request, template, context)
 
 @login_required
 def editar_perfil(request, id_usuario):
-    usuario = get_object_or_404(Usuario, id=id_usuario)
+    user = request.user
 
-    if request.method == "POST":
-        usuario.nome_fantasia = request.POST.get("nome_fantasia")
-        usuario.email = request.POST.get("email")
-        usuario.telefone = request.POST.get("telefone")
-        usuario.endereco = request.POST.get("endereco")
-        usuario.nome_admin = request.POST.get("nome_admin")
-        usuario.email_admin = request.POST.get("email_admin")
-        usuario.telefone_admin = request.POST.get("telefone_admin")
-        usuario.cpf_admin = request.POST.get("cpf_admin")
+    if user.tipo =='empresa':
+        usuario = get_object_or_404(Usuario, id=id_usuario)
+        template = 'registration/editar_perfil.html'
+        
+        if request.method == "POST":
+            usuario.nome_fantasia = request.POST.get("nome_fantasia")
+            usuario.email = request.POST.get("email")
+            usuario.telefone = request.POST.get("telefone")
+            usuario.endereco = request.POST.get("endereco")
+            usuario.nome_admin = request.POST.get("nome_admin")
+            usuario.email_admin = request.POST.get("email_admin")
+            usuario.telefone_admin = request.POST.get("telefone_admin")
+            usuario.cpf_admin = request.POST.get("cpf_admin")
 
-        if "imagem_perfil" in request.FILES:
-            usuario.imagem_perfil = request.FILES["imagem_perfil"]
+            if "imagem_perfil" in request.FILES:
+                usuario.imagem_perfil = request.FILES["imagem_perfil"]
 
-        usuario.save()
-        return redirect("usuarios:perfil")
+            usuario.save()
+            return redirect("usuarios:perfil")
+    else:
+        usuario = get_object_or_404(Usuario, id=id_usuario)
+        funcionario = Funcionario.objects.filter(user=user).first()
+        template = 'registration/editar_perfil_funcionario.html'
 
-    return render(request, "registration/editar_perfil.html", {"usuario": usuario})
+        if request.method == "POST":
+            usuario.email = request.POST.get("email")
+            usuario.telefone = request.POST.get("telefone")
+            funcionario.nome = request.POST.get("nome")
+            funcionario.cargo = request.POST.get("cargo")
+
+            if "imagem_perfil" in request.FILES:
+                usuario.imagem_perfil = request.FILES["imagem_perfil"]
+
+            usuario.save()
+            funcionario.save()
+            return redirect("usuarios:perfil")
+
+
+    return render(request, template, {"usuario": usuario, "funcionario": funcionario})
+
 
 
