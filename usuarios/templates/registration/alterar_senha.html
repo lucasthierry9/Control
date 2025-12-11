@@ -1,0 +1,48 @@
+{% extends "control/base.html" %}
+{% block title %}Alterar Senha{% endblock title %}
+{% block content %}
+<h2>Alterar Senha</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <div>
+        <label>Senha atual:</label>
+        {{ form.old_password }}
+        <div class="text-danger">{{ form.old_password.errors }}</div>
+    </div>
+
+    <div>
+        <label>Nova senha:</label>
+        {{ form.new_password1 }}
+        <div class="text-danger">{{ form.new_password1.errors }}</div>
+    </div>
+
+    <div>
+        <label>Confirmar nova senha:</label>
+        {{ form.new_password2 }}
+        <div class="text-danger">{{ form.new_password2.errors }}</div>
+    </div>
+
+    <button type="submit">Salvar nova senha</button>
+</form>
+
+<style>
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    button {
+        padding: 10px 15px;
+        border: none;
+        background: #2563eb;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+</style>
+{% endblock content %}

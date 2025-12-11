@@ -3,6 +3,10 @@ from django.contrib.auth.decorators import login_required
 from usuarios.forms import UserForm
 from .models import Usuario
 from control.models import Funcionario
+from django.contrib.auth.views import LoginView
+from .forms import LoginForm
+from django.contrib.auth import login
+
 
 def cadastrar_usuario(request):
     if request.method == "POST":
@@ -12,7 +16,7 @@ def cadastrar_usuario(request):
             return redirect("usuarios:login")
     else:
         form = UserForm()
-    return render(request, "registration/register.html", {"form": form})
+    return render(request, "registration/cadastro.html", {"form": form})
 
 @login_required
 def perfil(request):
@@ -43,7 +47,8 @@ def perfil(request):
 @login_required
 def editar_perfil(request, id_usuario):
     user = request.user
-
+    funcionario = None
+    
     if user.tipo =='empresa':
         usuario = get_object_or_404(Usuario, id=id_usuario)
         template = 'registration/editar_perfil.html'
@@ -80,7 +85,7 @@ def editar_perfil(request, id_usuario):
             usuario.save()
             funcionario.save()
             return redirect("usuarios:perfil")
-
+    
 
     return render(request, template, {"usuario": usuario, "funcionario": funcionario})
 
