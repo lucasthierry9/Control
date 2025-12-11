@@ -83,14 +83,7 @@ class PedidosVendaForm(forms.ModelForm):
                 Column(
                     HTML('<h5 style="font-family: Inter; font-weight: 700; margin-bottom: 8px;">Pagamento</h5>'),
                     Row(
-                        Column('pagamento', css_class='col-8'),
-                        Column(
-                            HTML('''
-                                <label class="form-label">&nbsp;</label>
-                                <button type="button" class="btn w-100" style="background-color: #2563EB; color: white; border-radius: 10px; height: 45px; font-family: Inter; font-weight: 600; font-size: 20px;" data-bs-toggle="modal" data-bs-target="#modalParcelar">Parcelar</button>
-                            '''),
-                            css_class='col-4 mb-3'
-                        ),
+                        Column('pagamento', css_class='col-12'),
                     ),
                     css_class='col-12 col-md-6'
                 ),
@@ -118,9 +111,9 @@ class PedidosVendaForm(forms.ModelForm):
                 Column('numero', css_class='col-6 col-md-2'),
                 Column('data', css_class='col-6 col-md-4'),
             ),
-            
-            # Campo oculto para parcelas
-            'status',
+            Row(
+                Column('complemento', css_class=''),
+            ),
             
             # Botão Submit
             Div(
