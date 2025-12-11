@@ -1,0 +1,202 @@
+[
+    {
+        "model": "control.Produto",
+        "pk": 1,
+        "fields": {
+            "nome": "Smartphone Samsung A54",
+            "categoria": 1,
+            "preco": "1899.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 2,
+        "fields": {
+            "nome": "Fone Bluetooth JBL",
+            "categoria": 1,
+            "preco": "299.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 3,
+        "fields": {
+            "nome": "Notebook Lenovo i5",
+            "categoria": 2,
+            "preco": "3299.00",
+            "imagem": null
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 4,
+        "fields": {
+            "nome": "Mouse Gamer Redragon",
+            "categoria": 2,
+            "preco": "149.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 5,
+        "fields": {
+            "nome": "Camiseta Oversized Preta",
+            "categoria": 3,
+            "preco": "59.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 6,
+        "fields": {
+            "nome": "Jaqueta Jeans Masculina",
+            "categoria": 3,
+            "preco": "199.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 7,
+        "fields": {
+            "nome": "Pulseira de Couro Masculina",
+            "categoria": 4,
+            "preco": "39.90",
+            "imagem": null
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 8,
+        "fields": {
+            "nome": "Relógio Minimalista",
+            "categoria": 4,
+            "preco": "129.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 9,
+        "fields": {
+            "nome": "Livro: Clean Code",
+            "categoria": 5,
+            "preco": "119.00",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 10,
+        "fields": {
+            "nome": "Livro: O Poder do Hábito",
+            "categoria": 5,
+            "preco": "49.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 11,
+        "fields": {
+            "nome": "Vaso Decorativo Cerâmico",
+            "categoria": 6,
+            "preco": "89.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 12,
+        "fields": {
+            "nome": "Quadro Minimalista",
+            "categoria": 6,
+            "preco": "129.90",
+            "imagem": null
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 13,
+        "fields": {
+            "nome": "Café Torrado Premium",
+            "categoria": 7,
+            "preco": "34.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 14,
+        "fields": {
+            "nome": "Chocolate Artesanal 70%",
+            "categoria": 7,
+            "preco": "19.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 15,
+        "fields": {
+            "nome": "Camiseta Esportiva Dry Fit",
+            "categoria": 8,
+            "preco": "79.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 16,
+        "fields": {
+            "nome": "Bola de Futebol Society",
+            "categoria": 8,
+            "preco": "119.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 17,
+        "fields": {
+            "nome": "Chave de Fenda Philips",
+            "categoria": 9,
+            "preco": "14.90",
+            "imagem": null
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 18,
+        "fields": {
+            "nome": "Martelo de Unha 250g",
+            "categoria": 9,
+            "preco": "29.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 19,
+        "fields": {
+            "nome": "Hidratante Corporal Aloe Vera",
+            "categoria": 10,
+            "preco": "24.90",
+            "imagem": ""
+        }
+    },
+    {
+        "model": "control.Produto",
+        "pk": 20,
+        "fields": {
+            "nome": "Sabonete Facial Detox",
+            "categoria": 10,
+            "preco": "19.90",
+            "imagem": null
+        }
+    }
+]
