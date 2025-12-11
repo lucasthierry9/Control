@@ -1,0 +1,9 @@
+{% extends "control/base.html" %}
+{% block title %}Alterar Senha Sucesso{% endblock title %}
+{% block content %}
+<h2>Senha alterada com sucesso!</h2>
+
+<p>Sua senha foi atualizada.</p>
+
+<a href="{% url 'usuarios:perfil' %}">Voltar ao perfil</a>
+{% endblock content %}

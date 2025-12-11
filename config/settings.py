@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "usuarios",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +43,6 @@ INSTALLED_APPS = [
     "control",
     "cadastros",
     "dashboard",
-    "usuarios",
     "vendas",
     "estoque",
 
@@ -147,3 +147,5 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 LOGIN_URL = "login"
 LOGOUT_REDIRECT_URL = "index"
 LOGIN_REDIRECT_URL = "dashboard:index"
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
