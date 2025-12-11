@@ -1,10 +1,21 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.db.models import Count, Sum # Usamos Count para contar os pedidos
+from django.db.models.functions import TruncWeek, TruncMonth # TruncWeek é a chave
+from datetime import datetime, timedelta
+from django.utils import timezone
+from control.models import Pedidos_Venda
 
-# Create your views here.
 @login_required
 def index(request):
-    return render(request, 'dashboard/index.html' )
+    context = {
+        "labels": 1,
+        "data": [5, 10, 15, 20],
+    }
+
+    return render(request, 'dashboard/index.html', context)
+
 @login_required
 def charts(request):
     return render(request, 'dashboard/charts.html' )

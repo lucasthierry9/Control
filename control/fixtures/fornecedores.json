@@ -1,0 +1,102 @@
+[
+  {
+    "model": "control.Fornecedor",
+    "pk": 1,
+    "fields": {
+      "nome": "Alpha Soluções Ltda.",
+      "email": "contato@alphasolucoes.com.br",
+      "cpf_cnpj": "00000000000191",
+      "telefone": "1130001000"
+    }
+  },
+  {
+    "model": "control.Fornecedor",
+    "pk": 2,
+    "fields": {
+      "nome": "Beta Comércio S.A.",
+      "email": "vendas@betacomercio.com",
+      "cpf_cnpj": "11111111111191",
+      "telefone": "2140002000"
+    }
+  },
+  {
+    "model": "control.Fornecedor",
+    "pk": 3,
+    "fields": {
+      "nome": "Gama Distribuidora",
+      "email": "financeiro@gamadistr.com",
+      "cpf_cnpj": "22222222222291",
+      "telefone": "3150003000"
+    }
+  },
+  {
+    "model": "control.Fornecedor",
+    "pk": 4,
+    "fields": {
+      "nome": "Delta Serviços ME",
+      "email": "suporte@deltaservicos.net",
+      "cpf_cnpj": "33333333333391",
+      "telefone": "4160004000"
+    }
+  },
+  {
+    "model": "control.Fornecedor",
+    "pk": 5,
+    "fields": {
+      "nome": "Empório Epsilon",
+      "email": "pedidos@emporioepsilon.com",
+      "cpf_cnpj": "44444444444491",
+      "telefone": "5170005000"
+    }
+  },
+  {
+    "model": "control.Fornecedor",
+    "pk": 6,
+    "fields": {
+      "nome": "Francisco Moura - MEI",
+      "email": "francisco.moura@exemplo.com",
+      "cpf_cnpj": "12345678901",
+      "telefone": "81987654321"
+    }
+  },
+  {
+    "model": "control.Fornecedor",
+    "pk": 7,
+    "fields": {
+      "nome": "Gabriela Alves Freelancer",
+      "email": "gabriela.alves@exemplo.com",
+      "cpf_cnpj": "98765432109",
+      "telefone": "62998765432"
+    }
+  },
+  {
+    "model": "control.Fornecedor",
+    "pk": 8,
+    "fields": {
+      "nome": "Omega Indústria",
+      "email": "rh@omegaindustria.com.br",
+      "cpf_cnpj": "55555555555591",
+      "telefone": "7180006000"
+    }
+  },
+  {
+    "model": "control.Fornecedor",
+    "pk": 9,
+    "fields": {
+      "nome": "João Carlos Consultoria",
+      "email": "jc.consultoria@exemplo.com",
+      "cpf_cnpj": "11122233344",
+      "telefone": "84976543210"
+    }
+  },
+  {
+    "model": "control.Fornecedor",
+    "pk": 10,
+    "fields": {
+      "nome": "Zeta Tecnologia",
+      "email": "adm@zetatecnologia.net",
+      "cpf_cnpj": "66666666666691",
+      "telefone": "8590007000"
+    }
+  }
+]

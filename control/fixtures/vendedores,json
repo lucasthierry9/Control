@@ -1,0 +1,102 @@
+[
+  {
+    "model": "control.Vendedor",
+    "pk": 1,
+    "fields": {
+      "nome": "Ana Carolina Silva",
+      "email": "ana.silva@exemplo.com",
+      "cpf": "12345678901",
+      "telefone": "11987654321"
+    }
+  },
+  {
+    "model": "control.Vendedor",
+    "pk": 2,
+    "fields": {
+      "nome": "Bruno Oliveira Santos",
+      "email": "bruno.santos@exemplo.com",
+      "cpf": "98765432109",
+      "telefone": "21998765432"
+    }
+  },
+  {
+    "model": "control.Vendedor",
+    "pk": 3,
+    "fields": {
+      "nome": "Carla Ferreira Lima",
+      "email": "carla.lima@exemplo.com",
+      "cpf": "11122233344",
+      "telefone": "31976543210"
+    }
+  },
+  {
+    "model": "control.Vendedor",
+    "pk": 4,
+    "fields": {
+      "nome": "Daniel Pereira Costa",
+      "email": "daniel.costa@exemplo.com",
+      "cpf": "55566677788",
+      "telefone": "41965432109"
+    }
+  },
+  {
+    "model": "control.Vendedor",
+    "pk": 5,
+    "fields": {
+      "nome": "Elaine Rodrigues Alves",
+      "email": "elaine.alves@exemplo.com",
+      "cpf": "00011122233",
+      "telefone": "51954321098"
+    }
+  },
+  {
+    "model": "control.Vendedor",
+    "pk": 6,
+    "fields": {
+      "nome": "Fábio Gomes Souza",
+      "email": "fabio.souza@exemplo.com",
+      "cpf": "44455566677",
+      "telefone": "61943210987"
+    }
+  },
+  {
+    "model": "control.Vendedor",
+    "pk": 7,
+    "fields": {
+      "nome": "Giovana Martins Nunes",
+      "email": "giovana.nunes@exemplo.com",
+      "cpf": "88899900011",
+      "telefone": "71932109876"
+    }
+  },
+  {
+    "model": "control.Vendedor",
+    "pk": 8,
+    "fields": {
+      "nome": "Henrique Barbosa Rocha",
+      "email": "henrique.rocha@exemplo.com",
+      "cpf": "22233344455",
+      "telefone": "81921098765"
+    }
+  },
+  {
+    "model": "control.Vendedor",
+    "pk": 9,
+    "fields": {
+      "nome": "Isabela Vieira Melo",
+      "email": "isabela.melo@exemplo.com",
+      "cpf": "66677788899",
+      "telefone": "91910987654"
+    }
+  },
+  {
+    "model": "control.Vendedor",
+    "pk": 10,
+    "fields": {
+      "nome": "João Victor Ribeiro",
+      "email": "joao.ribeiro@exemplo.com",
+      "cpf": "10987654321",
+      "telefone": "11909876543"
+    }
+  }
+]
