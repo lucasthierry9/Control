@@ -9,30 +9,32 @@
                 <!-- Header do Card -->
                 <div class="d-flex align-items-center" style="background: #2563EB; padding: 25px 30px; border-bottom: 1px solid #f0f0f0; justify-content: space-between;">
                     <h2 style="color: white; font-size: 30px; font-weight: 700; margin: 0;">Visão Geral</h2>
-                    <div class="d-flex align-items-center" style="gap: 20px;">
-                        <div style="position: relative; min-width: 150px;">
-                            <label style="position: absolute; top: -18px; left: 6px; padding: 0 6px; font-size: 14px; font-weight: 600; color: white; font-family: Inter;">Ano</label>
-                            <select name="ano" class="form-select rounded-5" onchange="this.form.submit()" form="filtros-form" style="background-color: white; outline: 2px solid #2563EB; outline-offset: -2px;">
-                                <option value="">Todos</option>
-                                    {% for a in anos %}
-                                        <option value="{{ a }}" {% if ano_selecionado == a|stringformat:'s' %}selected{% endif %}>
-                                            {{ a }}
-                                        </option>
-                                    {% endfor %}
-                            </select>
+                    <form id="filtros-form" method="get">
+                        <div class="d-flex align-items-center" style="gap: 20px;">
+                            <div style="position: relative; min-width: 150px;">
+                                <label style="position: absolute; top: -18px; left: 6px; padding: 0 6px; font-size: 14px; font-weight: 600; color: white; font-family: Inter;">Ano</label>
+                                <select name="ano" class="form-select rounded-5" onchange="this.form.submit()" form="filtros-form" style="background-color: white; outline: 2px solid #2563EB; outline-offset: -2px;">
+                                    <option value="">Todos</option>
+                                        {% for a in anos %}
+                                            <option value="{{ a }}" {% if ano_selecionado == a|stringformat:'s' %}selected{% endif %}>
+                                                {{ a }}
+                                            </option>
+                                        {% endfor %}
+                                </select>
+                            </div>
+                            <div style="position: relative; min-width: 150px;">
+                                <label style="position: absolute; top: -18px; left: 6px; padding: 0 6px; font-size: 14px; font-weight: 600; color: white; font-family: Inter;">Mês</label>
+                                <select name="mes" class="form-select rounded-5" onchange="this.form.submit()" form="filtros-form" style="background-color: white; outline: 2px solid #2563EB; outline-offset: -2px;">
+                                    <option value="">Todos</option>
+                                        {% for numero, nome in meses %}
+                                            <option value="{{ numero  }}" {% if mes_selecionado == numero %}selected{% endif %}>
+                                                {{ nome }}
+                                            </option>
+                                        {% endfor %}
+                                </select>
+                            </div>
                         </div>
-                        <div style="position: relative; min-width: 150px;">
-                            <label style="position: absolute; top: -18px; left: 6px; padding: 0 6px; font-size: 14px; font-weight: 600; color: white; font-family: Inter;">Mês</label>
-                            <select name="mes" class="form-select rounded-5" onchange="this.form.submit()" form="filtros-form" style="background-color: white; outline: 2px solid #2563EB; outline-offset: -2px;">
-                                <option value="">Todos</option>
-                                    {% for numero, nome in meses %}
-                                        <option value="{{ numero  }}" {% if mes_selecionado == numero %}selected{% endif %}>
-                                            {{ nome }}
-                                        </option>
-                                    {% endfor %}
-                            </select>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="p-4">
                     <div class="row g-3">
@@ -104,9 +106,8 @@
                             <div class="d-flex align-items-center" style="background: white; padding: 5px 10px; border-bottom: 1px solid #f0f0f0; justify-content: space-between; border-top-left-radius: 12px; border-top-right-radius: 12px;">
                                 <h2 style="color: white; font-size: 14px; font-weight: 700; margin: 0; color: black;">Quantidade de Vendas:</h2>
                             </div>
-                            <div style="width: 100%; height: 350px;">
-
-
+                            <div style="padding: 15px; height: 400px;">
+                                <canvas id="vendasChart"></canvas>
                             </div>
                         </div>
                     </div>
@@ -121,4 +122,48 @@
         </div>
 
 {% endblock content %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const vendasPorSemana = {{ vendas_json|safe }};
+  const labels = {{ labels_json|safe }};
+
+  const canvas = document.getElementById('vendasChart');
+
+  if (!canvas) {
+    console.error("Canvas vendasChart não encontrado");
+    return;
+  }
+
+  new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Vendas concluídas',
+        data: vendasPorSemana,
+        backgroundColor: '#3b82f6',
+        minBarLength: 6,
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      }
+    }
+  });
+
+});
 </script>
+{% endblock scripts %}
