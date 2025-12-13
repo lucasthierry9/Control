@@ -1,7 +1,8 @@
 from . models import Usuario
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
-    
+from django.contrib.auth import authenticate
+
 class UserForm(UserCreationForm):
     razao_social = forms.CharField(label='Razão Social', max_length=200)
     nome_fantasia = forms.CharField(label='Nome fantasia', max_length=200)
@@ -28,24 +29,3 @@ class UserForm(UserCreationForm):
                 'style': 'background-color: #E9E9E9; border: none; border-radius: 8px; height: 45px;'
             })
             field.label_suffix = ""
-
-class LoginForm(AuthenticationForm):
-    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'placeholder': 'Insira seu e-mail','class': 'form-control',}))
-    password = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'placeholder': 'Insira sua senha', 'class': 'form-control',}))
-
-    class Meta:
-        model = Usuario
-        fields = [
-            'email', 'password',
-        ]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        # Estilo padrão para todos os campos
-        for field_name, field in self.fields.items():
-            field.widget.attrs.update({
-                'class': 'form-control',
-                'style': 'background-color: #E9E9E9; border: none; border-radius: 8px; height: 50px;'
-            })
-            

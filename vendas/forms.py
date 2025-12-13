@@ -112,7 +112,8 @@ class PedidosVendaForm(forms.ModelForm):
                 Column('data', css_class='col-6 col-md-4'),
             ),
             Row(
-                Column('complemento', css_class=''),
+                Column('complemento', css_class='col-12'),
+                Column('status', css_class='col-12'),
             ),
             
             # Botão Submit

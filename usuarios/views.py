@@ -4,7 +4,6 @@ from usuarios.forms import UserForm
 from .models import Usuario
 from control.models import Funcionario
 from django.contrib.auth.views import LoginView
-from .forms import LoginForm
 from django.contrib.auth import login
 
 
@@ -17,6 +16,7 @@ def cadastrar_usuario(request):
     else:
         form = UserForm()
     return render(request, "registration/cadastro.html", {"form": form})
+
 
 @login_required
 def perfil(request):

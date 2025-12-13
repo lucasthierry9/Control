@@ -43,6 +43,8 @@ def registrar_pedido(request):
         if form.is_valid():
             form.save()
             return redirect("vendas:pedidos")
+        else:
+            print("Erros de Validação:", form.errors)
     else:
         form = PedidosVendaForm()
     return render(request, "vendas/pedidos/registrar_pedido.html", {"form": form})
