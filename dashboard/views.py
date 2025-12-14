@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Sum # Usamos Count para contar os pedidos
+from django.db.models import Count, Sum
 from django.db.models.functions import ExtractWeek, ExtractYear, ExtractMonth, ExtractDay
 from datetime import datetime, timedelta
 from django.utils import timezone
-from control.models import Pedidos_Venda
+from control.models import Pedidos_Venda, Produto, Cliente
 import json
 from django.utils.timezone import now
-
 @login_required
 def index(request):
+    total_produtos = Produto.objects.count()
+    total_clientes = Cliente.objects.count()
+
     ano = request.GET.get('ano')
     mes = request.GET.get('mes')
 
@@ -18,9 +20,6 @@ def index(request):
     if ano:
         vendas = vendas.filter(data__year=int(ano))
 
-    # ==================================================
-    # 🔥 CASO 1 — TEM MÊS → SEMANA 1,2,3,4 DO MÊS
-    # ==================================================
     if mes:
         vendas = vendas.filter(data__month=int(mes))
 
@@ -41,9 +40,6 @@ def index(request):
         labels = [f"Semana {s}" for s in semanas if semanas[s] > 0]
         dados = [semanas[s] for s in semanas if semanas[s] > 0]
 
-    # ==================================================
-    # 🔥 CASO 2 — SEM MÊS → ÚLTIMAS 4 SEMANAS
-    # ==================================================
     else:
         hoje = now().date()
         quatro_semanas_atras = hoje - timedelta(weeks=4)
@@ -65,9 +61,6 @@ def index(request):
             labels.append(f"Semana {i}")
             dados.append(v['total'])
 
-    # ==================================================
-    # 🔹 FILTROS
-    # ==================================================
     anos = (
         Pedidos_Venda.objects
         .annotate(ano=ExtractYear('data'))
@@ -90,6 +83,8 @@ def index(request):
         'meses': meses,
         'ano_selecionado': ano,
         'mes_selecionado': int(mes) if mes else '',
+        'total_produtos': total_produtos,
+        'total_clientes': total_clientes,
     })
 
 @login_required

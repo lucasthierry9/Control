@@ -1,6 +1,6 @@
 {% extends "dashboard/base_dashboard.html" %}
 {% load static %}
-{% block title %}Dashboard - Visão Geral{% endblock title %}
+{% block title %}Dashboard{% endblock title %}
 {% block content %}
 <div class="col-12 col-lg-10 px-4">
             <div style="min-height: 60px;"></div>
@@ -69,7 +69,7 @@
                                     <span style="font-size: 16px; font-weight: 600;">
                                         Produtos Cadastrados
                                     </span>
-                                    <h2 style="font-weight: 700; margin: 0;">65</h2>
+                                    <h2 style="font-weight: 700; margin: 0;">{{ total_produtos }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                     <span style="font-size: 16px; font-weight: 600;">
                                         Clientes Cadastrados
                                     </span>
-                                    <h2 style="font-weight: 700; margin: 0;">85</h2>
+                                    <h2 style="font-weight: 700; margin: 0;">{{ total_clientes }}</h2>
                                 </div>
                             </div>
                         </div>
