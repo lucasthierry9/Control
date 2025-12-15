@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum,ExpressionWrapper,F,FloatField
 from django.db.models.functions import ExtractWeek, ExtractYear, ExtractMonth, ExtractDay
 from datetime import datetime, timedelta
 from django.utils import timezone
@@ -61,6 +61,14 @@ def index(request):
             labels.append(f"Semana {i}")
             dados.append(v['total'])
 
+    faturamento = vendas.aggregate(
+    total=Sum(
+        ExpressionWrapper(F('quantidade') * F('produto__preco'), output_field=FloatField())
+    )
+    )['total'] or 0
+
+    clientes_ativos = vendas.values('cliente').distinct().count()
+    produtos_vendidos = vendas.values('produto').distinct().count()
     anos = (
         Pedidos_Venda.objects
         .annotate(ano=ExtractYear('data'))
@@ -85,6 +93,9 @@ def index(request):
         'mes_selecionado': int(mes) if mes else '',
         'total_produtos': total_produtos,
         'total_clientes': total_clientes,
+        'faturamento': faturamento,
+        'clientes': clientes_ativos,
+        'produtos': produtos_vendidos,
     })
 
 @login_required
