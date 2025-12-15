@@ -55,7 +55,6 @@ def editar_perfil(request, id_usuario):
         
         if request.method == "POST":
             usuario.nome_fantasia = request.POST.get("nome_fantasia")
-            usuario.email = request.POST.get("email")
             usuario.telefone = request.POST.get("telefone")
             usuario.endereco = request.POST.get("endereco")
             usuario.nome_admin = request.POST.get("nome_admin")
@@ -74,7 +73,6 @@ def editar_perfil(request, id_usuario):
         template = 'registration/editar_perfil_funcionario.html'
 
         if request.method == "POST":
-            usuario.email = request.POST.get("email")
             usuario.telefone = request.POST.get("telefone")
             funcionario.nome = request.POST.get("nome")
             funcionario.cargo = request.POST.get("cargo")
