@@ -1,9 +1,8 @@
 from django import forms
 from . models import Cliente, Produto, Funcionario, Vendedor, Fornecedor, Categoria_Produto, Pedidos_Venda
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Row, Column, Submit, Div
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Row, Column, Submit, HTML, Div
+from crispy_forms.layout import Layout, Row, Column, Submit, HTML, Div
 
 class ClienteForm(forms.ModelForm):
     class Meta:
@@ -142,7 +141,7 @@ class ProdutoForm(forms.ModelForm):
             ),
         )
 
-class FuncionarioForm(forms.Form):
+class FuncionarioForm(forms.ModelForm):
     nome = forms.CharField(max_length=100, label="Nome completo")
     email = forms.EmailField(label="Email")
     telefone = forms.CharField(max_length=20, label="Telefone")

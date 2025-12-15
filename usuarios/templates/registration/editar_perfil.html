@@ -10,7 +10,7 @@
                 <!-- Card Avatar/Logo - Esquerda Superior -->
                 <div class="col-lg-4 col-md-5">
                     <div style="background: #FFFFFF; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 40px 30px; text-align: center; height: 100%; min-height: 420px;">
-                        <div style="width: 150px; height: 150px; background: #E5E7EB; border-radius: 50%; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center;">
+                        <div style="width: 200px; height: 200px; background: #E5E7EB; border-radius: 50%; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center;">
                             {% if request.user.imagem_perfil %}
                                 <img src="{{ request.user.imagem_perfil.url }}" 
                                     alt="Foto de Perfil" 
@@ -19,13 +19,10 @@
                                 <span style="font-size: 14px; color: #6B7280;">Sem foto</span>
                             {% endif %}
                         </div>
-                        <div style="width: 100%;">
-                                <label style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: #374151; display: block; margin-bottom: 8px;">
-                                    Alterar Logo
-                                </label>
-                                <input type="file" name="imagem_perfil" accept="image/*" style="font-family: 'Inter', sans-serif; font-size: 14px; width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; background: #f9fafb;">
+                        <div>
+                            <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">Nome fantasia</label>
+                            <input type="text" name="nome_fantasia" value="{{ usuario.nome_fantasia }}" placeholder="Nome fantasia" style="font-family: 'Inter', sans-serif; width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; text-align: center;" onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#d1d5db'">
                         </div>
-                        <input type="text" name="nome_fantasia" value="{{ usuario.nome_fantasia }}" placeholder="Nome fantasia" style="font-family: 'Inter', sans-serif; width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; background: transparent; text-align: center;" onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#d1d5db'">
                     </div>
                 </div>
                 
@@ -36,29 +33,29 @@
                             Informações empresa
                         </h5>
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">CNPJ</label>
-                                <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.cnpj }}</p>
-                            </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-2">
                                 <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">Razão Social</label>
                                 <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.razao_social }}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-2">
+                                <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">CNPJ</label>
+                                <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.cnpj }}</p>
+                            </div>
+                            <div class="col-md-6 mb-2">
                                 <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">E-mail</label>
-                                <input type="email" name="email" value="{{ usuario.email }}" placeholder="00000-000" style="font-family: 'Inter', sans-serif;  width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; background: transparent;" onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#d1d5db'">
+                                <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.email }}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-2">
                                 <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">Telefone</label>
-                                <input type="text" name="telefone" value="{{ usuario.telefone }}" placeholder="00000-000" style="font-family: 'Inter', sans-serif;  width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; background: transparent;" onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#d1d5db'">
+                                <input type="text" name="telefone" value="{{ usuario.telefone }}" placeholder="00000-000" style="font-family: 'Inter', sans-serif;  width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px;" onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#d1d5db'">
                             </div>
-                            <div class="col-12">
+                            <div class="col-12 mb-1">
                                 <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">Endereço</label>
-                                <input type="text" name="endereco" value="{{ usuario.endereco }}" placeholder="Rua Exemplo, 123 - Cidade/UF" style="font-family: 'Inter', sans-serif; width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; background: transparent;" onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#d1d5db'">
+                                <input type="text" name="endereco" value="{{ usuario.endereco }}" placeholder="Rua Exemplo, 123 - Cidade/UF" style="font-family: 'Inter', sans-serif; width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px;" onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#d1d5db'">
                             </div>
                             <div class="col-12">
                                 <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">Logo</label>
-                                <input type="file" name="imagem_perfil" accept="image/*" style="font-family: 'Inter', sans-serif; font-size: 14px; width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; background: #f9fafb;">
+                                <input type="file" name="imagem_perfil" accept="image/*" style="font-family: 'Inter', sans-serif; font-size: 14px; width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px;">
                             </div>
                         </div>
                     </div>
