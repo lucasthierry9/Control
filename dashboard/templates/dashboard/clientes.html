@@ -1,106 +1,121 @@
 {% extends "dashboard/base_dashboard.html" %}
 {% load static %}
-{% block sidebar %}
-<div class="pt-3">
-    <div class="row g-0" style="min-height: calc(100vh - 200px);">
-        <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
-            <div style="min-height: 60px;">
-                <h1 class="ps-4" style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Dashboard</h1>
-            </div>
-            <div class="bg-white shadow" style="height: 100%; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
-                <ul class="nav flex-column p-3">
-                    <li class="nav-item">
-                        <a href="{% url 'dashboard:index' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
-                            <i class="bi bi-grid-1x2-fill me-3"></i>Visão Geral
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dashboard:vendas' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
-                            <i class="bi bi-cart2 me-3"></i>Vendas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dashboard:produtos' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
-                            <i class="fa-solid fa-cube me-3"></i>Produtos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dashboard:clientes' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
-                            <i class="fa-solid fa-user me-3"></i>Clientes
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-{% endblock sidebar %}
 {% block content %}
-            <div id="layoutSidenav_content" class="sidebar-wrapper" style="padding-top: 80px; min-height: calc(100vh - 80px - 100px);">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Clientes</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Informações sobre os clientes</li>
-                        </ol>
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Primary Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Warning Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Success Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Danger Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                        </div>
-                       
+<div class="col-12 col-lg-10 px-4">
+    <div style="min-height: 60px;"></div>
+    <div style="background: #f0f6ff; border-radius: 20px; width: 100%; max-width: 1350px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); overflow: hidden; font-family: Inter; margin: auto;">
+        
+        <!-- Header do Card -->
+        <div class="d-flex align-items-center" style="background: #2563EB; padding: 25px 30px; border-bottom: 1px solid #f0f0f0; justify-content: space-between;">
+            <h2 style="color: white; font-size: 30px; font-weight: 700; margin: 0;">Visão Geral</h2>
+            <form id="filtros-form" method="get">
+                <div class="d-flex align-items-center" style="gap: 20px;">
+                    <div style="position: relative; min-width: 150px;">
+                        <label style="position: absolute; top: -18px; left: 6px; padding: 0 6px; font-size: 14px; font-weight: 600; color: white; font-family: Inter;">Ano</label>
+                        <select name="ano" class="form-select rounded-5" onchange="this.form.submit()" form="filtros-form" style="background-color: white; outline: 2px solid #2563EB; outline-offset: -2px;">
+                            <option value="">Todos</option>
+                                {% for a in anos %}
+                                    <option value="{{ a }}" {% if ano_selecionado == a|stringformat:'s' %}selected{% endif %}>
+                                        {{ a }}
+                                    </option>
+                                {% endfor %}
+                        </select>
                     </div>
-                </main>
+                    <div style="position: relative; min-width: 150px;">
+                        <label style="position: absolute; top: -18px; left: 6px; padding: 0 6px; font-size: 14px; font-weight: 600; color: white; font-family: Inter;">Mês</label>
+                        <select name="mes" class="form-select rounded-5" onchange="this.form.submit()" form="filtros-form" style="background-color: white; outline: 2px solid #2563EB; outline-offset: -2px;">
+                            <option value="">Todos</option>
+                                {% for numero, nome in meses %}
+                                    <option value="{{ numero  }}" {% if mes_selecionado == numero %}selected{% endif %}>
+                                        {{ nome }}
+                                    </option>
+                                {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="p-4">
+            <div class="row g-3">
+
+                <!-- Faturamento -->
+                <div class="col-12 col-md-4">
+                    <div class="bg-white shadow-sm d-flex align-items-center p-3"
+                        style="border-radius: 12px; font-family: Inter;">
+                        <div class="me-3 p-3 d-flex align-items-center justify-content-center"style="width: 80px; height: 80px; background-color: #DBEAFE;border-radius: 12px;">
+                            <i class="fa-solid fa-dollar-sign" style="font-size: 40px; color: #2563EB;"></i>
+                        </div>
+
+                        <div>
+                            <span style="font-size: 16px; font-weight: 600;">
+                                Faturamento
+                            </span>
+                            <h2 style="font-weight: 700; margin: 0;">R$ {{ faturamento|floatformat:2 }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Produtos -->
+                <div class="col-12 col-md-4">
+                    <div class="bg-white shadow-sm d-flex align-items-center p-3"
+                        style="border-radius: 12px; font-family: Inter;">
+                        <div class="me-3 p-3"
+                            style="width: 80px; height: 80px; background-color: #DBEAFE; border-radius: 12px; display:flex; justify-content:center; align-items:center;">
+                            <i class="fa-solid fa-cube" 
+                            style="font-size: 40px; color: #2563EB;"></i>
+                        </div>
+
+                        <div>
+                            <span style="font-size: 16px; font-weight: 600;">
+                                Produtos Cadastrados
+                            </span>
+                            <h2 style="font-weight: 700; margin: 0;">{{ total_produtos }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Clientes -->
+                <div class="col-12 col-md-4">
+                    <div class="bg-white shadow-sm d-flex align-items-center p-3"
+                        style="border-radius: 12px; font-family: Inter;">
+                        <div class="me-3 p-3" 
+                            style="width: 80px; height: 80px; background-color: #DBEAFE; border-radius: 12px; display:flex; justify-content:center; align-items:center;">
+                            <i class="fa-solid fa-user" 
+                            style="font-size: 40px; color: #2563EB;"></i>
+                        </div>
+
+                        <div>
+                            <span style="font-size: 16px; font-weight: 600;">
+                                Clientes Cadastrados
+                            </span>
+                            <h2 style="font-weight: 700; margin: 0;">{{ total_clientes }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 g-3">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white shadow-sm" style="height: 450px; border-radius: 12px;">
+                    <div class="d-flex align-items-center" style="background: white; padding: 5px 10px; border-bottom: 1px solid #f0f0f0; justify-content: space-between; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                        <h2 style="color: white; font-size: 14px; font-weight: 700; margin: 0; color: black;">Faturamento</h2>
+                    </div>
+                    <div style="padding: 15px; height: 450px;">
+                        <canvas id="graficoFaturamento" style="height: 100%;" class="mt-4"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="bg-white shadow-sm" style="height: 450px; border-radius: 12px; font-family: Inter;">
+                    <div class="d-flex align-items-center" style="background: white; padding: 5px 10px; border-bottom: 1px solid #f0f0f0; justify-content: space-between; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                        <h2 style="color: white; font-size: 14px; font-weight: 700; margin: 0; color: black;">Quantidade de Vendas: {{ total_vendas }}</h2>
+                    </div>
+                    <div style="padding: 15px; height: 400px;">
+                        <canvas id="vendasChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>            
+    </div>
+</div>
+
 {% endblock content %}
 

@@ -139,11 +139,8 @@
             <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; padding: 15px;">
                 <p class="fw-bold" style="font-family: Inter; color: #2563EB; font-size: 18px; margin-bottom: 6px;">Ações Rápidas</p>
                 <div class="mt-2 ms-1">
-                    <a href="{% url 'dashboard:clientes' %}" class="d-block mb-2 text-decoration-none" style="color: #374151; font-family: Inter;">
-                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Dashboard Clientes
-                    </a>
-                    <a href="{% url 'estoque:verificacao' %}" class="d-block text-decoration-none" style="color: #374151; font-family: Inter;">
-                        <i class="fa-solid fa-file-lines me-2"></i> Relatório
+                    <a href="{% url 'dashboard:produtos' %}" class="d-block mb-2 text-decoration-none" style="color: #374151; font-family: Inter;">
+                        <i class="fa-solid fa-cube"></i> Ir para Dashboard Produtos
                     </a>
                 </div>
                 <p class="fw-bold mt-3" style="font-family: Inter; color: #2563EB; font-size: 18px; margin-bottom: 6px;">Histórico de ações</p>
@@ -174,3 +171,4 @@
 </div>
 
 {% endblock content %}
+{% block footer %}{% endblock %}

@@ -78,7 +78,7 @@ def editar_cliente(request, id_cliente):
     else:
         form = ClienteForm(instance=cliente)
 
-    return render(request, "cadastros/clientes/editar_cliente.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'clientes')})
+    return render(request, "cadastros/clientes/editar_cliente.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'clientes'), "cliente": cliente})
 
 @login_required
 def excluir_cliente(request, id_cliente=0):
@@ -427,6 +427,10 @@ def excluir_fornecedor(request, id_fornecedor=0):
 # CATEGORIA ------------------------------------------------------------------------------
 @login_required
 def categorias(request):
+
+    # Total de categorias:
+    total_categorias = Categoria_Produto.objects.count()
+
     search = request.GET.get("search")
 
     categorias = Categoria_Produto.objects.all()
@@ -443,7 +447,7 @@ def categorias(request):
     paginator = Paginator(categorias, 10)
     numero_da_pagina = request.GET.get('p')
     categorias = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/categorias/categorias.html", {"categorias": categorias, "search": search, "historico": ultimas_acoes_modulo(request.user, 'categorias')})
+    return render(request, "cadastros/categorias/categorias.html", {"categorias": categorias, "search": search, "historico": ultimas_acoes_modulo(request.user, 'categorias'), "total_categorias": total_categorias})
 
 @login_required
 def cadastrar_categoria(request):
