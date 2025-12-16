@@ -33,3 +33,19 @@
     scrollbar-width: thin; /* 'auto' ou 'thin' */
     scrollbar-color: #ffffffff #2563EB; /* [cor do polegar] [cor do trilho] */
 }
+html, body {
+    height: 100%; /* faz o body ocupar toda a altura da tela */
+    margin: 0;    /* remove margens padrões do body */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* organiza header, content e footer em coluna */
+}
+
+main {
+    flex: 1; /* faz o conteúdo principal crescer e empurrar o footer para baixo */
+}
+main, .sidebar-wrapper {
+    padding-top: 80px; /* mesma altura do header */
+}

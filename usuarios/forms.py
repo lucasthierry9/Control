@@ -28,4 +28,4 @@ class UserForm(UserCreationForm):
                 'class': 'form-control',
                 'style': 'background-color: #E9E9E9; border: none; border-radius: 8px; height: 45px;'
             })
-            field.label_suffix = ""
+            field.label_suffix = ""       
