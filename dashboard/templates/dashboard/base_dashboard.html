@@ -59,10 +59,10 @@
 </head>
 <body>
 {% block header %}
-    <header class="fixed-top" style="height:80px; background-color:#2563EB;">
-        <nav id="c2" class="navbar navbar-expand-lg fixed-top" style="background-color: #2563EB; padding: 10px; height: 80px;">
+    <header>
+        <nav id="c2" class="navbar navbar-expand-lg" style="background-color: #2563EB; padding: 10px; height: 80px;">
             <div class="container-fluid">
-                <a class="navbar-brand" href={% url 'dashboard:index' %} style="color: white; font-size: 36px; font-weight: 700; font-family: Inter;">Control</a>
+                <a class="navbar-brand" href={% url 'index' %} style="color: white; font-size: 36px; font-weight: 700; font-family: Inter;">Control</a>
                 <button class="navbar-toggler" type="button"data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -318,21 +318,39 @@
         </div>
     </header>
     {% endblock header %}
-{% block sidebar %}{% endblock sidebar %}
-
-<main>{% block content %}{% endblock content %}</main>
-{% block footer  %}
-        
-        <!-- FOOTER -->
-        <footer class="py-4" style="background-color:#2563EB;">
-            <div class="container text-center text-white">
-                <h5 class="fw-bold mb-1">CONTROL</h5>
-                <p class="mb-1">Gestão inteligente de vendas</p>
-                <small>© 2025 CONTROL • Todos os direitos reservados</small>
+<div class="pt-3">
+    <div class="row g-0" style="min-height: calc(100vh - 200px);">
+        <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
+            <div style="min-height: 60px;">
+                <h1 class="ps-4" style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Dashboard</h1>
             </div>
-        </footer>
+            <div class="bg-white shadow" style="height: 100%; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
+                <ul class="nav flex-column p-3">
+                    <li class="nav-item">
+                        <a href="{% url 'dashboard:index' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="bi bi-grid-1x2-fill me-3"></i>Visão Geral
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard:vendas' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="bi bi-cart2 me-3"></i>Vendas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard:produtos' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="fa-solid fa-cube me-3"></i>Produtos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard:clientes' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="fa-solid fa-user me-3"></i>Clientes
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% block content %}{% endblock content %}
 
-{% endblock footer  %}
         {% block scripts %}{% endblock scripts %}
 
     <script src="{% static 'dashboard/js/scripts.js' %}"></script>

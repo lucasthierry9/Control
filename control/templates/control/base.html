@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -11,84 +12,331 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"><!--Font inter-->
     {% block css %}<link rel="stylesheet" href="{% static 'css/cadastros.css' %}">{% endblock css %}
     <title>{% block title %}{% endblock title %} - Control</title>
- 
+    {% block style %}
+    <style>
+        /* Estilo padrão para os botões do menu */
+        .menu-button {
+            /* Garante que o texto dentro seja branco para o hover */
+            color: white !important; 
+            transition: background-color 0.2s ease; /* Transição suave para o efeito */
+        }
+
+        /* Estilo aplicado quando o mouse está sobre o botão (HOVER) */
+        .menu-button:hover {
+            background-color: #3f7cffff !important; /* Cor mais clara para simular o efeito selecionado */
+            /* Você pode querer mudar a cor do texto no hover também, se necessário: */
+            /* color: #FFFFFF !important; */
+        }
+        /* 1. WebKit (Chrome, Safari, Edge, Opera) - Define a largura e estiliza */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px; /* ESSENCIAL: Define a largura da barra */
+        }
+
+        /* 2. Estiliza o "trilho" (Background) */
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background-color: #2563EB; /* A cor do seu Offcanvas */
+            border-radius: 10px;
+        }
+
+        /* 3. Estiliza o "polegar" (Thumb - a parte que rola) */
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ffffffff;
+            border-radius: 10px;
+        }
+        
+        /* 4. Estilo Firefox */
+        .custom-scrollbar {
+            scrollbar-width: thin; /* 'auto' ou 'thin' */
+            scrollbar-color: #ffffffff #2563EB; /* [cor do polegar] [cor do trilho] */
+        }
+    </style>
+    {% endblock style %}
 </head>
     
 <body>
-    <header>
-    {% block header %}
-    <nav class="navbar navbar-expand-lg fixed-top"
-         style="background-color:#2563EB; height:80px;">
-        <div class="container-fluid">
-            <a class="navbar-brand"
-               href="{% url 'index' %}"
-               style="color:white; font-size:36px; font-weight:700; font-family:Inter;">
-                Control
-            </a>
+{% block header %}
+     <header>
+        <nav id="c2" class="navbar navbar-expand-lg" style="background-color: #2563EB; padding: 10px; height: 80px;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href={% url 'index' %} style="color: white; font-size: 36px; font-weight: 700; font-family: Inter;">Control</a>
+                <button class="navbar-toggler" type="button"data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="color: white; font-size: 20px; font-weight: 700; font-family: Inter;">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown show" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
+                                Cadastros
+                                <i class="bi bi-chevron-down fs-6"></i>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; min-width: 300px; padding: 15px 30px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Cadastros</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Clientes</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:produtos' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Produtos</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:funcionarios' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Funcionários</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:vendedores' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Vendedores</a></li>
+                                        <li><a class="dropdown-item" href={% url 'cadastros:fornecedores' %} style="font-weight: 500; padding: 0px;">Fornecedores</a></li>
+                                    </div>
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Ferramentas</li>
+                                        <li style=""><a class="dropdown-item" href={% url 'cadastros:categorias' %} style="font-weight: 500; margin: 0px; padding: 0px;">Categoria</a></li>
+                                    </div>
+                                </div>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown show">
+                            <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
+                                Vendas
+                                <i class="bi bi-chevron-down fs-6"></i>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; padding: 15px 30px;">
+                                <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Vendas</li>
+                                <li><a class="dropdown-item" href={% url 'vendas:pedidos' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Pedidos</a></li>
+                                <li><a class="dropdown-item" href={% url 'vendas:historico' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Histórico</a></li>
+                                <li><a class="dropdown-item" href={% url 'vendas:relatorio_vendas' %} style="color: #2563EB; font-weight: 700; padding: 0px; margin-top: 10px;">Ver relatório de vendas</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
+                                Estoque
+                                <i class="bi bi-chevron-down fs-6"></i>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; min-width: 300px; padding: 15px 30px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Estoque</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'estoque:movimentacoes' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Movimentações</a></li>
+                                        <li><a class="dropdown-item" href={% url 'estoque:verificacao' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Verificação</a></li>
+                                        <li><a class="dropdown-item" href={% url 'estoque:depositos' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Depósitos</a></li>
+                                    </div>
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px; margin-left: 5px;">Compras</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'estoque:pedidos_compra' %} style="font-weight: 500;  margin-left: 5px; padding: 0px;">Pedidos Compra</a></li>
+                                    </div>
+                                </div>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Usuário Dropdown -->
+                     <div class="d-flex gap-2">
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700; text-decoration: none;">
+                                {% if request.user.imagem_perfil %}
+                                    <img src="{{ request.user.imagem_perfil.url }}" alt="Foto de Perfil" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%; padding: 0px; margin: 0px;">
+                                {% else %}
+                                    <i class="bi bi-person-circle fs-3"></i>
+                                {% endif %}
+                                <span style="margin-left: 5px;">{{ request.user.nome_fantasia }}</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href={% url 'usuarios:perfil' %}>Perfil</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="POST" action="{% url 'logout' %}">
+                                        {% csrf_token %}
+                                        <button class="dropdown-item" type="submit">Sair</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="sidebarMenu"
+            style="background-color: #2563EB; width: 280px; font-family: Inter;">
+            
+            <div class="offcanvas-header" style="padding: 20px; border-bottom: 1px solid #3f7cffff">
+                <span id="sidebarOffcanvasLabel" style="color: rgb(232, 232, 240); font-size: 22px; font-weight: 700;">Control</span>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
 
-            <button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0"
-                    style="font-size:20px; font-weight:700; font-family:Inter;">
-                    
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#funcionalidades">
-                            Funcionalidades
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#segmentos">
-                            Segmentos
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#contato">
-                            Contato
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="d-flex gap-2">
-                    <a class="btn btn-link text-white fw-bold text-decoration-none"
-                       href="{% url 'login' %}">
-                        <i class="bi bi-person-circle me-1"></i> Login
-                    </a>
-
-                    <a class="btn"
-                       href="{% url 'usuarios:cadastro' %}"
-                       style="background:white; color:#2563EB; font-weight:700; border-radius:20px;">
-                        Criar conta
-                    </a>
+            <div class="offcanvas-body d-flex flex-column p-0 custom-scrollbar" style="padding: 0px 20px;">
+                <div class="flex-grow-1" style="padding: 0px 12px;">
+                    <ul class="nav flex-column gap-1">
+                        <li class="nav-item">
+                            <button class="nav-link menu-button" type="button" data-bs-toggle="collapse" data-bs-target="#submenuCadastros" aria-expanded="false" aria-controls="submenuCadastros" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 8px; color: white; 
+                            text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s; cursor: pointer; border: none; background-color: transparent; width: 100%;">
+                                <span style="display: flex; align-items: center; gap: 12px;">
+                                    <i class="bi bi-plus-square" style="font-size: 18px;"></i></i>Cadastros
+                                </span>
+                                <i class="bi bi-chevron-down submenu-icon" style="transition: transform 0.3s; font-size: 12px; transform: rotate(0deg);"></i>
+                            </button>
+                            <div class="collapse" id="submenuCadastros" style="overflow: hidden; transition: max-height 0.3s;">
+                                <ul class="nav flex-column" style="padding-top: 4px;">
+                                    <li>
+                                        <a  class="menu-button" href="{% url 'cadastros:clientes' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Clientes
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'cadastros:produtos' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Produtos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'cadastros:funcionarios' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Funcionários
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'cadastros:vendedores' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Vendedores
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'cadastros:fornecedores' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Fornecedores
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link menu-button" type="button" data-bs-toggle="collapse" data-bs-target="#submenuVendas" aria-expanded="false" aria-expanded="false" aria-controls="submenuVendas" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 8px; color: white; 
+                            text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s; cursor: pointer; border: none; background-color: transparent; width: 100%;">
+                                <span style="display: flex; align-items: center; gap: 12px;">
+                                    <i class="bi bi-cart2" style="font-size: 18px;"></i>Vendas
+                                </span>
+                                <i class="bi bi-chevron-down submenu-icon" style="transition: transform 0.3s; font-size: 12px; transform: rotate(0deg);"></i>
+                            </button>
+                            <div class="collapse" id="submenuVendas" style="overflow: hidden; transition: max-height 0.3s;">
+                                <ul class="nav flex-column" style="padding-top: 4px;">
+                                    <li>
+                                        <a class="menu-button" href="{% url 'vendas:pedidos' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Pedidos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'vendas:historico' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Histórico
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'vendas:relatorio_vendas' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Relatório Vendas
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link menu-button" type="button" data-bs-toggle="collapse" data-bs-target="#submenuEstoque" aria-expanded="false" aria-controls="submenuEstoque" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 8px; color: white; 
+                            text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s; cursor: pointer; border: none; background-color: transparent; width: 100%;">
+                                <span style="display: flex; align-items: center; gap: 12px;">
+                                    <i class="bi bi-boxes" style="font-size: 18px;"></i></i>Estoque
+                                </span>
+                                <i class="bi bi-chevron-down submenu-icon" style="transition: transform 0.3s; font-size: 12px; transform: rotate(0deg);"></i>
+                            </button>
+                            <div class="collapse" id="submenuEstoque" style="overflow: hidden; transition: max-height 0.3s;">
+                                <ul class="nav flex-column" style="padding-top: 4px;">
+                                    <li>
+                                        <a class="menu-button" href="{% url 'estoque:movimentacoes' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px;">
+                                            Movimentações
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'estoque:verificacao' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Verificação
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'estoque:depositos' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Depósitos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'estoque:pedidos_compra' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Pedidos Compra
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="padding: 0px 12px 16px; flex-shrink: 0;">
+                    <ul class="nav flex-column gap-1">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex justify-content-between align-items-center" href="#" 
+                            style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 8px; 
+                            color: white; text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s; cursor: pointer; border: none; background-color: transparent; width: 100%;">
+                                <span class="d-flex align-items-center gap-3"><i class="bi-bell" style="font-size: 18px;"></i>Notificações</span>
+                                <span style=" border: 1px solid rgb(58, 58, 78); color: rgb(232, 232, 240); font-size: 12px; padding: 2px 8px; border-radius: 4px; font-weight: 500;">12</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex justify-content-between align-items-center" href="#" 
+                            style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 8px; 
+                            color: white; text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s; cursor: pointer; border: none; background-color: transparent; width: 100%;">
+                                <span class="d-flex align-items-center gap-3"><i class="bi-question-circle" style="font-size: 18px;"></i>Support</span>
+                            </a>
+                        </li>
+                    <ul>
+                </div>
+                <div style="border-top: 1px solid #3f7cffff; padding: 16px; margin-top: auto; flex-shrink: 0;">
+                    <div class="d-flex align-items-center justify-content-between menu-button" style="border-radius: 6px;">
+                        <div class="d-flex align-items-center gap-3" style="margin: auto;">
+                            {% if request.user.imagem_perfil %}
+                                <img src="{{ request.user.imagem_perfil.url }}" alt="Foto de Perfil" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%; padding: 0px; margin: 0px;">
+                            {% else %}
+                                <i class="bi bi-person-circle" style="font-size: 40px; color: white;"></i>
+                            {% endif %}
+                            <div>
+                                <div style="color: rgb(232, 232, 240); font-size: 14px; font-weight: 600; margin-bottom: 2px;">
+                                    {{ request.user.nome_fantasia }}
+                                </div>
+                                <div style="color: white; font-size: 12px;">
+                                    {{ request.user.email }}
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-link p-1" style="color: white; text-decoration: none;">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
     {% endblock header %}
-</header>
-
     {% block content %}<p>conteúdo</p>{% endblock content %}
-    {% block footer  %}
-        
-        <!-- FOOTER -->
-        <footer class="py-4" style="background-color:#2563EB;">
-            <div class="container text-center text-white">
-                <h5 class="fw-bold mb-1">CONTROL</h5>
-                <p class="mb-1">Gestão inteligente de vendas</p>
-                <small>© 2025 CONTROL • Todos os direitos reservados</small>
-            </div>
-        </footer>
-
-    {% endblock footer  %}
-
+    {% block footer %}<p>footer<p>{% endblock footer %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static "control/js/scripts.js" %}"></script>
-   
+
+    <script>
+        // Script para rotação do ícone de seta
+        document.addEventListener('DOMContentLoaded', function() {
+            var buttons = document.querySelectorAll('.nav-item button[data-bs-toggle="collapse"]');
+            buttons.forEach(function(button) {
+                var targetId = button.getAttribute('data-bs-target');
+                var targetElement = document.querySelector(targetId);
+                var icon = button.querySelector('.submenu-icon');
+
+                if (targetElement) {
+                    targetElement.addEventListener('show.bs.collapse', function () {
+                        if (icon) icon.style.transform = 'rotate(180deg)';
+                    });
+                    targetElement.addEventListener('hide.bs.collapse', function () {
+                        if (icon) icon.style.transform = 'rotate(0deg)';
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
