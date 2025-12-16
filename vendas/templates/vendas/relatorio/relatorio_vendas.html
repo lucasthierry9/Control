@@ -77,7 +77,7 @@
                             <th class="py-2 ps-3" style="background-color: #2563EB; border-top-left-radius: 10px; border-bottom-left-radius: 10px; color: white; text-align: left; width: 250px;">Produto</th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Cliente</th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Vendedor</th>
-                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">Preço</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">Valor Total</th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; border-top-right-radius: 10px; border-bottom-right-radius: 10px; color: white; text-align: left; width: 200px;">Data</th>
                         </tr>
                     </thead>
@@ -88,7 +88,7 @@
                         <td class="py-2 ps-3 fw-medium" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;">{{ pedido.produto }}</td>
                         <td class="py-2 ps-3 fw-medium">{{ pedido.cliente }}</td>
                         <td class="py-2 ps-3 fw-medium">{{ pedido.vendedor }}</td>
-                        <td class="py-2 ps-3 fw-medium">R$ {{ pedido.produto.preco }}</td>
+                        <td class="py-2 ps-3 fw-medium">R$ {{ pedido.total }}</td>
                         <td class="py-2 ps-3 fw-medium" style="border-top-right-radius: 10px; border-bottom-right-radius: 10px;">{{ pedido.data|date:"d/m/y" }} às {{ pedido.data|date:"H:i" }}</td>
                         </tr>
                         {% endfor %}
@@ -96,7 +96,7 @@
                 </table>
             </div>
             {% if pedidos.paginator.num_pages > 1 %}
-            <nav aria-label="paginator navigation">
+            <nav aria-label="paginator navigation" style="font-family: Inter;">
                 <ul class="pagination justify-content-end">
                     <li class="page-item" {{  pedidos.has_previous|yesno:',disabled,disabled'  }}>
                         <a class="page-link" href="{% if pedidos.has_previous %}{% querystring p=pedidos.previous_page_number %}{% endif %}" aria-label="Previous">

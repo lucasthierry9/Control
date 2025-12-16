@@ -1,102 +1,542 @@
 [
   {
-    "model": "control.Fornecedor",
+    "model": "control.fornecedor",
     "pk": 1,
     "fields": {
-      "nome": "Alpha Soluções Ltda.",
-      "email": "contato@alphasolucoes.com.br",
-      "cpf_cnpj": "00000000000191",
-      "telefone": "1130001000"
+      "nome": "Alpha Suprimentos LTDA",
+      "cpf_cnpj": "00000000000100",
+      "email": "contato@alpha.com",
+      "telefone": "84300000001",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Lagoa Nova",
+      "logradouro": "Rua das Industrias, 150",
+      "numero": "150",
+      "complemento": "Galpão A",
+      "cep": "59000001",
+      "data_cadastro": "2025-01-01T08:00:00Z"
     }
   },
   {
-    "model": "control.Fornecedor",
+    "model": "control.fornecedor",
     "pk": 2,
     "fields": {
-      "nome": "Beta Comércio S.A.",
-      "email": "vendas@betacomercio.com",
-      "cpf_cnpj": "11111111111191",
-      "telefone": "2140002000"
+      "nome": "Beta Componentes S.A.",
+      "cpf_cnpj": "00000000000200",
+      "email": "vendas@beta.com",
+      "telefone": "84300000002",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Emaús",
+      "logradouro": "Av. Principal, 500",
+      "numero": "500",
+      "complemento": "",
+      "cep": "59000002",
+      "data_cadastro": "2025-01-05T09:30:00Z"
     }
   },
   {
-    "model": "control.Fornecedor",
+    "model": "control.fornecedor",
     "pk": 3,
     "fields": {
-      "nome": "Gama Distribuidora",
-      "email": "financeiro@gamadistr.com",
-      "cpf_cnpj": "22222222222291",
-      "telefone": "3150003000"
+      "nome": "Carlos Viana Representações",
+      "cpf_cnpj": "11111111111",
+      "email": "carlos.rep@email.com",
+      "telefone": "84990000003",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Capim Macio",
+      "logradouro": "Rua do Comércio, 20",
+      "numero": "20",
+      "complemento": "Sala 101",
+      "cep": "59000003",
+      "data_cadastro": "2025-01-10T11:45:00Z"
     }
   },
   {
-    "model": "control.Fornecedor",
+    "model": "control.fornecedor",
     "pk": 4,
     "fields": {
-      "nome": "Delta Serviços ME",
-      "email": "suporte@deltaservicos.net",
-      "cpf_cnpj": "33333333333391",
-      "telefone": "4160004000"
+      "nome": "Delta Ferramentas MEI",
+      "cpf_cnpj": "00000000000300",
+      "email": "delta@ferramentas.com",
+      "telefone": "84300000004",
+      "estado": null,
+      "cidade": "Macaíba",
+      "bairro": "Centro",
+      "logradouro": "Av. Rodoviária, 10",
+      "numero": "10",
+      "complemento": "",
+      "cep": "59000004",
+      "data_cadastro": "2025-01-15T13:20:00Z"
     }
   },
   {
-    "model": "control.Fornecedor",
+    "model": "control.fornecedor",
     "pk": 5,
     "fields": {
-      "nome": "Empório Epsilon",
-      "email": "pedidos@emporioepsilon.com",
-      "cpf_cnpj": "44444444444491",
-      "telefone": "5170005000"
+      "nome": "Epsilon Logística",
+      "cpf_cnpj": "00000000000400",
+      "email": "transporte@epsilon.com",
+      "telefone": "84300000005",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Alecrim",
+      "logradouro": "Rua dos Portos, 80",
+      "numero": "80",
+      "complemento": "Box 05",
+      "cep": "59000005",
+      "data_cadastro": "2025-01-20T15:55:00Z"
     }
   },
   {
-    "model": "control.Fornecedor",
+    "model": "control.fornecedor",
     "pk": 6,
     "fields": {
-      "nome": "Francisco Moura - MEI",
-      "email": "francisco.moura@exemplo.com",
-      "cpf_cnpj": "12345678901",
-      "telefone": "81987654321"
+      "nome": "Fábio Martins Eletro",
+      "cpf_cnpj": "22222222222",
+      "email": "fabiomartins@email.com",
+      "telefone": "84990000006",
+      "estado": null,
+      "cidade": "São Gonçalo do Amarante",
+      "bairro": "Novo Amarante",
+      "logradouro": "Rua Industrial, 30",
+      "numero": "30",
+      "complemento": "",
+      "cep": "59000006",
+      "data_cadastro": "2025-01-25T17:10:00Z"
     }
   },
   {
-    "model": "control.Fornecedor",
+    "model": "control.fornecedor",
     "pk": 7,
     "fields": {
-      "nome": "Gabriela Alves Freelancer",
-      "email": "gabriela.alves@exemplo.com",
-      "cpf_cnpj": "98765432109",
-      "telefone": "62998765432"
+      "nome": "Gama Metalúrgica",
+      "cpf_cnpj": "00000000000500",
+      "email": "metal@gama.com",
+      "telefone": "84300000007",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Liberdade",
+      "logradouro": "Travessa Ferro, 10",
+      "numero": "10",
+      "complemento": "",
+      "cep": "59000007",
+      "data_cadastro": "2025-02-01T08:30:00Z"
     }
   },
   {
-    "model": "control.Fornecedor",
+    "model": "control.fornecedor",
     "pk": 8,
     "fields": {
-      "nome": "Omega Indústria",
-      "email": "rh@omegaindustria.com.br",
-      "cpf_cnpj": "55555555555591",
-      "telefone": "7180006000"
+      "nome": "HTECH Soluções em TI",
+      "cpf_cnpj": "00000000000600",
+      "email": "suporte@htech.com",
+      "telefone": "84300000008",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Tirol",
+      "logradouro": "Av. Principal, 1200",
+      "numero": "1200",
+      "complemento": "Sala 303",
+      "cep": "59000008",
+      "data_cadastro": "2025-02-05T10:45:00Z"
     }
   },
   {
-    "model": "control.Fornecedor",
+    "model": "control.fornecedor",
     "pk": 9,
     "fields": {
-      "nome": "João Carlos Consultoria",
-      "email": "jc.consultoria@exemplo.com",
-      "cpf_cnpj": "11122233344",
-      "telefone": "84976543210"
+      "nome": "Icaro Importadora",
+      "cpf_cnpj": "33333333333",
+      "email": "icaro.import@email.com",
+      "telefone": "84990000009",
+      "estado": null,
+      "cidade": "Ceará-Mirim",
+      "bairro": "Centro",
+      "logradouro": "Rua do Comércio, 99",
+      "numero": "99",
+      "complemento": "",
+      "cep": "59000009",
+      "data_cadastro": "2025-02-10T12:00:00Z"
     }
   },
   {
-    "model": "control.Fornecedor",
+    "model": "control.fornecedor",
     "pk": 10,
     "fields": {
-      "nome": "Zeta Tecnologia",
-      "email": "adm@zetatecnologia.net",
-      "cpf_cnpj": "66666666666691",
-      "telefone": "8590007000"
+      "nome": "Jota Tintas e Vernizes",
+      "cpf_cnpj": "00000000000700",
+      "email": "contato@jotatintas.com",
+      "telefone": "84300000010",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Quintas",
+      "logradouro": "Rua da Pintura, 50",
+      "numero": "50",
+      "complemento": "",
+      "cep": "59000010",
+      "data_cadastro": "2025-02-15T14:35:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 11,
+    "fields": {
+      "nome": "Kappa Consultoria",
+      "cpf_cnpj": "00000000000800",
+      "email": "contato@kappa.com",
+      "telefone": "84300000011",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Nova Esperança",
+      "logradouro": "Av. Consultores, 10",
+      "numero": "10",
+      "complemento": "",
+      "cep": "59000011",
+      "data_cadastro": "2025-02-20T16:05:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 12,
+    "fields": {
+      "nome": "Lana Peças Automotivas",
+      "cpf_cnpj": "44444444444",
+      "email": "lana.pecas@email.com",
+      "telefone": "84990000012",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Nordeste",
+      "logradouro": "Rua do Motor, 35",
+      "numero": "35",
+      "complemento": "",
+      "cep": "59000012",
+      "data_cadastro": "2025-02-25T09:25:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 13,
+    "fields": {
+      "nome": "Mega Plásticos",
+      "cpf_cnpj": "00000000000900",
+      "email": "vendas@mega.com",
+      "telefone": "84300000013",
+      "estado": null,
+      "cidade": "Extremoz",
+      "bairro": "Centro",
+      "logradouro": "Rua do Plástico, 15",
+      "numero": "15",
+      "complemento": "",
+      "cep": "59000013",
+      "data_cadastro": "2025-03-01T11:50:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 14,
+    "fields": {
+      "nome": "Nova Quimica Soluções",
+      "cpf_cnpj": "00000000001000",
+      "email": "contato@novaquimica.com",
+      "telefone": "84300000014",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Potengi",
+      "logradouro": "Av. Química, 200",
+      "numero": "200",
+      "complemento": "Laboratório",
+      "cep": "59000014",
+      "data_cadastro": "2025-03-05T14:00:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 15,
+    "fields": {
+      "nome": "Otávio Rocha EPP",
+      "cpf_cnpj": "55555555555",
+      "email": "otavio.rocha@email.com",
+      "telefone": "84990000015",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Cohabinal",
+      "logradouro": "Rua das Américas, 40",
+      "numero": "40",
+      "complemento": "",
+      "cep": "59000015",
+      "data_cadastro": "2025-03-10T16:25:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 16,
+    "fields": {
+      "nome": "Primeira Distribuidora",
+      "cpf_cnpj": "00000000001100",
+      "email": "pedidos@primeira.com",
+      "telefone": "84300000016",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Candelária",
+      "logradouro": "Rua da Entrega, 1",
+      "numero": "1",
+      "complemento": "Centro Dist.",
+      "cep": "59000016",
+      "data_cadastro": "2025-03-15T09:00:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 17,
+    "fields": {
+      "nome": "Quasar Engenharia",
+      "cpf_cnpj": "00000000001200",
+      "email": "projetos@quasar.com",
+      "telefone": "84300000017",
+      "estado": null,
+      "cidade": "Macau",
+      "bairro": "Porto",
+      "logradouro": "Av. Marítima, 50",
+      "numero": "50",
+      "complemento": "",
+      "cep": "59000017",
+      "data_cadastro": "2025-03-20T11:15:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 18,
+    "fields": {
+      "nome": "Rafaela Mendes (Autônoma)",
+      "cpf_cnpj": "66666666666",
+      "email": "rafaela.m@email.com",
+      "telefone": "84990000018",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Neópolis",
+      "logradouro": "Rua da Liberdade, 100",
+      "numero": "100",
+      "complemento": "Apt 5",
+      "cep": "59000018",
+      "data_cadastro": "2025-03-25T13:30:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 19,
+    "fields": {
+      "nome": "Sigma Embalagens",
+      "cpf_cnpj": "00000000001300",
+      "email": "embalagens@sigma.com",
+      "telefone": "84300000019",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Santos Reis",
+      "logradouro": "Av. do Papel, 30",
+      "numero": "30",
+      "complemento": "",
+      "cep": "59000019",
+      "data_cadastro": "2025-04-01T15:00:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 20,
+    "fields": {
+      "nome": "Taurus Segurança",
+      "cpf_cnpj": "00000000001400",
+      "email": "contato@taurusseg.com",
+      "telefone": "84300000020",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Petrópolis",
+      "logradouro": "Rua da Vigilância, 5",
+      "numero": "5",
+      "complemento": "Torre A",
+      "cep": "59000020",
+      "data_cadastro": "2025-04-05T08:40:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 21,
+    "fields": {
+      "nome": "União Limpeza Profissional",
+      "cpf_cnpj": "77777777777",
+      "email": "uniao@limpeza.com",
+      "telefone": "84990000021",
+      "estado": null,
+      "cidade": "São Gonçalo do Amarante",
+      "bairro": "Centro",
+      "logradouro": "Rua Principal, 77",
+      "numero": "77",
+      "complemento": "",
+      "cep": "59000021",
+      "data_cadastro": "2025-04-10T10:50:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 22,
+    "fields": {
+      "nome": "Víctor Hugo ME",
+      "cpf_cnpj": "00000000001500",
+      "email": "victor.hugo@email.com",
+      "telefone": "84300000022",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Ponta Negra",
+      "logradouro": "Av. Litorânea, 300",
+      "numero": "300",
+      "complemento": "Loja A",
+      "cep": "59000022",
+      "data_cadastro": "2025-04-15T12:25:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 23,
+    "fields": {
+      "nome": "W Soluções Gráficas",
+      "cpf_cnpj": "00000000001600",
+      "email": "grafica@wsolucoes.com",
+      "telefone": "84300000023",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Cohabinal",
+      "logradouro": "Rua da Impressão, 12",
+      "numero": "12",
+      "complemento": "",
+      "cep": "59000023",
+      "data_cadastro": "2025-04-20T14:40:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 24,
+    "fields": {
+      "nome": "Xis Alimentos Congelados",
+      "cpf_cnpj": "88888888888",
+      "email": "xis.alimentos@email.com",
+      "telefone": "84990000024",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Nova Natal",
+      "logradouro": "Av. do Sabor, 25",
+      "numero": "25",
+      "complemento": "Câmara Fria",
+      "cep": "59000024",
+      "data_cadastro": "2025-04-25T16:55:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 25,
+    "fields": {
+      "nome": "Ypsilon Energia Solar",
+      "cpf_cnpj": "00000000001700",
+      "email": "contato@ypsilon.com",
+      "telefone": "84300000025",
+      "estado": null,
+      "cidade": "Ceará-Mirim",
+      "bairro": "Novo Horizonte",
+      "logradouro": "Rua da Luz, 5",
+      "numero": "5",
+      "complemento": "",
+      "cep": "59000025",
+      "data_cadastro": "2025-05-01T09:10:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 26,
+    "fields": {
+      "nome": "Zeta Serviços de Marketing",
+      "cpf_cnpj": "00000000001800",
+      "email": "agencia@zeta.com",
+      "telefone": "84300000026",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Lagoa Seca",
+      "logradouro": "Av. da Comunicação, 15",
+      "numero": "15",
+      "complemento": "Andar 2",
+      "cep": "59000026",
+      "data_cadastro": "2025-05-05T11:40:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 27,
+    "fields": {
+      "nome": "Andréia Cabral (Consultora)",
+      "cpf_cnpj": "99999999999",
+      "email": "andreia.c@email.com",
+      "telefone": "84990000027",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Centro",
+      "logradouro": "Rua dos Profissionais, 33",
+      "numero": "33",
+      "complemento": "",
+      "cep": "59000027",
+      "data_cadastro": "2025-05-10T14:00:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 28,
+    "fields": {
+      "nome": "Bio Produtos Naturais",
+      "cpf_cnpj": "00000000001900",
+      "email": "bio@produtos.com",
+      "telefone": "84300000028",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Candelária",
+      "logradouro": "Av. da Natureza, 70",
+      "numero": "70",
+      "complemento": "",
+      "cep": "59000028",
+      "data_cadastro": "2025-05-15T16:20:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 29,
+    "fields": {
+      "nome": "Cia do Gesso",
+      "cpf_cnpj": "00000000002000",
+      "email": "gesso@ciagesso.com",
+      "telefone": "84300000029",
+      "estado": null,
+      "cidade": "São Gonçalo do Amarante",
+      "bairro": "Amizade",
+      "logradouro": "Rua do Cimento, 10",
+      "numero": "10",
+      "complemento": "Depósito",
+      "cep": "59000029",
+      "data_cadastro": "2025-05-20T08:55:00Z"
+    }
+  },
+  {
+    "model": "control.fornecedor",
+    "pk": 30,
+    "fields": {
+      "nome": "Duda Cosméticos",
+      "cpf_cnpj": "00000000002100",
+      "email": "contato@dudacosm.com",
+      "telefone": "84300000030",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Capim Macio",
+      "logradouro": "Rua da Beleza, 55",
+      "numero": "55",
+      "complemento": "Loja Principal",
+      "cep": "59000030",
+      "data_cadastro": "2025-05-25T11:10:00Z"
     }
   }
 ]

@@ -121,6 +121,7 @@ class Pedidos_CompraForm(forms.ModelForm):
             "quantidade": "Quantidade",
             "status": "Status",
             "valor": "Valor Total",
+            "data": "Data"
         }
         widgets = {
             'quantidade': forms.NumberInput(attrs={'min': 1}),
@@ -168,6 +169,7 @@ class Pedidos_CompraForm(forms.ModelForm):
                 Column('valor', css_class='col-12 col-md-6'),
             ),
             Row(
+                Column('data', css_class='col-12 col-md-6'),
                 Column('status', css_class='col-12 col-md-6'),
             ),
             

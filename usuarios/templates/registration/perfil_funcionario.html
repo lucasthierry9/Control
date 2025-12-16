@@ -40,23 +40,23 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500;">Nome completo</label>
-                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ funcionario.nome }}</p>
+                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ funcionario.nome|default:"Não registrado"  }}</p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500;">CPF</label>
-                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ funcionario.cpf }}</p>
+                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ funcionario.cpf|default:"Não registrado"  }}</p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500;">E-mail</label>
-                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.email  }}</p>
+                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.email|default:"Não registrado"   }}</p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500;">Telefone</label>
-                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.telefone  }}</p>
+                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.telefone|default:"Não registrado"   }}</p>
                         </div>
                         <div class="col-12">
                             <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500;">Cargo</label>
-                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ funcionario.cargo|default:"Rua Exemplo, 123 - Cidade/UF" }}</p>
+                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ funcionario.cargo|default:"Não registrado"  }}</p>
                         </div>
                     </div>
                 </div>
