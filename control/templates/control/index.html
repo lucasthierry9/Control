@@ -1,117 +1,197 @@
 {% extends "control/base.html" %}
 {% load static %}
-{% block title%}Início{%endblock title%}
-{% block header %}
-<header>
-        <nav id="c2" class="navbar navbar-expand-lg" style="background-color: #2563EB; padding: 10px; height: 80px;">
-            <div class="container-fluid">
-                <a class="navbar-brand" href={% url 'index' %} style="color: white; font-size: 36px; font-weight: 700; font-family: Inter;">Control</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="color: white; font-size: 20px; font-weight: 700; font-family: Inter;">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown show" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
-                                Funcionalidades
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown show">
-                            <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
-                                Segmentos
-                            </a>
-                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; margin-top: 15px; font-size: 14px;">
-                                <li style="color: #2563EB; font-weight: 700; margin-left: 15px; margin-top: 5px;">Vendas</li>
-                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Pedidos</a></li>
-                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Histórico</a></li>
-                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="color: #2563EB; font-weight: 700;">Ver relatório de vendas</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700;">
-                                Contato
-                            </a>
-                            <ul class="dropdown-menu" data-bs-popper="static">
-                                <li><a class="dropdown-item" href="#">Funcional</a></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <div class="d-flex gap-2">
-                        <a class="btn btn-link text-white d-flex align-items-center" href={% url 'login' %} style="color: white; font-family: Inter; font-weight: 700; text-decoration: none;">
-                            <i class="bi bi-person-circle me-1"></i> Login
-                        </a>
-                        <a class="btn btn-criar-conta" style="background-color: white; color: #2563EB; font-family: Inter; font-weight: 700; padding: 6px 16px; border-radius: 20px;" href={% url 'usuarios:cadastro' %}>Criar conta</a>
+
+{% block title %}Início{% endblock title %}
+
+
+{% block content %}
+
+<main class="container-fluid min-vh-100" style="padding-top:100px;">
+
+    <!-- HERO -->
+    <section class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2 class="fw-bold display-5">
+                    Venda mais, controle melhor, tenha menos estresse.<br>
+                    Bem-vindo ao <span class="text-primary">CONTROL</span>
+                </h2>
+
+                <form class="d-flex mt-4">
+                    <input type="email"
+                            name="email"
+                           class="form-control me-2 rounded-pill"
+                           placeholder="Insira seu e-mail">
+                    <button class="btn btn-primary rounded-pill fw-semibold">
+                        <a href="{%  url "usuarios:cadastro" %}">Criar conta</a>
+                    </button>
+                </form>
+            </div>
+
+            <div class="col-md-6 text-center">
+                <div class="bg-secondary text-light d-flex align-items-center
+                            justify-content-center rounded-3"
+                     style="height:400px;">
+                    <h3 class="fw-bold">IMAGEM</h3>
+                </div>
+            </div>
+        </div>
+        <div class="section-divider"></div>
+    </section>
+
+    <!-- FUNCIONALIDADES -->
+    <section id="segmentos" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-primary">
+                    Por que escolher o CONTROL?
+                </h2>
+                <p class="text-muted">
+                    Nosso objetivo é tornar a gestão de vendas simples e eficiente.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="fw-bold text-primary">Praticidade</h5>
+                            <p class="text-muted">
+                                Plataforma simples e intuitiva para o dia a dia.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="fw-bold text-primary">Qualidade</h5>
+                            <p class="text-muted">
+                                Experiência de alto nível para empresas e clientes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="fw-bold text-primary">Parcerias</h5>
+                            <p class="text-muted">
+                                Relacionamentos duradouros e crescimento conjunto.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </nav>
-    </header>{% endblock header %}
-{% block content %}
-<main class="container-fluid d-flex align-items-center min-vh-100">
-    <div class="container pt-3">
-        <div class="row align-items-center">
-            
-            <!-- Texto -->
-            <div class="col-md-6 mb-4 mb-md-0">
-            <h2 class="fw-bold display-5">
-                Venda mais, controle melhor, tenha menos estresse. <br>
-                Bem-vindo ao <span class="text-primary">CONTROL</span>
+        </div>
+        <div class="section-divider"></div>
+    </section>
+
+    <!-- funcionalidades -->
+<section id="funcionalidades" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-primary">
+                Funcionalidades do sistema
             </h2>
-    
-            <!-- Formulário -->
-            <form class="d-flex mt-4">
-                <input type="email" class="form-control me-2 rounded-pill" placeholder="Insira seu e-mail">
-                <button class="btn btn-primary rounded-pill fw-semibold">Criar conta</button>
-            </form>
-            </div>
-  
-        <!-- Imagem -->
-            <div class="col-md-6 text-center">
-            <div class="bg-secondary text-light d-flex align-items-center justify-content-center w-100 rounded-3" style="height:400px;">
-                <h3 class="fw-bold">IMAGEM</h3>
-            </div>
-            </div>
+            <p class="text-muted fs-5">
+                Ferramentas essenciais para facilitar a gestão de vendas
+                e o controle do seu negócio.
+            </p>
         </div>
-        <!-- Bloco de informações -->
-    <section class="py-5 bg-light mt-5">
-        <div class="container">
-        <div class="row text-center mb-4">
-            <h2 class="fw-bold text-primary">Por que escolher o CONTROL?</h2>
-            <p class="text-muted">Nosso objetivo é tornar a gestão de vendas simples, prática e de alta qualidade.</p>
-        </div>
-    
+
         <div class="row g-4">
             <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                <h5 class="fw-bold text-primary">Praticidade</h5>
-                <p class="text-muted">Facilitamos o processo de compra e venda, oferecendo uma plataforma intuitiva para todos os usuários.</p>
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="fw-bold text-primary mb-3">
+                            Cadastro de clientes
+                        </h5>
+                        <p class="text-muted">
+                            Registre e gerencie informações importantes dos seus clientes
+                            de forma rápida e segura.
+                        </p>
+                        <p class="text-muted">
+                            Tenha histórico de compras sempre disponível.
+                        </p>
+                    </div>
                 </div>
             </div>
-            </div>
-    
+
             <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                <h5 class="fw-bold text-primary">Qualidade</h5>
-                <p class="text-muted">Buscamos entregar sempre uma experiência de excelência, tanto para compradores quanto para empresas parceiras.</p>
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="fw-bold text-primary mb-3">
+                            Controle de vendas
+                        </h5>
+                        <p class="text-muted">
+                            Acompanhe todas as vendas realizadas, valores, formas de pagamento
+                            e datas.
+                        </p>
+                        <p class="text-muted">
+                            Mais clareza e controle financeiro.
+                        </p>
+                    </div>
                 </div>
             </div>
-            </div>
-    
+
             <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                <h5 class="fw-bold text-primary">Parcerias</h5>
-                <p class="text-muted">Valorizamos relacionamentos de longo prazo, criando oportunidades duradouras para todos que confiam no CONTROL.</p>
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="fw-bold text-primary mb-3">
+                            Relatórios e acompanhamento
+                        </h5>
+                        <p class="text-muted">
+                            Visualize dados importantes para analisar o desempenho
+                            do seu negócio.
+                        </p>
+                        <p class="text-muted">
+                            Tome decisões mais seguras e estratégicas.
+                        </p>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
-        </div>
-    </section>
     </div>
+    <div class="section-divider"></div>
+
+</section>
+
+
+    <!-- CONTATO -->
+<section id="contato" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary">
+                Fale com a gente
+            </h2>
+            <p class="text-muted fs-5">
+                Tem dúvidas ou quer saber se o CONTROL é ideal para o seu negócio?
+                Entre em contato conosco.
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <p class="text-muted">
+                    Nossa equipe está pronta para ajudar você a entender melhor
+                    as funcionalidades da plataforma e como ela pode transformar
+                    a gestão do seu negócio.
+                </p>
+
+                <a href="mailto:contato@control.com"
+                   class="btn btn-primary rounded-pill fw-bold px-5 mt-3">
+                    Entrar em contato
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="section-divider"></div>
+
+</section>
+
 </main>
+
 {% endblock content %}

@@ -15,6 +15,7 @@ def cadastrar_usuario(request):
             return redirect("usuarios:login")
     else:
         form = UserForm()
+        
     return render(request, "registration/cadastro.html", {"form": form})
 
 
