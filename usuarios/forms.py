@@ -6,9 +6,9 @@ from django.contrib.auth import authenticate
 class UserForm(UserCreationForm):
     razao_social = forms.CharField(label='Razão Social', max_length=200)
     nome_fantasia = forms.CharField(label='Nome fantasia', max_length=200)
-    cnpj = forms.CharField(label='CNPJ', max_length=18)
+    cnpj = forms.CharField(label='CNPJ', max_length=14)
     email = forms.EmailField(label='E-mail')
-    telefone = forms.CharField(label='Telefone', max_length=20)
+    telefone = forms.CharField(label='Telefone', max_length=11)
     password1 = forms.CharField( label='Crie sua senha de acesso', help_text='', widget=forms.PasswordInput(attrs={'class': 'form-control',}))
     password2 = forms.CharField( label='Confirmação de senha', help_text='', widget=forms.PasswordInput(attrs={'class': 'form-control',}))
     

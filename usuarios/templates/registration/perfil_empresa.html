@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-12">
                             <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500;">Endereço</label>
-                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ empresa.endereco|default:"Rua Exemplo, 123 - Cidade/UF" }}</p>
+                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.endereco|default:"Rua Exemplo, 123 - Cidade/UF" }}</p>
                         </div>
                     </div>
                 </div>
@@ -90,26 +90,26 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500;">Nome</label>
-                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ admin.nome|default:"Nome do Administrador" }}</p>
+                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.nome_admin|default:"Nome do Administrador" }}</p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500;">CPF</label>
-                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ admin.cpf|default:"000.000.000-00" }}</p>
+                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.cpf_admin|default:"000.000.000-00" }}</p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500;">E-mail</label>
-                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ admin.email|default:"admin@empresa.com" }}</p>
+                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.email_admin|default:"admin@empresa.com" }}</p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500;">Telefone</label>
-                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ admin.telefone|default:"(00) 00000-0000" }}</p>
+                            <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ request.user.telefone_admin|default:"(00) 00000-0000" }}</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="w-100 d-flex" style="justify-content: flex-end; gap: 20px;">
-                <a href={% url 'usuarios:editar_perfil' request.user.id  %} class="d-block"><button class="fs-4" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none;">Editar Perfil</button></a>
-                <a href={% url 'usuarios:alterar_senha'  %} class="d-block"><button class="fs-4" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none;">Alterar Senha</button></a>
+                <a href={% url 'usuarios:editar_perfil' request.user.id  %} class="d-block"><button class="fs-5" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none;">Editar Perfil</button></a>
+                <a href={% url 'usuarios:alterar_senha'  %} class="d-block"><button class="fs-5" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none;">Alterar Senha</button></a>
             </div>
         </div>
     </div>

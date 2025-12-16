@@ -1,16 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Sum
-from django.db.models.functions import ExtractWeek, ExtractYear, ExtractMonth, ExtractDay
+from django.db.models import Count, Sum, F, DecimalField
+from django.db.models.functions import ExtractWeek, ExtractYear, ExtractMonth, ExtractDay, TruncMonth
 from datetime import datetime, timedelta
 from django.utils import timezone
-from control.models import Pedidos_Venda, Produto, Cliente
+from control.models import Pedidos_Venda, Produto, Cliente, Pedidos_Compra
 import json
 from django.utils.timezone import now
+from decimal import Decimal
+
 @login_required
 def index(request):
     total_produtos = Produto.objects.count()
     total_clientes = Cliente.objects.count()
+    total_vendas = Pedidos_Venda.objects.filter(status='concluido').count()
+    valor_total_vendas = Decimal('0.00')
+    valor_total_compras = Decimal('0.00')
 
     ano = request.GET.get('ano')
     mes = request.GET.get('mes')
@@ -61,6 +66,42 @@ def index(request):
             labels.append(f"Semana {i}")
             dados.append(v['total'])
 
+    vendas_mensal = (
+        Pedidos_Venda.objects
+        .filter(status='concluido')
+        .annotate(mes=TruncMonth('data'))
+        .values('mes')
+        .annotate(
+            valor_total_vendas=Sum(
+                F('produto__preco') * F('quantidade'),
+                output_field=DecimalField()
+            )
+        )
+    )
+
+    compras_mensal = (
+        Pedidos_Compra.objects
+        .filter(status='concluido')
+        .annotate(mes=TruncMonth('data'))
+        .values('mes')
+        .annotate(total_compras=Sum('valor'))
+    )
+
+    compras_dict = {c['mes']: c['total_compras'] for c in compras_mensal}
+
+    labels_faturamento = []
+    dados_faturamento = []
+
+    for v in vendas_mensal:
+        mes_ref = v['mes']
+        valor_total_vendas = v['valor_total_vendas'] or 0
+        total_compras = compras_dict.get(mes_ref, 0) or 0
+
+        faturamento = valor_total_vendas - total_compras
+
+        labels_faturamento.append(mes_ref.strftime('%b/%Y'))
+        dados_faturamento.append(float(faturamento))
+
     anos = (
         Pedidos_Venda.objects
         .annotate(ano=ExtractYear('data'))
@@ -79,12 +120,16 @@ def index(request):
     return render(request, 'dashboard/index.html', {
         'labels_json': json.dumps(labels),
         'vendas_json': json.dumps(dados),
+        'labels_faturamento_json': json.dumps(labels_faturamento),
+        'faturamento_json': json.dumps(dados_faturamento),
         'anos': anos,
         'meses': meses,
         'ano_selecionado': ano,
         'mes_selecionado': int(mes) if mes else '',
         'total_produtos': total_produtos,
         'total_clientes': total_clientes,
+        'total_vendas': total_vendas,
+        'valor_total_vendas': valor_total_vendas,
     })
 
 @login_required

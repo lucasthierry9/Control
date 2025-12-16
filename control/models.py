@@ -2,37 +2,38 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from usuarios.models import Usuario
 User = get_user_model()
 
 class Estado(models.Model):
     ESTADOS_CHOICES = [
-    ('AC', 'Acre'),
-    ('AL', 'Alagoas'),
-    ('AM', 'Amazonas'),
-    ('AP', 'Amapá'),
-    ('BA', 'Bahia'),
-    ('CE', 'Ceará'),
-    ('DF', 'Distrito Federal'),
-    ('ES', 'Espírito Santo'),
-    ('GO', 'Goiás'),
-    ('MA', 'Maranhão'),
-    ('MG', 'Minas Gerais'),
-    ('MS', 'Mato Grosso do Sul'),
-    ('MT', 'Mato Grosso'),
-    ('PA', 'Pará'),
-    ('PB', 'Paraíba'),
-    ('PE', 'Pernambuco'),
-    ('PI', 'Piauí'),
-    ('PR', 'Paraná'),
-    ('RJ', 'Rio de Janeiro'),
-    ('RN', 'Rio Grande do Norte'),
-    ('RO', 'Rondônia'),
-    ('RR', 'Roraima'),
-    ('RS', 'Rio Grande do Sul'),
-    ('SC', 'Santa Catarina'),
-    ('SE', 'Sergipe'),
-    ('SP', 'São Paulo'),
-    ('TO', 'Tocantins')
+    ('AC', 'AC'),
+    ('AL', 'AL'),
+    ('AM', 'AM'),
+    ('AP', 'AP'),
+    ('BA', 'BA'),
+    ('CE', 'CE'),
+    ('DF', 'DF'),
+    ('ES', 'ES'),
+    ('GO', 'GO'),
+    ('MA', 'MA'),
+    ('MG', 'MG'),
+    ('MS', 'MS'),
+    ('MT', 'MT'),
+    ('PA', 'PA'),
+    ('PB', 'PB'),
+    ('PE','PE'),
+    ('PI', 'PI'),
+    ('PR', 'PR'),
+    ('RJ', 'RJ'),
+    ('RN', 'RN'),
+    ('RO', 'RO'),
+    ('RR', 'RR'),
+    ('RS', 'RS'),
+    ('SC', 'SC'),
+    ('SE', 'SE'),
+    ('SP', 'SP'),
+    ('TO', 'TO'),
     ]
     estado = models.CharField(max_length=2, choices=ESTADOS_CHOICES)
 
@@ -77,13 +78,13 @@ class Cliente(models.Model):
     cpf = models.CharField(max_length=11)
     email = models.EmailField(max_length=254, default="")
     telefone = models.CharField(max_length=11, default="")
-    estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
-    cidade = models.CharField(max_length=50)
-    bairro = models.CharField(max_length=50)
-    logradouro = models.CharField(max_length=100)
-    numero = models.CharField(max_length=100)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE, null=True, blank=True)
+    cidade = models.CharField(max_length=50, blank=True)
+    bairro = models.CharField(max_length=50, blank=True)
+    logradouro = models.CharField(max_length=100, blank=True)
+    numero = models.CharField(max_length=100, blank=True)
     complemento = models.CharField(max_length=100, blank=True)
-    cep = models.CharField(max_length=8)
+    cep = models.CharField(max_length=8, blank=True)
 
     def __str__(self):
         return self.nome
@@ -121,7 +122,8 @@ class Pedidos_Compra(models.Model):
     quantidade = models.IntegerField()
     valor = models.DecimalField(max_digits=8, decimal_places=2)
     status = models.CharField(max_length=20, choices=STATUS, default='aberto')
-
+    data = models.DateTimeField(default=timezone.now)
+    
 class Deposito(models.Model):
     descricao = models.CharField(max_length=50)
 
@@ -190,13 +192,13 @@ class Pedidos_Venda(models.Model):
     peso = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     valor_frete = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     frete = models.CharField(max_length=30, choices=TIPO_FRETE, blank=True)
-    estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
-    cidade = models.CharField(max_length=50)
-    bairro = models.CharField(max_length=50)
-    logradouro = models.CharField(max_length=100)
-    numero = models.CharField(max_length=7)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE, blank=True)
+    cidade = models.CharField(max_length=50, blank=True)
+    bairro = models.CharField(max_length=50, blank=True)
+    logradouro = models.CharField(max_length=100, blank=True)
+    numero = models.CharField(max_length=7, blank=True)
     complemento = models.CharField(max_length=100, blank=True)
-    cep = models.CharField(max_length=8)
+    cep = models.CharField(max_length=8, blank=True)
 
 
     def total(self):
@@ -212,3 +214,22 @@ class Funcionario(models.Model):
 
     def __str__(self):
         return f"{self.nome} ({self.cargo})"
+    
+    
+class HistoricoAcao(models.Model):
+    MODULOS = (
+        ('clientes', 'Clientes'),
+        ('produtos', 'Produtos'),
+        ('vendedores', 'Vendedores'),
+        ('funcionarios', 'Funcionarios'),
+        ('categorias', 'Categorias'),
+        ('fornecedores', 'Fornecedores'),
+    )
+
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    modulo = models.CharField(max_length=20, choices=MODULOS)
+    descricao = models.CharField(max_length=255)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"[{self.modulo}] {self.descricao}"
