@@ -1,6 +1,39 @@
 {% extends "dashboard/base_dashboard.html" %}
 {% load static %}
 {% block title %}Dashboard{% endblock title %}
+{% block sidebar %}
+<div class="pt-3">
+    <div class="row g-0" style="min-height: calc(100vh - 200px);">
+        <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
+            <div style="min-height: 60px;">
+                <h1 class="ps-4" style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Dashboard</h1>
+            </div>
+            <div class="bg-white shadow" style="height: 100%; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
+                <ul class="nav flex-column p-3">
+                    <li class="nav-item">
+                        <a href="{% url 'dashboard:index' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="bi bi-grid-1x2-fill me-3"></i>Visão Geral
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard:vendas' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="bi bi-cart2 me-3"></i>Vendas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard:produtos' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="fa-solid fa-cube me-3"></i>Produtos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard:clientes' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="fa-solid fa-user me-3"></i>Clientes
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+{% endblock sidebar %}
 {% block content %}
 <div class="col-12 col-lg-10 px-4">
     <div style="min-height: 60px;"></div>
