@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Sum, F, DecimalField
 from django.db.models.functions import ExtractWeek, ExtractYear, ExtractMonth, ExtractDay, TruncMonth
+from django.db.models import Count, Sum,ExpressionWrapper,F,FloatField
+from django.db.models.functions import ExtractWeek, ExtractYear, ExtractMonth, ExtractDay
 from datetime import datetime, timedelta
 from django.utils import timezone
 from control.models import Pedidos_Venda, Produto, Cliente, Pedidos_Compra
@@ -102,6 +104,14 @@ def index(request):
         labels_faturamento.append(mes_ref.strftime('%b/%Y'))
         dados_faturamento.append(float(faturamento))
 
+    faturamento = vendas.aggregate(
+    total=Sum(
+        ExpressionWrapper(F('quantidade') * F('produto__preco'), output_field=FloatField())
+    )
+    )['total'] or 0
+
+    clientes_ativos = vendas.values('cliente').distinct().count()
+    produtos_vendidos = vendas.values('produto').distinct().count()
     anos = (
         Pedidos_Venda.objects
         .annotate(ano=ExtractYear('data'))
@@ -130,6 +140,9 @@ def index(request):
         'total_clientes': total_clientes,
         'total_vendas': total_vendas,
         'valor_total_vendas': valor_total_vendas,
+        'faturamento': faturamento,
+        'clientes': clientes_ativos,
+        'produtos': produtos_vendidos,
     })
 
 @login_required
