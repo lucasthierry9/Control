@@ -95,16 +95,20 @@
                     <div class="row mt-4 g-3">
 
                     <div class="col-12 col-lg-6">
-                        <div class="bg-white shadow-sm" 
-                            style="height: 450px; border-radius: 12px;">
-
+                        <div class="bg-white shadow-sm" style="height: 450px; border-radius: 12px;">
+                            <div class="d-flex align-items-center" style="background: white; padding: 5px 10px; border-bottom: 1px solid #f0f0f0; justify-content: space-between; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                                <h2 style="color: white; font-size: 14px; font-weight: 700; margin: 0; color: black;">Faturamento</h2>
+                            </div>
+                            <div style="padding: 15px; height: 400px;">
+                                <canvas id="graficoFaturamento" class="mt-4"></canvas>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-12 col-lg-6">
                         <div class="bg-white shadow-sm" style="height: 450px; border-radius: 12px; font-family: Inter;">
                             <div class="d-flex align-items-center" style="background: white; padding: 5px 10px; border-bottom: 1px solid #f0f0f0; justify-content: space-between; border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                                <h2 style="color: white; font-size: 14px; font-weight: 700; margin: 0; color: black;">Quantidade de Vendas:</h2>
+                                <h2 style="color: white; font-size: 14px; font-weight: 700; margin: 0; color: black;">Quantidade de Vendas: {{ total_vendas }}</h2>
                             </div>
                             <div style="padding: 15px; height: 400px;">
                                 <canvas id="vendasChart"></canvas>
@@ -126,44 +130,71 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-  const vendasPorSemana = {{ vendas_json|safe }};
-  const labels = {{ labels_json|safe }};
+    const vendasPorSemana = {{ vendas_json|safe }};
+    const labels = {{ labels_json|safe }};
 
-  const canvas = document.getElementById('vendasChart');
+    const canvas = document.getElementById('vendasChart');
 
-  if (!canvas) {
-    console.error("Canvas vendasChart não encontrado");
-    return;
-  }
+    if (!canvas) {
+        console.error("Canvas vendasChart não encontrado");
+        return;
+    }
 
-  new Chart(canvas, {
-    type: 'bar',
+    new Chart(canvas, {
+        type: 'bar',
+        data: {
+        labels: labels,
+        datasets: [{
+            label: 'Vendas concluídas',
+            data: vendasPorSemana,
+            backgroundColor: '#3b82f6',
+            minBarLength: 6,
+            borderRadius: 6,
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+            beginAtZero: true,
+            }
+        }
+        }
+    });
+
+    });
+</script>
+
+<script>
+const labelsFaturamento = JSON.parse('{{ labels_faturamento_json|escapejs }}');
+const dadosFaturamento = JSON.parse('{{ faturamento_json|escapejs }}');
+
+new Chart(document.getElementById('graficoFaturamento'), {
+    type: 'line',
     data: {
-      labels: labels,
-      datasets: [{
-        label: 'Vendas concluídas',
-        data: vendasPorSemana,
-        backgroundColor: '#3b82f6',
-        minBarLength: 6,
-        borderRadius: 6,
-      }]
+        labels: labelsFaturamento,
+        datasets: [{
+            label: 'Faturamento Mensal (R$)',
+            data: dadosFaturamento,
+            borderWidth: 3,
+            tension: 0.4,
+            fill: false
+        }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
         }
-      }
     }
-  });
-
 });
 </script>
 {% endblock scripts %}

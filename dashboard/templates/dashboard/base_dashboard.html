@@ -332,13 +332,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dashboard:vendas' %}">Vendas</a>
+                        <a class="nav-link" href="{% url 'dashboard:vendas' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="bi bi-cart2 me-3"></i>Vendas
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Produtos</a>
+                        <a class="nav-link" href="{% url 'dashboard:produtos' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="fa-solid fa-cube me-3"></i>Produtos
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Clientes</a>
+                        <a class="nav-link" href="{% url 'dashboard:clientes' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="fa-solid fa-user me-3"></i>Clientes
+                        </a>
                     </li>
                 </ul>
             </div>

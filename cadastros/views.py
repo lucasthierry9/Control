@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
+from control.utils import registrar_acao, ultimas_acoes_modulo
 
 #CLIENTES
 @login_required
@@ -29,18 +30,24 @@ def clientes(request):
     paginator = Paginator(clientes, 10)
     numero_da_pagina = request.GET.get('p')
     clientes_paginados = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/clientes/clientes.html", {"clientes": clientes_paginados, "search": search})
+    return render(request, "cadastros/clientes/clientes.html", {"clientes": clientes_paginados, "search": search, "historico": ultimas_acoes_modulo(request.user, 'clientes')})
 
 @login_required
 def cadastrar_cliente(request):
     if request.method == "POST":
         form = ClienteForm(request.POST)
         if form.is_valid():
-            form.save()
+            cliente = form.save()
+
+            registrar_acao(
+                request.user,
+                'clientes',
+                f"{cliente.nome} cadastrado"
+            )
             return redirect("cadastros:clientes")
     else:
         form = ClienteForm()
-    return render(request, "cadastros/clientes/cadastrar_cliente.html", {"form": form})
+    return render(request, "cadastros/clientes/cadastrar_cliente.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'clientes',)})
 
 def editar_cliente(request, id_cliente):
     cliente = get_object_or_404(Cliente, id=id_cliente)
@@ -48,12 +55,18 @@ def editar_cliente(request, id_cliente):
     if request.method == "POST":
         form = ClienteForm(request.POST, instance=cliente)
         if form.is_valid():
-            form.save()
+            cliente = form.save()
+
+            registrar_acao(
+                request.user,
+                'clientes',
+                f"{cliente.nome} editado"
+            )
             return redirect("cadastros:clientes")
     else:
         form = ClienteForm(instance=cliente)
 
-    return render(request, "cadastros/clientes/editar_cliente.html", {"form": form})
+    return render(request, "cadastros/clientes/editar_cliente.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'clientes')})
 
 @login_required
 def excluir_cliente(request, id_cliente=0):
@@ -86,42 +99,44 @@ def produtos(request):
     paginator = Paginator(produtos, 10)
     numero_da_pagina = request.GET.get('p')
     produtos_paginados = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/produtos/produtos.html", {"produtos": produtos_paginados, "search": search})
+    return render(request, "cadastros/produtos/produtos.html", {"produtos": produtos_paginados, "search": search, "historico": ultimas_acoes_modulo(request.user, 'produtos')})
 
 @login_required
 def cadastrar_produto(request):
     if request.method == "POST":
         form = ProdutoForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            produto = form.save()
+
+            registrar_acao(
+                request.user,
+                'produtos',
+                f"{produto.nome} cadastrado"
+            )
             return redirect("cadastros:produtos")
     else:
         form = ProdutoForm()
-    return render(request, "cadastros/produtos/cadastrar_produto.html", {"form": form})
+    return render(request, "cadastros/produtos/cadastrar_produto.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'produtos',)})
 
+@login_required 
 def editar_produto(request, id_produto):
     produto = get_object_or_404(Produto, id=id_produto)
 
     if request.method == "POST":
         form = ProdutoForm(request.POST, instance=produto)
         if form.is_valid():
-            form.save()
+            produto = form.save()
+
+            registrar_acao(
+                request.user,
+                'produtos',
+                f"{produto.nome} editado"
+            )
             return redirect("cadastros:produtos")
     else:
         form = ProdutoForm(instance=produto)
 
-    return render(request, "cadastros/produtos/editar_produto.html", {"form": form})
-
-@login_required 
-def editar_produto(request, id_produto):
-    produto = get_object_or_404(Produto, id=id_produto)
-    form = ProdutoForm(request.POST, instance=produto)
-    if form.is_valid():
-        form.save()
-        return redirect("cadastros:produtos")
-    else:
-        form = ProdutoForm(instance=produto)
-    return render(request, "cadastros/produtos/editar_produto.html", {"form": form})
+    return render(request, "cadastros/produtos/editar_produto.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'produtos',), "produto": produto})
 
 @login_required
 def excluir_produto(request, id_produto=0):
@@ -156,7 +171,7 @@ def funcionarios(request):
     paginator = Paginator(funcionarios, 10)
     numero_da_pagina = request.GET.get('p')
     funcionarios = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/funcionarios/funcionarios.html", {"funcionarios": funcionarios, "search": search})
+    return render(request, "cadastros/funcionarios/funcionarios.html", {"funcionarios": funcionarios, "search": search, "historico": ultimas_acoes_modulo(request.user, 'funcionarios')})
 
 @login_required
 def cadastrar_funcionario(request):
@@ -193,13 +208,20 @@ def cadastrar_funcionario(request):
 @login_required
 def editar_funcionario(request, id_funcionario):
     funcionario = get_object_or_404(Funcionario, id=id_funcionario)
-    form = FuncionarioForm(request.POST, instance=funcionario)
-    if form.is_valid():
-        form.save()
-        return redirect("cadastros:funcionarios")
+    if request.method == "POST":
+        form = FuncionarioForm(request.POST, instance=funcionario)
+        if form.is_valid():
+            funcionario = form.save()
+
+            registrar_acao(
+                request.user,
+                'funcionarios',
+                f"{funcionario.nome} editado"
+            )
+            return redirect("cadastros:funcionarios")
     else:
         form = FuncionarioForm(instance=funcionario)
-    return render(request, "cadastros/funcionarios/editar_funcionario.html", {"form": form})
+    return render(request, "cadastros/funcionarios/editar_funcionario.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'funcionarios'), "funcionario": funcionario})
 
 @login_required
 def excluir_funcionario(request, id_funcionario=0):
@@ -238,42 +260,44 @@ def vendedores(request):
     paginator = Paginator(vendedores, 10)
     numero_da_pagina = request.GET.get('p')
     vendedores = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/vendedores/vendedores.html", {"vendedores": vendedores, "search": search})
+    return render(request, "cadastros/vendedores/vendedores.html", {"vendedores": vendedores, "search": search, "historico": ultimas_acoes_modulo(request.user, 'vendedores')})
 
 @login_required
 def cadastrar_vendedor(request):
     if request.method == "POST":
         form = VendedorForm(request.POST)
         if form.is_valid():
-            form.save()
+            vendedor = form.save()
+
+            registrar_acao(
+                request.user,
+                'vendedores',
+                f"{vendedor.nome} cadastrado"
+            )
             return redirect("cadastros:vendedores")
     else:
         form = VendedorForm()
-    return render(request, "cadastros/vendedores/cadastrar_vendedor.html", {"form": form})
+    return render(request, "cadastros/vendedores/cadastrar_vendedor.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'vendedores')})
 
+@login_required 
 def editar_vendedor(request, id_vendedor):
     vendedor = get_object_or_404(Vendedor, id=id_vendedor)
 
     if request.method == "POST":
         form = VendedorForm(request.POST, instance=vendedor)
         if form.is_valid():
-            form.save()
-            return redirect("cadastros:vendedors")
+            vendedor = form.save()
+
+            registrar_acao(
+                request.user,
+                'vendedores',
+                f"{vendedor.nome} editado"
+            )
+            return redirect("cadastros:vendedores")
     else:
         form = VendedorForm(instance=vendedor)
 
-    return render(request, "cadastros/vendedores/editar_vendedor.html", {"form": form})
-
-@login_required         
-def editar_vendedor(request, id_vendedor):
-    vendedor = get_object_or_404(Vendedor, id=id_vendedor)
-    form = VendedorForm(request.POST, instance=vendedor)
-    if form.is_valid():
-        form.save()
-        return redirect("cadastros:vendedores")
-    else:
-        form = VendedorForm(instance=vendedor)
-    return render(request, "cadastros/vendedores/editar_vendedor.html", {"form": form})
+    return render(request, "cadastros/vendedores/editar_vendedor.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'vendedores'), "vendedor": vendedor})
 
 @login_required
 def excluir_vendedor(request, id_vendedor=0):
@@ -306,29 +330,42 @@ def fornecedores(request):
     paginator = Paginator(fornecedores, 10)
     numero_da_pagina = request.GET.get('p')
     fornecedores = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/fornecedores/fornecedores.html", {"fornecedores": fornecedores, "search": search})
+    return render(request, "cadastros/fornecedores/fornecedores.html", {"fornecedores": fornecedores, "search": search, "historico": ultimas_acoes_modulo(request.user,'fornecedores')})
 
 @login_required
 def cadastrar_fornecedor(request):
     if request.method == "POST":
         form = FornecedorForm(request.POST)
         if form.is_valid():
-            form.save()
+            fornecedor = form.save()
+
+            registrar_acao(
+                request.user,
+                'fornecedores',
+                f"{fornecedor.nome} cadastrado"
+            )
             return redirect("cadastros:fornecedores")
     else:
         form = FornecedorForm()
-    return render(request, "cadastros/fornecedores/cadastrar_fornecedor.html", {"form": form})
+    return render(request, "cadastros/fornecedores/cadastrar_fornecedor.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'fornecedores')})
 
 @login_required  
 def editar_fornecedor(request, id_fornecedor):
     fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
-    form = FornecedorForm(request.POST, instance=fornecedor)
-    if form.is_valid():
-        form.save()
-        return redirect("cadastros:fornecedores")
+    if request.method == "POST":
+        form = FornecedorForm(request.POST, instance=fornecedor)
+        if form.is_valid():
+            fornecedor = form.save()
+
+            registrar_acao(
+                request.user,
+                'fornecedores',
+                f"{fornecedor.nome} editado"
+            )
+            return redirect("cadastros:fornecedores")
     else:
         form = FornecedorForm(instance=fornecedor)
-    return render(request, "cadastros/fornecedores/editar_fornecedor.html", {"form": form})
+    return render(request, "cadastros/fornecedores/editar_fornecedor.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'fornecedores'), "fornecedor": fornecedor})
 
 @login_required
 def excluir_fornecedor(request, id_fornecedor=0):
@@ -361,42 +398,44 @@ def categorias(request):
     paginator = Paginator(categorias, 10)
     numero_da_pagina = request.GET.get('p')
     categorias = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/categorias/categorias.html", {"categorias": categorias, "search": search})
+    return render(request, "cadastros/categorias/categorias.html", {"categorias": categorias, "search": search, "historico": ultimas_acoes_modulo(request.user, 'categorias')})
 
 @login_required
 def cadastrar_categoria(request):
     if request.method == "POST":
         form = CategoriaForm(request.POST)
         if form.is_valid():
-            form.save()
+            categoria = form.save()
+
+            registrar_acao(
+                request.user,
+                'categorias',
+                f"{categoria.nome} cadastrado"
+            )
             return redirect("cadastros:categorias")
     else:
         form = CategoriaForm()
-    return render(request, "cadastros/categorias/cadastrar_categoria.html", {"form": form})
+    return render(request, "cadastros/categorias/cadastrar_categoria.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'categorias')})
 
+@login_required
 def editar_categoria(request, id_categoria):
     categoria = get_object_or_404(Categoria_Produto, id=id_categoria)
 
     if request.method == "POST":
         form = CategoriaForm(request.POST, instance=categoria)
         if form.is_valid():
-            form.save()
+            categoria = form.save()
+
+            registrar_acao(
+                request.user,
+                'categorias',
+                f"{categoria.nome} editado"
+            )
             return redirect("cadastros:categorias")
     else:
         form = CategoriaForm(instance=categoria)
 
-    return render(request, "cadastros/categorias/editar_categoria.html", {"form": form})
-
-@login_required  
-def editar_categoria(request, id_categoria):
-    categoria = get_object_or_404(Categoria_Produto, id=id_categoria)
-    form = CategoriaForm(request.POST, instance=categoria)
-    if form.is_valid():
-        form.save()
-        return redirect("cadastros:categorias")
-    else:
-        form = CategoriaForm(instance=categoria)
-    return render(request, "cadastros/categorias/editar_categoria.html", {"form": form})
+    return render(request, "cadastros/categorias/editar_categoria.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'categorias'), "categoria": categoria})
 
 @login_required
 def excluir_categoria(request, id_categoria=0):

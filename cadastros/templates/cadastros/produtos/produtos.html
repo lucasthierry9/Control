@@ -136,7 +136,38 @@
         {% endif %}
         <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
             <a href={% url 'cadastros:cadastrar_produto' %} class="d-block w-100"><button class="fs-4 w-100" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none; ">+ Cadastrar Produto</button></a>
-            <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"><p>teste</p></div>
+            <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; padding: 15px;">
+                <p class="fw-bold" style="font-family: Inter; color: #2563EB; font-size: 18px; margin-bottom: 6px;">Ações Rápidas</p>
+                <div class="mt-2 ms-1">
+                    <a href="{% url 'dashboard:clientes' %}" class="d-block mb-2 text-decoration-none" style="color: #374151; font-family: Inter;">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Dashboard Clientes
+                    </a>
+                    <a href="{% url 'estoque:verificacao' %}" class="d-block text-decoration-none" style="color: #374151; font-family: Inter;">
+                        <i class="fa-solid fa-file-lines me-2"></i> Relatório
+                    </a>
+                </div>
+                <p class="fw-bold mt-3" style="font-family: Inter; color: #2563EB; font-size: 18px; margin-bottom: 6px;">Histórico de ações</p>
+                <div class="mt-2 ms-1">
+                    {% if historico %}
+                    {% for acao in historico %}
+                    <a href="{% url 'dashboard:clientes' %}" class="d-block mb-2 text-decoration-none" style="color: #374151; font-family: Inter;">
+                        {{ acao.descricao }} - {{ acao.criado_em|date:"d/m H:i" }}
+                    </a>
+                    {% endfor %}
+                    {% else %}
+                    <h3 style="color: gray; font-family: Inter; font-size: 18px;">Nenhuma atividade recente.</h3>
+                    {% endif %}
+                </div>
+                <p class="fw-bold mt-3" style="font-family: Inter; color: #2563EB; font-size: 18px; margin-bottom: 6px;">Informações</p>
+                <div class="mt-2 ms-1">
+                    <a href="{% url 'dashboard:clientes' %}" class="d-block mb-2 text-decoration-none" style="color: #374151; font-family: Inter;">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Dashboard Clientes
+                    </a>
+                    <a href="{% url 'estoque:verificacao' %}" class="d-block text-decoration-none" style="color: #374151; font-family: Inter;">
+                        <i class="fa-solid fa-file-lines me-2"></i> Relatório
+                    </a>
+                </div>
+            </div>
         </div>    
 
     </div>
