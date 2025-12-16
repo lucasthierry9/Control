@@ -292,7 +292,70 @@ def clientes(request):
 
 @login_required
 def produtos(request):
-    return render(request, 'dashboard/produtos.html' )
+
+    total_produtos = Produto.objects.count()
+
+    # Obter filtros
+    ano = request.GET.get('ano')
+    mes = request.GET.get('mes')
+
+    # Produto mais vendido
+    produto_mais_vendido = Pedidos_Venda.objects.filter(status='concluido').values('produto__id', 'produto__nome').annotate(total_vendido=Sum('quantidade')).order_by('-total_vendido').first()
+    
+    if produto_mais_vendido:
+        nome_produto_mais_vendido = produto_mais_vendido['produto__nome']
+        quantidade_produto_mais_vendido = produto_mais_vendido['total_vendido']
+    else:
+        nome_produto_mais_vendido = 'Nenhum'
+        quantidade_produto_mais_vendido = 0
+
+    # TOP 5 PRODUTOS MAIS VENDIDOS
+    produtos_mais_vendidos = (
+        Pedidos_Venda.objects
+        .filter(status='concluido')
+        .values('produto__nome')
+        .annotate(total_vendido=Sum('quantidade'))
+        .order_by('-total_vendido')[:5]
+    )
+
+    labels_produtos = []
+    dados_produtos = []
+
+    for p in produtos_mais_vendidos:
+        labels_produtos.append(p['produto__nome'])
+        dados_produtos.append(p['total_vendido'])
+
+    # Produtos maior faturamento
+    produtos_faturamento = (
+        Pedidos_Venda.objects
+        .filter(status='concluido')
+        .values('produto__nome')
+        .annotate(
+            faturamento=Sum(
+                F('produto__preco') * F('quantidade'),
+                output_field=DecimalField()
+            )
+        )
+        .order_by('-faturamento')[:5]  # TOP 5
+    )
+
+    labels_produtos_faturamento = []
+    dados_produtos_faturamento = []
+
+    for p in produtos_faturamento:
+        labels_produtos_faturamento.append(p['produto__nome'])
+        dados_produtos_faturamento.append(float(p['faturamento']))
+
+    return render(request, 'dashboard/produtos.html', {
+        "total_produtos": total_produtos,
+        "produto_mais_vendido": nome_produto_mais_vendido,
+        "quantidade_produto_mais_vendido": quantidade_produto_mais_vendido,
+        
+        "labels_produtos_json": json.dumps(labels_produtos),
+        "dados_produtos_json": json.dumps(dados_produtos),
+        
+        'labels_produtos_faturamento_json': json.dumps(labels_produtos_faturamento),
+        'dados_produtos_faturamento_json': json.dumps(dados_produtos_faturamento),})
 
 
 

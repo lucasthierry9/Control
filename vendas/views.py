@@ -14,10 +14,15 @@ from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import A4
+from control.utils import registrar_acao, ultimas_acoes_modulo
 
 #PEDIDOS
 @login_required
 def pedidos(request):
+
+    # Total de pedidos:
+    total_pedidos = Pedidos_Venda.objects.filter(status__in=['aberto', 'processando']).count()
+
     search = request.GET.get("search")
 
     pedidos = Pedidos_Venda.objects.filter(status__in=['aberto', 'processando'])
@@ -34,20 +39,26 @@ def pedidos(request):
     paginator = Paginator(pedidos, 10)
     numero_da_pagina = request.GET.get('p')
     pedidos_paginados = paginator.get_page(numero_da_pagina)
-    return render(request, "vendas/pedidos/pedidos.html", {"pedidos": pedidos_paginados, "search": search})
+    return render(request, "vendas/pedidos/pedidos.html", {"pedidos": pedidos_paginados, "search": search, "total_pedidos": total_pedidos, 'historico': ultimas_acoes_modulo(request.user, 'pedidos_venda')})
 
 @login_required
 def registrar_pedido(request):
     if request.method == "POST":
         form = PedidosVendaForm(request.POST)
         if form.is_valid():
-            form.save()
+            pedidos_venda = form.save()
+
+            registrar_acao(
+                request.user,
+                'pedidos_venda',
+                f"{pedidos_venda.nome} adicionado"
+            )
             return redirect("vendas:pedidos")
         else:
             print("Erros de Validação:", form.errors)
     else:
         form = PedidosVendaForm()
-    return render(request, "vendas/pedidos/registrar_pedido.html", {"form": form})
+    return render(request, "vendas/pedidos/registrar_pedido.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'pedidos_venda')})
 
 @login_required
 def editar_pedido(request, id_pedido):
@@ -56,12 +67,18 @@ def editar_pedido(request, id_pedido):
     if request.method == "POST":
         form = PedidosVendaForm(request.POST, instance=pedido)
         if form.is_valid():
-            form.save()
+            pedidos_venda = form.save()
+
+            registrar_acao(
+                request.user,
+                'pedidos_venda',
+                f"{pedidos_venda.nome} editado"
+            )
             return redirect("vendas:pedidos")
     else:
         form = PedidosVendaForm(instance=pedido)
 
-    return render(request, "vendas/pedidos/editar_pedido.html", {"form": form})
+    return render(request, "vendas/pedidos/editar_pedido.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'pedidos_venda'), "pedidos_venda": pedidos_venda})
     
 @login_required
 def excluir_pedido(request, id_pedido=0):
@@ -76,6 +93,10 @@ def excluir_pedido(request, id_pedido=0):
 #HISTÓRICO
 @login_required
 def historico(request):
+
+    # Vendas concluídas:
+    total_vendas = Pedidos_Venda.objects.filter(status='concluido').count()
+
     search = request.GET.get("search")
 
     pedidos = Pedidos_Venda.objects.filter(status__in=['concluido', 'cancelado'])
@@ -91,11 +112,15 @@ def historico(request):
     paginator = Paginator(pedidos, 10)
     numero_da_pagina = request.GET.get('p')
     pedidos_paginados = paginator.get_page(numero_da_pagina)
-    return render(request, "vendas/historico/historico.html", {"pedidos": pedidos_paginados, "search": search})
+    return render(request, "vendas/historico/historico.html", {"pedidos": pedidos_paginados, "search": search, "total_vendas": total_vendas})
 
 #RELATÓRIO DE VENDAS
 @login_required
 def relatorio_vendas(request):
+
+    # Vendas concluídas:
+    total_vendas = Pedidos_Venda.objects.filter(status='concluido').count()
+
     ano = request.GET.get("ano")
     mes = request.GET.get("mes")
     search = request.GET.get("search")
@@ -133,7 +158,8 @@ def relatorio_vendas(request):
     paginator = Paginator(pedidos, 10)
     numero_da_pagina = request.GET.get('p')
     pedidos_paginados = paginator.get_page(numero_da_pagina)
-    return render(request, "vendas/relatorio/relatorio_vendas.html", {"pedidos": pedidos_paginados, "anos": anos, "meses": meses_lista, "ano_selecionado": ano, "mes_selecionado": mes, "search": search,})
+    total_vendas = Pedidos_Venda.objects.filter(status='concluido').count()
+    return render(request, "vendas/relatorio/relatorio_vendas.html", {"pedidos": pedidos_paginados, "anos": anos, "meses": meses_lista, "ano_selecionado": ano, "mes_selecionado": mes, "search": search, "total_vendas": total_vendas})
 
 @login_required
 def exportar_pdf(request):
