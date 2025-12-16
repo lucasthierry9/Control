@@ -1,267 +1,542 @@
 [
-    {
-        "model": "control.Estado",
-        "pk": 1,
-        "fields": {"estado": "SP"}
-    },
-    {
-        "model": "control.Estado",
-        "pk": 2,
-        "fields": {"estado": "RJ"}
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 1,
-        "fields": {
-            "nome": "Fernando 1",
-            "cpf": "12345678901",
-            "email": "fernando1@exemplo.com",
-            "telefone": "11987654321",
-            "estado": 1,
-            "cidade": "São Paulo",
-            "bairro": "Centro",
-            "logradouro": "Rua A",
-            "numero": "101",
-            "complemento": "",
-            "cep": "01001000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 2,
-        "fields": {
-            "nome": "Maria 2",
-            "cpf": "23456789012",
-            "email": "maria2@exemplo.com",
-            "telefone": "11987654322",
-            "estado": 1,
-            "cidade": "São Paulo",
-            "bairro": "Jardim América",
-            "logradouro": "Rua B",
-            "numero": "102",
-            "complemento": "",
-            "cep": "01002000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 3,
-        "fields": {
-            "nome": "Lucas 3",
-            "cpf": "34567890123",
-            "email": "lucas3@exemplo.com",
-            "telefone": "11987654323",
-            "estado": 1,
-            "cidade": "Campinas",
-            "bairro": "Centro",
-            "logradouro": "Rua C",
-            "numero": "103",
-            "complemento": "",
-            "cep": "13010000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 4,
-        "fields": {
-            "nome": "Ana 4",
-            "cpf": "45678901234",
-            "email": "ana4@exemplo.com",
-            "telefone": "11987654324",
-            "estado": 1,
-            "cidade": "Campinas",
-            "bairro": "Jardim América",
-            "logradouro": "Avenida D",
-            "numero": "104",
-            "complemento": "",
-            "cep": "13020000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 5,
-        "fields": {
-            "nome": "João 5",
-            "cpf": "56789012345",
-            "email": "joao5@exemplo.com",
-            "telefone": "11987654325",
-            "estado": 2,
-            "cidade": "Rio de Janeiro",
-            "bairro": "Copacabana",
-            "logradouro": "Rua E",
-            "numero": "105",
-            "complemento": "",
-            "cep": "22041001"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 6,
-        "fields": {
-            "nome": "Carla 6",
-            "cpf": "67890123456",
-            "email": "carla6@exemplo.com",
-            "telefone": "11987654326",
-            "estado": 2,
-            "cidade": "Rio de Janeiro",
-            "bairro": "Icaraí",
-            "logradouro": "Rua F",
-            "numero": "106",
-            "complemento": "",
-            "cep": "22050000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 7,
-        "fields": {
-            "nome": "Pedro 7",
-            "cpf": "78901234567",
-            "email": "pedro7@exemplo.com",
-            "telefone": "11987654327",
-            "estado": 2,
-            "cidade": "Niterói",
-            "bairro": "Copacabana",
-            "logradouro": "Rua G",
-            "numero": "107",
-            "complemento": "",
-            "cep": "24230000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 8,
-        "fields": {
-            "nome": "Beatriz 8",
-            "cpf": "89012345678",
-            "email": "beatriz8@exemplo.com",
-            "telefone": "11987654328",
-            "estado": 2,
-            "cidade": "Niterói",
-            "bairro": "Icaraí",
-            "logradouro": "Rua H",
-            "numero": "108",
-            "complemento": "",
-            "cep": "24240000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 9,
-        "fields": {
-            "nome": "Rafael 9",
-            "cpf": "90123456789",
-            "email": "rafael9@exemplo.com",
-            "telefone": "11987654329",
-            "estado": 1,
-            "cidade": "São Paulo",
-            "bairro": "Centro",
-            "logradouro": "Avenida I",
-            "numero": "109",
-            "complemento": "",
-            "cep": "01003000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 10,
-        "fields": {
-            "nome": "Camila 10",
-            "cpf": "01234567890",
-            "email": "camila10@exemplo.com",
-            "telefone": "11987654330",
-            "estado": 1,
-            "cidade": "Campinas",
-            "bairro": "Jardim América",
-            "logradouro": "Rua J",
-            "numero": "110",
-            "complemento": "",
-            "cep": "13030000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 11,
-        "fields": {
-            "nome": "Fernando 11",
-            "cpf": "11234567890",
-            "email": "fernando11@exemplo.com",
-            "telefone": "11987654331",
-            "estado": 2,
-            "cidade": "Rio de Janeiro",
-            "bairro": "Copacabana",
-            "logradouro": "Rua K",
-            "numero": "111",
-            "complemento": "",
-            "cep": "22060000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 12,
-        "fields": {
-            "nome": "Maria 12",
-            "cpf": "12234567890",
-            "email": "maria12@exemplo.com",
-            "telefone": "11987654332",
-            "estado": 2,
-            "cidade": "Niterói",
-            "bairro": "Icaraí",
-            "logradouro": "Rua L",
-            "numero": "112",
-            "complemento": "",
-            "cep": "24250000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 13,
-        "fields": {
-            "nome": "Lucas 13",
-            "cpf": "13234567890",
-            "email": "lucas13@exemplo.com",
-            "telefone": "11987654333",
-            "estado": 1,
-            "cidade": "São Paulo",
-            "bairro": "Jardim América",
-            "logradouro": "Rua M",
-            "numero": "113",
-            "complemento": "",
-            "cep": "01004000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 14,
-        "fields": {
-            "nome": "Ana 14",
-            "cpf": "14234567890",
-            "email": "ana14@exemplo.com",
-            "telefone": "11987654334",
-            "estado": 1,
-            "cidade": "Campinas",
-            "bairro": "Centro",
-            "logradouro": "Rua N",
-            "numero": "114",
-            "complemento": "",
-            "cep": "13040000"
-        }
-    },
-    {
-        "model": "control.Cliente",
-        "pk": 15,
-        "fields": {
-            "nome": "João 15",
-            "cpf": "15234567890",
-            "email": "joao15@exemplo.com",
-            "telefone": "11987654335",
-            "estado": 2,
-            "cidade": "Niterói",
-            "bairro": "Copacabana",
-            "logradouro": "Rua O",
-            "numero": "115",
-            "complemento": "",
-            "cep": "24260000"
-        }
+  {
+    "model": "control.cliente",
+    "pk": 1,
+    "fields": {
+      "nome": "João Silva",
+      "cpf": "11111111111",
+      "email": "joao.silva@exemplo.com",
+      "telefone": "84990000001",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Lagoa Nova",
+      "logradouro": "Rua das Flores, 100",
+      "numero": "100",
+      "complemento": "",
+      "cep": "59000001",
+      "data_cadastro": "2025-01-01T10:00:00Z"
     }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 2,
+    "fields": {
+      "nome": "Maria Santos",
+      "cpf": "22222222222",
+      "email": "maria.santos@exemplo.com",
+      "telefone": "84990000002",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Nova Esperança",
+      "logradouro": "Avenida Brasil, 250",
+      "numero": "250",
+      "complemento": "Apt 201",
+      "cep": "59000002",
+      "data_cadastro": "2025-01-05T12:30:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 3,
+    "fields": {
+      "nome": "Pedro Oliveira",
+      "cpf": "33333333333",
+      "email": "pedro.oliver@exemplo.com",
+      "telefone": "84990000003",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Petrópolis",
+      "logradouro": "Rua João Pessoa, 50",
+      "numero": "50",
+      "complemento": "",
+      "cep": "59000003",
+      "data_cadastro": "2025-01-10T08:00:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 4,
+    "fields": {
+      "nome": "Ana Costa",
+      "cpf": "44444444444",
+      "email": "ana.costa@exemplo.com",
+      "telefone": "84990000004",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Centro",
+      "logradouro": "Travessa das Palmeiras, 15",
+      "numero": "15",
+      "complemento": "Casa",
+      "cep": "59000004",
+      "data_cadastro": "2025-01-15T14:45:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 5,
+    "fields": {
+      "nome": "Carlos Pereira",
+      "cpf": "55555555555",
+      "email": "carlos.p@exemplo.com",
+      "telefone": "84990000005",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Capim Macio",
+      "logradouro": "Rua do Sol, 300",
+      "numero": "300",
+      "complemento": "",
+      "cep": "59000005",
+      "data_cadastro": "2025-01-20T09:10:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 6,
+    "fields": {
+      "nome": "Laura Mendes",
+      "cpf": "66666666666",
+      "email": "laura.mendes@exemplo.com",
+      "telefone": "84990000006",
+      "estado": null,
+      "cidade": "Macaíba",
+      "bairro": "Centro",
+      "logradouro": "Av. Principal, 120",
+      "numero": "120",
+      "complemento": "",
+      "cep": "59000006",
+      "data_cadastro": "2025-01-25T11:55:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 7,
+    "fields": {
+      "nome": "Rafael Lima",
+      "cpf": "77777777777",
+      "email": "rafael.lima@exemplo.com",
+      "telefone": "84990000007",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Ponta Negra",
+      "logradouro": "Rua da Praia, 45",
+      "numero": "45",
+      "complemento": "Bloco A",
+      "cep": "59000007",
+      "data_cadastro": "2025-02-01T16:20:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 8,
+    "fields": {
+      "nome": "Sofia Rocha",
+      "cpf": "88888888888",
+      "email": "sofia.rocha@exemplo.com",
+      "telefone": "84990000008",
+      "estado": null,
+      "cidade": "Ceará-Mirim",
+      "bairro": "Novo Horizonte",
+      "logradouro": "Rua dos Coqueiros, 99",
+      "numero": "99",
+      "complemento": "",
+      "cep": "59000008",
+      "data_cadastro": "2025-02-05T07:40:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 9,
+    "fields": {
+      "nome": "Lucas Martins",
+      "cpf": "99999999999",
+      "email": "lucas.m@exemplo.com",
+      "telefone": "84990000009",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Alecrim",
+      "logradouro": "Av. Rio Branco, 700",
+      "numero": "700",
+      "complemento": "",
+      "cep": "59000009",
+      "data_cadastro": "2025-02-10T13:15:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 10,
+    "fields": {
+      "nome": "Camila Ferreira",
+      "cpf": "01010101010",
+      "email": "camila.f@exemplo.com",
+      "telefone": "84990000010",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Santos Reis",
+      "logradouro": "Rua 15 de Novembro, 10",
+      "numero": "10",
+      "complemento": "Fundos",
+      "cep": "59000010",
+      "data_cadastro": "2025-02-15T15:05:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 11,
+    "fields": {
+      "nome": "Felipe Gomes",
+      "cpf": "12121212121",
+      "email": "felipe.g@exemplo.com",
+      "telefone": "84990000011",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Neópolis",
+      "logradouro": "Av. Ayrton Senna, 1500",
+      "numero": "1500",
+      "complemento": "",
+      "cep": "59000011",
+      "data_cadastro": "2025-02-20T09:40:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 12,
+    "fields": {
+      "nome": "Giselle Alves",
+      "cpf": "23232323232",
+      "email": "giselle.a@exemplo.com",
+      "telefone": "84990000012",
+      "estado": null,
+      "cidade": "São Gonçalo do Amarante",
+      "bairro": "Novo Amarante",
+      "logradouro": "Rua Sete, 22",
+      "numero": "22",
+      "complemento": "",
+      "cep": "59000012",
+      "data_cadastro": "2025-02-25T17:30:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 13,
+    "fields": {
+      "nome": "Hugo Barreto",
+      "cpf": "34343434343",
+      "email": "hugo.b@exemplo.com",
+      "telefone": "84990000013",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Cidade Alta",
+      "logradouro": "Praça Cívica, 1",
+      "numero": "1",
+      "complemento": "Edifício",
+      "cep": "59000013",
+      "data_cadastro": "2025-03-01T11:00:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 14,
+    "fields": {
+      "nome": "Isabela Dantas",
+      "cpf": "45454545454",
+      "email": "isabela.d@exemplo.com",
+      "telefone": "84990000014",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Cohabinal",
+      "logradouro": "Rua do Comércio, 55",
+      "numero": "55",
+      "complemento": "",
+      "cep": "59000014",
+      "data_cadastro": "2025-03-05T08:25:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 15,
+    "fields": {
+      "nome": "Júlio César",
+      "cpf": "56565656565",
+      "email": "julio.c@exemplo.com",
+      "telefone": "84990000015",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Tirol",
+      "logradouro": "Av. Afonso Pena, 900",
+      "numero": "900",
+      "complemento": "Sala 10",
+      "cep": "59000015",
+      "data_cadastro": "2025-03-10T14:50:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 16,
+    "fields": {
+      "nome": "Karen Lima",
+      "cpf": "67676767676",
+      "email": "karen.lima@exemplo.com",
+      "telefone": "84990000016",
+      "estado": null,
+      "cidade": "Extremoz",
+      "bairro": "Centro",
+      "logradouro": "Rua da Igreja, 1",
+      "numero": "1",
+      "complemento": "",
+      "cep": "59000016",
+      "data_cadastro": "2025-03-15T10:00:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 17,
+    "fields": {
+      "nome": "Leonardo Neves",
+      "cpf": "78787878787",
+      "email": "leo.n@exemplo.com",
+      "telefone": "84990000017",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Lagoa Seca",
+      "logradouro": "Av. Salgado Filho, 2000",
+      "numero": "2000",
+      "complemento": "",
+      "cep": "59000017",
+      "data_cadastro": "2025-03-20T12:00:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 18,
+    "fields": {
+      "nome": "Mônica Paiva",
+      "cpf": "89898989898",
+      "email": "monica.p@exemplo.com",
+      "telefone": "84990000018",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Emaús",
+      "logradouro": "Rua do Cajueiro, 35",
+      "numero": "35",
+      "complemento": "Loja 02",
+      "cep": "59000018",
+      "data_cadastro": "2025-03-25T18:10:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 19,
+    "fields": {
+      "nome": "Natália Queiroz",
+      "cpf": "90909090909",
+      "email": "natalia.q@exemplo.com",
+      "telefone": "84990000019",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Candelária",
+      "logradouro": "Rua do Farol, 77",
+      "numero": "77",
+      "complemento": "",
+      "cep": "59000019",
+      "data_cadastro": "2025-04-01T09:00:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 20,
+    "fields": {
+      "nome": "Otávio Ribeiro",
+      "cpf": "02020202020",
+      "email": "otavio.r@exemplo.com",
+      "telefone": "84990000020",
+      "estado": null,
+      "cidade": "Ceará-Mirim",
+      "bairro": "Ponte Nova",
+      "logradouro": "Estrada Velha, 20",
+      "numero": "20",
+      "complemento": "",
+      "cep": "59000020",
+      "data_cadastro": "2025-04-05T13:40:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 21,
+    "fields": {
+      "nome": "Patrícia Souza",
+      "cpf": "13131313131",
+      "email": "patricia.s@exemplo.com",
+      "telefone": "84990000021",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Lagoa Nova",
+      "logradouro": "Rua da Igreja, 500",
+      "numero": "500",
+      "complemento": "Apt 502",
+      "cep": "59000021",
+      "data_cadastro": "2025-04-10T16:55:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 22,
+    "fields": {
+      "nome": "Quênia Torres",
+      "cpf": "24242424242",
+      "email": "quenia.t@exemplo.com",
+      "telefone": "84990000022",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Liberdade",
+      "logradouro": "Rua das Rosas, 88",
+      "numero": "88",
+      "complemento": "",
+      "cep": "59000022",
+      "data_cadastro": "2025-04-15T11:20:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 23,
+    "fields": {
+      "nome": "Ricardo Uchoa",
+      "cpf": "35353535353",
+      "email": "ricardo.u@exemplo.com",
+      "telefone": "84990000023",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Petrópolis",
+      "logradouro": "Av. Hermes da Fonseca, 1200",
+      "numero": "1200",
+      "complemento": "Cobertura",
+      "cep": "59000023",
+      "data_cadastro": "2025-04-20T07:05:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 24,
+    "fields": {
+      "nome": "Sandro Viana",
+      "cpf": "46464646464",
+      "email": "sandro.v@exemplo.com",
+      "telefone": "84990000024",
+      "estado": null,
+      "cidade": "São Gonçalo do Amarante",
+      "bairro": "Jardim Lola",
+      "logradouro": "Rua Quinze, 10",
+      "numero": "10",
+      "complemento": "",
+      "cep": "59000024",
+      "data_cadastro": "2025-04-25T14:15:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 25,
+    "fields": {
+      "nome": "Tatiane Ximenes",
+      "cpf": "57575757575",
+      "email": "tatiane.x@exemplo.com",
+      "telefone": "84990000025",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Capim Macio",
+      "logradouro": "Rua das Dunas, 220",
+      "numero": "220",
+      "complemento": "",
+      "cep": "59000025",
+      "data_cadastro": "2025-05-01T10:30:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 26,
+    "fields": {
+      "nome": "Ubiratan Zanetti",
+      "cpf": "68686868686",
+      "email": "ubiratan.z@exemplo.com",
+      "telefone": "84990000026",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Centro",
+      "logradouro": "Av. Castor, 50",
+      "numero": "50",
+      "complemento": "Loja 01",
+      "cep": "59000026",
+      "data_cadastro": "2025-05-05T15:45:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 27,
+    "fields": {
+      "nome": "Viviane Assis",
+      "cpf": "79797979797",
+      "email": "viviane.a@exemplo.com",
+      "telefone": "84990000027",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Ponta Negra",
+      "logradouro": "Rua da Lagosta, 10",
+      "numero": "10",
+      "complemento": "",
+      "cep": "59000027",
+      "data_cadastro": "2025-05-10T08:50:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 28,
+    "fields": {
+      "nome": "Wesley Brito",
+      "cpf": "80808080808",
+      "email": "wesley.b@exemplo.com",
+      "telefone": "84990000028",
+      "estado": null,
+      "cidade": "Ceará-Mirim",
+      "bairro": "Centro",
+      "logradouro": "Rua Principal, 30",
+      "numero": "30",
+      "complemento": "",
+      "cep": "59000028",
+      "data_cadastro": "2025-05-15T11:00:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 29,
+    "fields": {
+      "nome": "Yara Castro",
+      "cpf": "91919191919",
+      "email": "yara.c@exemplo.com",
+      "telefone": "84990000029",
+      "estado": null,
+      "cidade": "Natal",
+      "bairro": "Alecrim",
+      "logradouro": "Av. Deodoro, 400",
+      "numero": "400",
+      "complemento": "Apt 305",
+      "cep": "59000029",
+      "data_cadastro": "2025-05-20T14:20:00Z"
+    }
+  },
+  {
+    "model": "control.cliente",
+    "pk": 30,
+    "fields": {
+      "nome": "Zeca Drumond",
+      "cpf": "03030303030",
+      "email": "zeca.d@exemplo.com",
+      "telefone": "84990000030",
+      "estado": null,
+      "cidade": "Parnamirim",
+      "bairro": "Nova Parnamirim",
+      "logradouro": "Rua Maria Quitéria, 70",
+      "numero": "70",
+      "complemento": "",
+      "cep": "59000030",
+      "data_cadastro": "2025-05-25T16:30:00Z"
+    }
+  }
 ]

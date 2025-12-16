@@ -100,7 +100,7 @@ def relatorio_vendas(request):
     mes = request.GET.get("mes")
     search = request.GET.get("search")
 
-    pedidos = Pedidos_Venda.objects.filter(status__in=['concluido', 'cancelado'])
+    pedidos = Pedidos_Venda.objects.filter(status__in=['concluido'])
 
     if ano and ano.isdigit():
         pedidos = pedidos.filter(data__year=ano)

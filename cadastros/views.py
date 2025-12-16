@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
 from control.utils import registrar_acao, ultimas_acoes_modulo
+from django.utils.timezone import now
 
 #CLIENTES
 @login_required
@@ -15,6 +16,12 @@ def clientes(request):
     search = request.GET.get("search")
 
     clientes = Cliente.objects.all()
+
+    # Total de clientes:
+    total_clientes = Cliente.objects.count()
+
+    # Total clientes cadastrados no mês:
+    clientes_mes = Cliente.objects.filter(data_cadastro__month=now().month).count()
 
     if search:
         filtros = (
@@ -30,7 +37,12 @@ def clientes(request):
     paginator = Paginator(clientes, 10)
     numero_da_pagina = request.GET.get('p')
     clientes_paginados = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/clientes/clientes.html", {"clientes": clientes_paginados, "search": search, "historico": ultimas_acoes_modulo(request.user, 'clientes')})
+    return render(request, "cadastros/clientes/clientes.html", {
+        "clientes": clientes_paginados, 
+        "search": search, 
+        "historico": ultimas_acoes_modulo(request.user, 'clientes'), 
+        "total_clientes": total_clientes,
+        "clientes_mes": clientes_mes})
 
 @login_required
 def cadastrar_cliente(request):
@@ -87,6 +99,12 @@ def produtos(request):
 
     produtos = Produto.objects.all()
 
+    # Total de produtos:
+    total_produtos = Produto.objects.count()
+
+    # Total produtos cadastrados no mês:
+    produtos_mes = Produto.objects.filter(data_cadastro__month=now().month).count()
+
     if search:
         produtos = produtos.filter(
             Q(nome__icontains=search) |
@@ -99,7 +117,12 @@ def produtos(request):
     paginator = Paginator(produtos, 10)
     numero_da_pagina = request.GET.get('p')
     produtos_paginados = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/produtos/produtos.html", {"produtos": produtos_paginados, "search": search, "historico": ultimas_acoes_modulo(request.user, 'produtos')})
+    return render(request, "cadastros/produtos/produtos.html", {
+        "produtos": produtos_paginados, 
+        "search": search, 
+        "historico": ultimas_acoes_modulo(request.user, 'produtos'),
+        "total_produtos": total_produtos,
+        "produtos_mes": produtos_mes})
 
 @login_required
 def cadastrar_produto(request):
@@ -242,6 +265,12 @@ def vendedores(request):
 
     vendedores = Vendedor.objects.all()
 
+    # Total de vendedores:
+    total_vendedores = Vendedor.objects.count()
+
+    # Total vendedores cadastrados no mês:
+    vendedores_mes = Vendedor.objects.filter(data_cadastro__month=now().month).count()
+
     if search:
         filtros = (
             Q(nome__icontains=search) |
@@ -260,7 +289,12 @@ def vendedores(request):
     paginator = Paginator(vendedores, 10)
     numero_da_pagina = request.GET.get('p')
     vendedores = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/vendedores/vendedores.html", {"vendedores": vendedores, "search": search, "historico": ultimas_acoes_modulo(request.user, 'vendedores')})
+    return render(request, "cadastros/vendedores/vendedores.html", {
+        "vendedores": vendedores, 
+        "search": search, 
+        "historico": ultimas_acoes_modulo(request.user, 'vendedores'),
+        "total_vendedores": total_vendedores,
+        "vendedores_mes": vendedores_mes})
 
 @login_required
 def cadastrar_vendedor(request):
@@ -316,6 +350,12 @@ def fornecedores(request):
 
     fornecedores = Fornecedor.objects.all()
 
+    # Total de fornecedores:
+    total_fornecedores = Fornecedor.objects.count()
+
+    # Total fornecedores cadastrados no mês:
+    fornecedores_mes = Fornecedor.objects.filter(data_cadastro__month=now().month).count()
+
     if search:
         filtros = (
             Q(nome__icontains=search) |
@@ -330,7 +370,12 @@ def fornecedores(request):
     paginator = Paginator(fornecedores, 10)
     numero_da_pagina = request.GET.get('p')
     fornecedores = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/fornecedores/fornecedores.html", {"fornecedores": fornecedores, "search": search, "historico": ultimas_acoes_modulo(request.user,'fornecedores')})
+    return render(request, "cadastros/fornecedores/fornecedores.html", {
+        "fornecedores": fornecedores, 
+        "search": search, 
+        "historico": ultimas_acoes_modulo(request.user,'fornecedores'),
+        "total_fornecedores": total_fornecedores,
+        "fornecedores_mes": fornecedores_mes})
 
 @login_required
 def cadastrar_fornecedor(request):

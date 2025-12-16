@@ -59,13 +59,14 @@ class Fornecedor(models.Model):
     cpf_cnpj = models.CharField(max_length=14)
     email = models.EmailField(max_length=254, default="")
     telefone = models.CharField(max_length=11, default="")
-    estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE, null=True, blank=True)
     cidade = models.CharField(max_length=50, default="")
     bairro = models.CharField(max_length=50, default="")
     logradouro = models.CharField(max_length=100, default="")
     numero = models.CharField(max_length=100, default="")
     complemento = models.CharField(max_length=100, blank=True)
     cep = models.CharField(max_length=8, default="")
+    data_cadastro = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = "Fornecedores"
@@ -85,6 +86,7 @@ class Cliente(models.Model):
     numero = models.CharField(max_length=100, blank=True)
     complemento = models.CharField(max_length=100, blank=True)
     cep = models.CharField(max_length=8, blank=True)
+    data_cadastro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.nome
@@ -92,6 +94,7 @@ class Cliente(models.Model):
 class Categoria_Produto(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.CharField(max_length=200, blank=True)
+    
 
     @property
     def quantidade(self):
@@ -105,6 +108,7 @@ class Produto(models.Model):
     nome = models.CharField(max_length=50)
     preco = models.DecimalField(max_digits=8, decimal_places=2)
     imagem = models.ImageField(upload_to="imagens/", blank=True)
+    data_cadastro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.nome
@@ -126,6 +130,7 @@ class Pedidos_Compra(models.Model):
     
 class Deposito(models.Model):
     descricao = models.CharField(max_length=50)
+
 
     def __str__(self):
         return self.descricao
@@ -154,6 +159,7 @@ class Vendedor(models.Model):
     cpf = models.CharField(max_length=11)
     email = models.EmailField(max_length=254, default="")
     telefone = models.CharField(max_length=11, default="")
+    data_cadastro = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = "Vendedores"
@@ -192,7 +198,7 @@ class Pedidos_Venda(models.Model):
     peso = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     valor_frete = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     frete = models.CharField(max_length=30, choices=TIPO_FRETE, blank=True)
-    estado = models.ForeignKey(Estado, on_delete=models.CASCADE, blank=True)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE, null=True, blank=True)
     cidade = models.CharField(max_length=50, blank=True)
     bairro = models.CharField(max_length=50, blank=True)
     logradouro = models.CharField(max_length=100, blank=True)
@@ -211,6 +217,7 @@ class Funcionario(models.Model):
     cpf = models.CharField(max_length=11)
     telefone = models.CharField(max_length=20, blank=True)
     cargo = models.CharField(max_length=50)
+    
 
     def __str__(self):
         return f"{self.nome} ({self.cargo})"

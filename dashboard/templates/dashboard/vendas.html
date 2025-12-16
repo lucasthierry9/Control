@@ -1,4 +1,199 @@
 {% extends "dashboard/base_dashboard.html" %}
 {% load static %}
 {% block title %}Dashboard - Vendas{% endblock title %}
-{% block content %}{% endblock %}
+{% block content %}
+<div class="col-12 col-lg-10 px-4">
+    <div style="min-height: 60px;"></div>
+    <div style="background: #f0f6ff; border-radius: 20px; width: 100%; max-width: 1350px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); overflow: hidden; font-family: Inter; margin: auto;">
+        
+        <!-- Header do Card -->
+        <div class="d-flex align-items-center" style="background: #2563EB; padding: 25px 30px; border-bottom: 1px solid #f0f0f0; justify-content: space-between;">
+            <h2 style="color: white; font-size: 30px; font-weight: 700; margin: 0;">Vendas</h2>
+            <form id="filtros-form" method="get">
+                <div class="d-flex align-items-center" style="gap: 20px;">
+                    <div style="position: relative; min-width: 150px;">
+                        <label style="position: absolute; top: -18px; left: 6px; padding: 0 6px; font-size: 14px; font-weight: 600; color: white; font-family: Inter;">Ano</label>
+                        <select name="ano" class="form-select rounded-5" onchange="this.form.submit()" form="filtros-form" style="background-color: white; outline: 2px solid #2563EB; outline-offset: -2px;">
+                            <option value="">Todos</option>
+                                {% for a in anos %}
+                                    <option value="{{ a }}" {% if ano_selecionado == a|stringformat:'s' %}selected{% endif %}>
+                                        {{ a }}
+                                    </option>
+                                {% endfor %}
+                        </select>
+                    </div>
+                    <div style="position: relative; min-width: 150px;">
+                        <label style="position: absolute; top: -18px; left: 6px; padding: 0 6px; font-size: 14px; font-weight: 600; color: white; font-family: Inter;">Mês</label>
+                        <select name="mes" class="form-select rounded-5" onchange="this.form.submit()" form="filtros-form" style="background-color: white; outline: 2px solid #2563EB; outline-offset: -2px;">
+                            <option value="">Todos</option>
+                                {% for numero, nome in meses %}
+                                    <option value="{{ numero  }}" {% if mes_selecionado == numero %}selected{% endif %}>
+                                        {{ nome }}
+                                    </option>
+                                {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="p-4">
+            <div class="row g-3">
+
+                <!-- Faturamento -->
+                <div class="col-12 col-md-4">
+                    <div class="bg-white shadow-sm d-flex align-items-center p-3"
+                        style="border-radius: 12px; font-family: Inter;">
+                        <div class="me-3 p-3 d-flex align-items-center justify-content-center"style="width: 80px; height: 80px; background-color: #DBEAFE;border-radius: 12px;">
+                            <i class="fa-solid bi bi-check-lg" style="font-size: 44px; color: #2563EB;"></i>
+                        </div>
+
+                        <div>
+                            <span style="font-size: 16px; font-weight: 600;">
+                                Vendas concluídas
+                            </span>
+                            <h2 style="font-weight: 700; margin: 0;">{{ total_vendas }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Produtos -->
+                <div class="col-12 col-md-4">
+                    <div class="bg-white shadow-sm d-flex align-items-center p-3"
+                        style="border-radius: 12px; font-family: Inter;">
+                        <div class="me-3 p-3"
+                            style="width: 80px; height: 80px; background-color: #DBEAFE; border-radius: 12px; display:flex; justify-content:center; align-items:center;">
+                            <i class="fa-solid fa-user" 
+                            style="font-size: 40px; color: #2563EB;"></i>
+                        </div>
+
+                        <div>
+                            <span style="font-size: 16px; font-weight: 600;">
+                                Vendedor com mais vendas
+                            </span>
+                            <h2 style="font-weight: 700; margin: 0;">{{ vendedor|truncatewords:2 }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Clientes -->
+                <div class="col-12 col-md-4">
+                    <div class="bg-white shadow-sm d-flex align-items-center p-3"
+                        style="border-radius: 12px; font-family: Inter;">
+                        <div class="me-3 p-3" 
+                            style="width: 80px; height: 80px; background-color: #DBEAFE; border-radius: 12px; display:flex; justify-content:center; align-items:center;">
+                            <i class="fa-solid bi bi-cash" 
+                            style="font-size: 40px; color: #2563EB;"></i>
+                        </div>
+
+                        <div>
+                            <span style="font-size: 16px; font-weight: 600;">
+                                Maior valor em uma venda
+                            </span>
+                            <h2 style="font-weight: 700; margin: 0;">R$ {{ maior_valor_venda }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 g-3">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white shadow-sm" style="height: 450px; border-radius: 12px;">
+                    <div class="d-flex align-items-center" style="background: white; padding: 5px 10px; border-bottom: 1px solid #f0f0f0; justify-content: space-between; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                        <h2 style="color: white; font-size: 14px; font-weight: 700; margin: 0; color: black;">Status</h2>
+                    </div>
+                    <div style="padding: 10px; height: 400px;">
+                        <canvas id="statusPedidosChart" style="max-height: 400px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="bg-white shadow-sm" style="height: 450px; border-radius: 12px; font-family: Inter;">
+                    <div class="d-flex align-items-center" style="background: white; padding: 5px 10px; border-bottom: 1px solid #f0f0f0; justify-content: space-between; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                        <h2 style="color: white; font-size: 14px; font-weight: 700; margin: 0; color: black;">Vendas mensais concluídas </h2>
+                    </div>
+                    <div style="padding: 15px; height: 400px;">
+                        <canvas id="vendasMensaisChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>            
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Gráfico Pizza
+document.addEventListener("DOMContentLoaded", function () {
+
+    const labels = {{ labels_status_json|safe }};
+    const dados = {{ dados_status_json|safe }};
+    const cores = {{ cores_status_json|safe }};
+
+    const ctx = document.getElementById('statusPedidosChart');
+
+    if (!ctx) return;
+
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: dados,
+                backgroundColor: cores,
+                borderWidth: 1
+            }]
+        },
+        type: 'doughnut',
+            options: {
+                cutout: '65%',
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+    });
+
+});
+
+// Gráfico linha
+document.addEventListener("DOMContentLoaded", function () {
+
+    const labelsMensal = {{ labels_mensal_json|safe }};
+    const dadosMensal = {{ dados_mensal_json|safe }};
+
+    const ctx = document.getElementById('vendasMensaisChart');
+
+    if (!ctx) return;
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labelsMensal,
+            datasets: [{
+                label: 'Vendas Concluídas',
+                data: dadosMensal,
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59,130,246,0.15)',
+                tension: 0.4,
+                fill: true,
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: true }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+
+});
+</script>{% endblock scripts %}

@@ -1,102 +1,332 @@
 [
   {
-    "model": "control.Vendedor",
+    "model": "control.vendedor",
     "pk": 1,
     "fields": {
-      "nome": "Ana Carolina Silva",
-      "email": "ana.silva@exemplo.com",
-      "cpf": "12345678901",
-      "telefone": "11987654321"
+      "nome": "Alice Lima",
+      "cpf": "10010010001",
+      "email": "alice.lima@vendas.com",
+      "telefone": "84988000001",
+      "data_cadastro": "2025-01-01T10:00:00Z"
     }
   },
   {
-    "model": "control.Vendedor",
+    "model": "control.vendedor",
     "pk": 2,
     "fields": {
-      "nome": "Bruno Oliveira Santos",
-      "email": "bruno.santos@exemplo.com",
-      "cpf": "98765432109",
-      "telefone": "21998765432"
+      "nome": "Bruno Costa",
+      "cpf": "20020020002",
+      "email": "bruno.costa@vendas.com",
+      "telefone": "84988000002",
+      "data_cadastro": "2025-01-05T11:30:00Z"
     }
   },
   {
-    "model": "control.Vendedor",
+    "model": "control.vendedor",
     "pk": 3,
     "fields": {
-      "nome": "Carla Ferreira Lima",
-      "email": "carla.lima@exemplo.com",
-      "cpf": "11122233344",
-      "telefone": "31976543210"
+      "nome": "Carla Silva",
+      "cpf": "30030030003",
+      "email": "carla.silva@vendas.com",
+      "telefone": "84988000003",
+      "data_cadastro": "2025-01-10T14:45:00Z"
     }
   },
   {
-    "model": "control.Vendedor",
+    "model": "control.vendedor",
     "pk": 4,
     "fields": {
-      "nome": "Daniel Pereira Costa",
-      "email": "daniel.costa@exemplo.com",
-      "cpf": "55566677788",
-      "telefone": "41965432109"
+      "nome": "Daniel Farias",
+      "cpf": "40040040004",
+      "email": "daniel.farias@vendas.com",
+      "telefone": "84988000004",
+      "data_cadastro": "2025-01-15T09:20:00Z"
     }
   },
   {
-    "model": "control.Vendedor",
+    "model": "control.vendedor",
     "pk": 5,
     "fields": {
-      "nome": "Elaine Rodrigues Alves",
-      "email": "elaine.alves@exemplo.com",
-      "cpf": "00011122233",
-      "telefone": "51954321098"
+      "nome": "Erica Gomes",
+      "cpf": "50050050005",
+      "email": "erica.gomes@vendas.com",
+      "telefone": "84988000005",
+      "data_cadastro": "2025-01-20T12:50:00Z"
     }
   },
   {
-    "model": "control.Vendedor",
+    "model": "control.vendedor",
     "pk": 6,
     "fields": {
-      "nome": "Fábio Gomes Souza",
-      "email": "fabio.souza@exemplo.com",
-      "cpf": "44455566677",
-      "telefone": "61943210987"
+      "nome": "Fernando Souza",
+      "cpf": "60060060006",
+      "email": "fernando.souza@vendas.com",
+      "telefone": "84988000006",
+      "data_cadastro": "2025-01-25T16:10:00Z"
     }
   },
   {
-    "model": "control.Vendedor",
+    "model": "control.vendedor",
     "pk": 7,
     "fields": {
-      "nome": "Giovana Martins Nunes",
-      "email": "giovana.nunes@exemplo.com",
-      "cpf": "88899900011",
-      "telefone": "71932109876"
+      "nome": "Giovanna Reis",
+      "cpf": "70070070007",
+      "email": "giovanna.reis@vendas.com",
+      "telefone": "84988000007",
+      "data_cadastro": "2025-02-01T08:40:00Z"
     }
   },
   {
-    "model": "control.Vendedor",
+    "model": "control.vendedor",
     "pk": 8,
     "fields": {
-      "nome": "Henrique Barbosa Rocha",
-      "email": "henrique.rocha@exemplo.com",
-      "cpf": "22233344455",
-      "telefone": "81921098765"
+      "nome": "Hugo Rocha",
+      "cpf": "80080080008",
+      "email": "hugo.rocha@vendas.com",
+      "telefone": "84988000008",
+      "data_cadastro": "2025-02-05T10:15:00Z"
     }
   },
   {
-    "model": "control.Vendedor",
+    "model": "control.vendedor",
     "pk": 9,
     "fields": {
-      "nome": "Isabela Vieira Melo",
-      "email": "isabela.melo@exemplo.com",
-      "cpf": "66677788899",
-      "telefone": "91910987654"
+      "nome": "Isabela Nunes",
+      "cpf": "90090090009",
+      "email": "isabela.nunes@vendas.com",
+      "telefone": "84988000009",
+      "data_cadastro": "2025-02-10T13:00:00Z"
     }
   },
   {
-    "model": "control.Vendedor",
+    "model": "control.vendedor",
     "pk": 10,
     "fields": {
-      "nome": "João Victor Ribeiro",
-      "email": "joao.ribeiro@exemplo.com",
-      "cpf": "10987654321",
-      "telefone": "11909876543"
+      "nome": "Júlio Moraes",
+      "cpf": "11011011011",
+      "email": "julio.moraes@vendas.com",
+      "telefone": "84988000010",
+      "data_cadastro": "2025-02-15T15:25:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 11,
+    "fields": {
+      "nome": "Karina Lopes",
+      "cpf": "22022022022",
+      "email": "karina.lopes@vendas.com",
+      "telefone": "84988000011",
+      "data_cadastro": "2025-02-20T09:55:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 12,
+    "fields": {
+      "nome": "Lucas Barros",
+      "cpf": "33033033033",
+      "email": "lucas.barros@vendas.com",
+      "telefone": "84988000012",
+      "data_cadastro": "2025-02-25T11:10:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 13,
+    "fields": {
+      "nome": "Marisa Freitas",
+      "cpf": "44044044044",
+      "email": "marisa.freitas@vendas.com",
+      "telefone": "84988000013",
+      "data_cadastro": "2025-03-01T14:00:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 14,
+    "fields": {
+      "nome": "Natã Oliveira",
+      "cpf": "55055055055",
+      "email": "nata.oliveira@vendas.com",
+      "telefone": "84988000014",
+      "data_cadastro": "2025-03-05T16:30:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 15,
+    "fields": {
+      "nome": "Otávio Pires",
+      "cpf": "66066066066",
+      "email": "otavio.pires@vendas.com",
+      "telefone": "84988000015",
+      "data_cadastro": "2025-03-10T08:20:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 16,
+    "fields": {
+      "nome": "Paula Queiroz",
+      "cpf": "77077077077",
+      "email": "paula.queiroz@vendas.com",
+      "telefone": "84988000016",
+      "data_cadastro": "2025-03-15T10:40:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 17,
+    "fields": {
+      "nome": "Régis Ribeiro",
+      "cpf": "88088088088",
+      "email": "regis.ribeiro@vendas.com",
+      "telefone": "84988000017",
+      "data_cadastro": "2025-03-20T13:15:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 18,
+    "fields": {
+      "nome": "Sofia Santos",
+      "cpf": "99099099099",
+      "email": "sofia.santos@vendas.com",
+      "telefone": "84988000018",
+      "data_cadastro": "2025-03-25T15:50:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 19,
+    "fields": {
+      "nome": "Thiago Torres",
+      "cpf": "12112112112",
+      "email": "thiago.torres@vendas.com",
+      "telefone": "84988000019",
+      "data_cadastro": "2025-04-01T09:05:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 20,
+    "fields": {
+      "nome": "Ulisses Urquiza",
+      "cpf": "23223223223",
+      "email": "ulisses.urquiza@vendas.com",
+      "telefone": "84988000020",
+      "data_cadastro": "2025-04-05T11:45:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 21,
+    "fields": {
+      "nome": "Viviane Vieira",
+      "cpf": "34334334334",
+      "email": "viviane.vieira@vendas.com",
+      "telefone": "84988000021",
+      "data_cadastro": "2025-04-10T14:20:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 22,
+    "fields": {
+      "nome": "Wallace Xavier",
+      "cpf": "45445445445",
+      "email": "wallace.xavier@vendas.com",
+      "telefone": "84988000022",
+      "data_cadastro": "2025-04-15T16:55:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 23,
+    "fields": {
+      "nome": "Yara Zeferino",
+      "cpf": "56556556556",
+      "email": "yara.zeferino@vendas.com",
+      "telefone": "84988000023",
+      "data_cadastro": "2025-04-20T08:30:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 24,
+    "fields": {
+      "nome": "Zeca Drumond",
+      "cpf": "67667667667",
+      "email": "zeca.drumond@vendas.com",
+      "telefone": "84988000024",
+      "data_cadastro": "2025-04-25T10:10:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 25,
+    "fields": {
+      "nome": "Amanda Barbosa",
+      "cpf": "78778778778",
+      "email": "amanda.barbosa@vendas.com",
+      "telefone": "84988000025",
+      "data_cadastro": "2025-05-01T12:45:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 26,
+    "fields": {
+      "nome": "Bento Cordeiro",
+      "cpf": "89889889889",
+      "email": "bento.cordeiro@vendas.com",
+      "telefone": "84988000026",
+      "data_cadastro": "2025-05-05T15:20:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 27,
+    "fields": {
+      "nome": "Cíntia Dantas",
+      "cpf": "90990990990",
+      "email": "cintia.dantas@vendas.com",
+      "telefone": "84988000027",
+      "data_cadastro": "2025-05-10T09:35:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 28,
+    "fields": {
+      "nome": "Douglas Esteves",
+      "cpf": "13113113113",
+      "email": "douglas.esteves@vendas.com",
+      "telefone": "84988000028",
+      "data_cadastro": "2025-05-15T11:50:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 29,
+    "fields": {
+      "nome": "Elaine França",
+      "cpf": "24224224224",
+      "email": "elaine.franca@vendas.com",
+      "telefone": "84988000029",
+      "data_cadastro": "2025-05-20T14:10:00Z"
+    }
+  },
+  {
+    "model": "control.vendedor",
+    "pk": 30,
+    "fields": {
+      "nome": "Fábio Galvão",
+      "cpf": "35335335335",
+      "email": "fabio.galvao@vendas.com",
+      "telefone": "84988000030",
+      "data_cadastro": "2025-05-25T16:40:00Z"
     }
   }
 ]

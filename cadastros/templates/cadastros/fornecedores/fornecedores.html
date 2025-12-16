@@ -161,12 +161,12 @@
                 </div>
                 <p class="fw-bold mt-3" style="font-family: Inter; color: #2563EB; font-size: 18px; margin-bottom: 6px;">Informações</p>
                 <div class="mt-2 ms-1">
-                    <a href="{% url 'dashboard:clientes' %}" class="d-block mb-2 text-decoration-none" style="color: #374151; font-family: Inter;">
-                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Dashboard Clientes
-                    </a>
-                    <a href="{% url 'estoque:verificacao' %}" class="d-block text-decoration-none" style="color: #374151; font-family: Inter;">
-                        <i class="fa-solid fa-file-lines me-2"></i> Relatório
-                    </a>
+                    <h4 class="d-block mb-2" style="color: #374151; font-family: Inter; font-size: 18px;">
+                        Total de clientes: {{ total_fornecedores }}
+                    </h4>
+                    <h4 class="d-block mb-2" style="color: #374151; font-family: Inter; font-size: 18px;">
+                        Cadastrados esse mês: {{ fornecedores_mes }}
+                    </h4>
                 </div>
             </div>
         </div>    
