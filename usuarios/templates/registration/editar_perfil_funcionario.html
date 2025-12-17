@@ -20,10 +20,9 @@
                             {% endif %}
                         </div>
                         <div style="width: 100%;">
-                                <label style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: #374151; display: block; margin-bottom: 8px;">
-                                    Alterar Logo
-                                </label>
-                                <input type="file" name="imagem_perfil" accept="image/*" style="font-family: 'Inter', sans-serif; font-size: 14px; width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; background: transparent;">
+                            <div class="col-12">
+                                
+                            </div>
                         </div>
                         <h4 style="font-family: 'Inter', sans-serif; font-weight: 700; color: #1F2937; margin-top: 0; font-size: 1.25rem;">
                             {{ funcionario.nome }}
@@ -55,8 +54,8 @@
                                 <input type="text" name="telefone" value="{{ usuario.telefone }}" placeholder="00000-000" style="font-family: 'Inter', sans-serif;  width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; background: transparent;" onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#d1d5db'">
                             </div>
                             <div class="col-12">
-                                <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">Cargo</label>
-                                <input type="text" value="{{ funcionario.cargo }}" disabled style="font-family: 'Inter', sans-serif;  width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; background: transparent; color: black; cursor: not-allowed;">
+                                <label class="form-label" tyle="font-family: Inter; font-size: 0.85rem; color: #6B7280; font-weight: 500;">Imagem perfil:</label>
+                                {{ imagem_form.imagem_perfil }}
                                 <input type="hidden" name="cargo" value="{{ funcionario.cargo }}">
                             </div>
                         </div>
@@ -109,7 +108,7 @@
                     </div>
                 </div>
                 <div style="text-align: right; margin-top: 20px;">
-                    <button type="submit" class="fs-4 w-100" style="background: #2563EB; color: white; font-weight: 700; border: none; border-radius: 8px; font-family: Inter; font-weight: 700; cursor:pointer; transition:0.2s; border-top-left-radius: 15px; border-bottom-left-radius: 15px;">Salvar alterações
+                    <button type="submit" class="fs-4 w-100" style="background: #2563EB; color: white; min-height: 50px; font-weight: 700; border: none; border-radius: 8px; font-family: Inter; font-weight: 700; cursor:pointer; transition:0.2s; border-radius: 15px;">Salvar alterações
                     </button>
                 </div>
             </div>
