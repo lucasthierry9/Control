@@ -11,6 +11,7 @@
     /* Você pode querer mudar a cor do texto no hover também, se necessário: */
     /* color: #FFFFFF !important; */
 }
+
 /* 1. WebKit (Chrome, Safari, Edge, Opera) - Define a largura e estiliza */
 .custom-scrollbar::-webkit-scrollbar {
     width: 8px; /* ESSENCIAL: Define a largura da barra */

@@ -29,3 +29,13 @@ class UserForm(UserCreationForm):
                 'style': 'background-color: #E9E9E9; border: none; border-radius: 8px; height: 45px;'
             })
             field.label_suffix = ""       
+
+class ImagemPerfilForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['imagem_perfil']
+        widgets = {
+            'imagem_perfil': forms.ClearableFileInput(attrs={
+                'class': 'form-control rounded-3',
+            })
+        }

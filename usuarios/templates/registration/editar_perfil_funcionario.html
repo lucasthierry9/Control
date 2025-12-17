@@ -1,5 +1,4 @@
-{% extends "{% extends "dashboard/base_dashboard.html" %}
-/base.html" %}
+{% extends "control/base.html" %}
 {% load static %}
 {% block title %}Editar Perfil{% endblock title %}
 {% block content %}
@@ -57,7 +56,8 @@
                             </div>
                             <div class="col-12">
                                 <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">Cargo</label>
-                                <p style="font-family: 'Inter', sans-serif; color: #1F2937; margin: 5px 0 0 0;">{{ funcionario.cargo|default:"Rua Exemplo, 123 - Cidade/UF" }}</p>
+                                <input type="text" value="{{ funcionario.cargo }}" disabled style="font-family: 'Inter', sans-serif;  width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; background: transparent; color: black; cursor: not-allowed;">
+                                <input type="hidden" name="cargo" value="{{ funcionario.cargo }}">
                             </div>
                         </div>
                     </div>
@@ -117,3 +117,4 @@
     </div>
 </form>
 {% endblock %}
+{% block footer %}{% endblock %}

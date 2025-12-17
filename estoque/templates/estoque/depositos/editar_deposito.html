@@ -1,18 +1,19 @@
 {% extends "control/base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block title %}Cadastrar Produto{% endblock title %}
+
+{% block title %}Editar Depósito{% endblock title %}
 
 {% block content %}
 <div class="pt-3">
     <div class="container" style="max-width: 100%;">
         <div class="d-flex align-items-center">
-            <a href="{% url 'cadastros:produtos' %}">
+            <a href="{% url 'estoque:depositos' %}">
                 <i class="fa-solid fa-chevron-left fs-4" style="color: black;"></i>
             </a>
-            <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Cadastrar Produto</h1>
+            <h1 style="font-family: Inter; font-weight: 700; color: #2563EB;">Editar Depósito</h1>
         </div>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" style="margin: 0px;">
             {% csrf_token %}
             {% crispy form %}
         </form>

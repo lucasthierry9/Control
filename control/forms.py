@@ -1,5 +1,7 @@
 from django import forms
 from . models import Cliente, Produto, Funcionario, Vendedor, Fornecedor, Categoria_Produto, Pedidos_Venda
+from usuarios.models import Usuario
+from django.contrib.auth.models import Group
 from crispy_forms.helper import FormHelper
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Submit, HTML, Div
@@ -141,20 +143,29 @@ class ProdutoForm(forms.ModelForm):
             ),
         )
 
-class FuncionarioForm(forms.Form):
-    nome = forms.CharField(max_length=100, label="Nome completo")
+class FuncionarioForm(forms.ModelForm):
     email = forms.EmailField(label="Email")
-    telefone = forms.CharField(max_length=20, label="Telefone")
-    cpf = forms.CharField(max_length=11, label="CPF")
-    cargo = forms.CharField(max_length=50, label="Cargo")
     senha = forms.CharField(widget=forms.PasswordInput, label="Senha de acesso")
+    telefone = forms.CharField(max_length=11)
+    class Meta:
+        model = Funcionario
+        fields = ['nome', 'telefone', 'cpf', 'cargo']
+        labels = {
+            'nome': 'Nome completo',
+            'telefone': 'Telefone',
+            'cpf': 'CPF',
+            'cargo': 'Cargo',
+        }
+        widgets = {
+            'senha': forms.PasswordInput(render_value=True),
+        }
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        botao_texto = "Salvar" 
+        botao_texto = "Registrar"
 
-        # Estilo padrão para todos os campos
         for field_name, field in self.fields.items():
             if field_name == "senha":
                 field.widget.attrs.update({
@@ -167,43 +178,81 @@ class FuncionarioForm(forms.Form):
                     'class': 'form-control',
                     'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;'
                 })
+
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            HTML('<h5 style="font-family: Inter; font-weight: 700;">Dados</h5>'),
+            Row(
+                Column('nome', css_class='col-md-6'),
+                Column('email', css_class='col-md-6'),
+            ),
+            Row(
+                Column('cpf', css_class='col-md-6'),
+                Column('telefone', css_class='col-md-6'),
+            ),
+            Row(
+                Column('cargo', css_class='col-md-6'),
+                Column('senha', css_class='col-md-6'),
+            ),
+            Div(
+                Submit(
+                    'submit', botao_texto,
+                    css_class='btn',
+                    style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
+                ),
+                
+            )
         
-        # Campos select
-        select_fields = ['estado']
-        for field_name in select_fields:
-            if field_name in self.fields:
-                self.fields[field_name].widget.attrs.update({
-                    'class': 'form-select',
+
+class FuncionarioEditarForm(forms.ModelForm):
+    class Meta:
+        model = Funcionario
+        fields = ['nome', 'telefone', 'cargo'] 
+        labels = {
+            'nome': 'Nome completo',
+            'telefone': 'Telefone',
+            'cargo': 'Cargo',
+        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['grupo'].queryset = Group.objects.exclude(name='Empresa')
+        botao_texto = "Salvar"
+
+        for field_name, field in self.fields.items():
+            if field_name == "senha":
+                field.widget.attrs.update({
+                    'class': 'form-control',
+                    'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;',
+                    'autocomplete': 'new-password',
+                })
+            else:
+                field.widget.attrs.update({
+                    'class': 'form-control',
                     'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;'
                 })
 
         self.helper = FormHelper()
         self.helper.form_method = 'post'
-        self.helper.form_class = ''
-        self.helper.label_class = 'form-label'
-        self.helper.field_class = ''
-        
         self.helper.layout = Layout(
-            # Seção Dados
-            HTML('<h5 style="font-family: Inter; font-weight: 700; margin-bottom: 8px; margin-top: 10px;">Dados</h5>'),
+            HTML('<h5 style="font-family: Inter; font-weight: 700;">Dados</h5>'),
             Row(
-                Column('nome', css_class='col-12 col-md-6'),
-                Column('email', css_class='col-12 col-md-6'),
+                Column('nome', css_class='col-md-6'),
+                Column('cpf', css_class='col-md-6'),
             ),
             Row(
-                Column('cpf', css_class='col-12 col-md-6'),
-                Column('telefone', css_class='col-12 col-md-6'),
+                Column('telefone', css_class='col-md-6'),
+                Column('cargo', css_class='col-md-6'),
             ),
-            Row(
-                Column('cargo', css_class='col-12 col-md-6'),
-                Column('senha', css_class='col-12 col-md-6'),
-            ),
-            # Botão Submit
             Div(
-                Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
-                       style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
-                css_class='mt-2'
-            ),
+                Submit(
+                    'submit', botao_texto,
+                    css_class='btn',
+                    style='background-color: #2563EB; color: white; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'
+                ),
+                css_class='mt-3'
+            )
         )
 
 class VendedorForm(forms.ModelForm):

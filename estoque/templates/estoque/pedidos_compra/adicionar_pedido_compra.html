@@ -13,8 +13,10 @@
             </a>
             <h1 style="font-family: Inter; font-weight: 700; color: #2563EB;">Registrar Pedido de Compra</h1>
         </div>
-        
-        {% crispy form %}
+        <form method="post" style="margin: 0px;">
+            {% csrf_token %}
+            {% crispy form %}
+        </form>
     </div>
 </div>
 {% endblock content %}

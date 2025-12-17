@@ -12,7 +12,10 @@
             </a>
             <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Editar Categoria</h1>
         </div>
-        {% crispy form %}
+        <form method="post" style="margin: 0px;">
+            {% csrf_token %}
+            {% crispy form %}
+        </form>
     </div>
 </div>
 {% endblock content %}

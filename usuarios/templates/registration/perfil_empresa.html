@@ -1,4 +1,4 @@
-{% extends "dashboard/base_dashboard.html" %}
+{% extends "control/base.html" %}
 {% load static %}
 {% block title %}Perfil{% endblock title %}
 {% block content %}
@@ -70,7 +70,7 @@
                     </h5>
                     <div style="text-align: center; padding-top: 20px;">
                         <div style="margin-bottom: 20px;">
-                            <p style="font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 700; color: #2563EB; margin: 0;">{{ total_pedidos|default:"0" }}</p>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 700; color: #2563EB; margin: 0;">{{ total_vendas|default:"0" }}</p>
                             <span style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280;">Vendas concluídas</span>
                         </div>
                         <div>
@@ -108,10 +108,11 @@
                 </div>
             </div>
             <div class="w-100 d-flex" style="justify-content: flex-end; gap: 20px;">
-                <a href={% url 'usuarios:editar_perfil' request.user.id  %} class="d-block"><button class="fs-5" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none;">Editar Perfil</button></a>
-                <a href={% url 'usuarios:alterar_senha'  %} class="d-block"><button class="fs-5" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background-color: #2563EB; border: none;">Alterar Senha</button></a>
+                <a href={% url 'usuarios:editar_perfil' request.user.id  %} class="d-block"><button class="fs-5" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-radius: 15px; background-color: #2563EB; border: none;">Editar Perfil</button></a>
+                <a href={% url 'usuarios:alterar_senha'  %} class="d-block"><button class="fs-5" style="min-height: 60px; font-family: Inter; color: white; font-weight: 700; border-radius: 15px; background-color: #2563EB; border: none;">Alterar Senha</button></a>
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
+{% block footer %}{% endblock %}

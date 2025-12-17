@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404,redirect
 from control.models import Cliente, Produto, Funcionario, Vendedor, Fornecedor, Categoria_Produto
 from control.forms import ClienteForm, ProdutoForm, FuncionarioForm, VendedorForm, FornecedorForm, CategoriaForm
 from usuarios.models import Usuario
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -51,10 +51,15 @@ def cadastrar_cliente(request):
         if form.is_valid():
             cliente = form.save()
 
+            messages.success(
+                request,
+                f"Cliente <strong>{cliente.nome}</strong> cadastrado com sucesso."
+            )
+
             registrar_acao(
                 request.user,
                 'clientes',
-                f"{cliente.nome} cadastrado"
+                f"{cliente.nome} <strong>cadastrado</strong>"
             )
             return redirect("cadastros:clientes")
     else:
@@ -68,11 +73,15 @@ def editar_cliente(request, id_cliente):
         form = ClienteForm(request.POST, instance=cliente)
         if form.is_valid():
             cliente = form.save()
+            messages.success(
+                request,
+                f"Cliente <strong>{cliente.nome}</strong> editado com sucesso."
+            )
 
             registrar_acao(
                 request.user,
                 'clientes',
-                f"{cliente.nome} editado"
+                f"{cliente.nome} <strong>editado</strong>"
             )
             return redirect("cadastros:clientes")
     else:
@@ -84,11 +93,26 @@ def editar_cliente(request, id_cliente):
 def excluir_cliente(request, id_cliente=0):
     if request.method == "POST":
         ids = request.POST.getlist("ids_selecionados")
-        Cliente.objects.filter(id__in=ids).delete() 
+        
+        quantidade = len(ids)
+
+        if quantidade > 0:
+            Cliente.objects.filter(id__in=ids).delete() 
+
+            messages.success(
+                request,
+                f"Cliente excluído com sucesso."
+            )
+            # REGISTRA A AÇÃO
+            registrar_acao(
+                usuario=request.user,
+                modulo='clientes',
+                descricao=f'{quantidade} cliente(s) excluído(s)'
+            )
         return redirect('cadastros:clientes')
     else:
         cliente = get_object_or_404(Cliente, id=id_cliente)
-        return render(request, "cadastros/clientes/confirma.html", {"cliente": cliente})
+        return render(request, "cadastros/clientes/confirma.html", {"cliente": cliente, "historico": ultimas_acoes_modulo(request.user, 'clientes')})
     
 # ----------------------------------------------------------------------------------------
 
@@ -131,10 +155,15 @@ def cadastrar_produto(request):
         if form.is_valid():
             produto = form.save()
 
+            messages.success(
+                request,
+                f"Produto <strong>{produto.nome}</strong> cadastrado com sucesso."
+            )
+
             registrar_acao(
                 request.user,
                 'produtos',
-                f"{produto.nome} cadastrado"
+                f"{produto.nome} <strong>cadastrado</strong>"
             )
             return redirect("cadastros:produtos")
     else:
@@ -146,36 +175,62 @@ def editar_produto(request, id_produto):
     produto = get_object_or_404(Produto, id=id_produto)
 
     if request.method == "POST":
-        form = ProdutoForm(request.POST, instance=produto)
+        form = ProdutoForm(request.POST, request.FILES, instance=produto)
         if form.is_valid():
             produto = form.save()
+
+            messages.success(
+                request,
+                f"Produto <strong>{produto.nome}</strong> editado com sucesso."
+            )
 
             registrar_acao(
                 request.user,
                 'produtos',
-                f"{produto.nome} editado"
+                f"{produto.nome} <strong>editado</strong>"
             )
             return redirect("cadastros:produtos")
     else:
         form = ProdutoForm(instance=produto)
 
-    return render(request, "cadastros/produtos/editar_produto.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'produtos',), "produto": produto})
+    return render(request, "cadastros/produtos/editar_produto.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'produtos'), "produto": produto})
 
 @login_required
 def excluir_produto(request, id_produto=0):
     if request.method == "POST":
         ids = request.POST.getlist("ids_selecionados")
-        Produto.objects.filter(id__in=ids).delete() 
+        
+        quantidade = len(ids)
+
+        if quantidade > 0:
+            Produto.objects.filter(id__in=ids).delete() 
+
+            messages.success(
+                request,
+                f"Produto excluído com sucesso."
+            )
+
+            # REGISTRA A AÇÃO
+            registrar_acao(
+                usuario=request.user,
+                modulo='produtos',
+                descricao=f'{quantidade} produto(s) excluído(s)'
+            )
+        
         return redirect('cadastros:produtos')
     else:
         produto = get_object_or_404(Produto, id=id_produto)
-        return render(request, "cadastros/produtos/confirma.html", {"produto": produto})
+        return render(request, "cadastros/produtos/confirma.html", {"produto": produto, "historico": ultimas_acoes_modulo(request.user, 'produtos')})
 
 # ----------------------------------------------------------------------------------------
 
 # FUNCIONÁRIOS
 @login_required
 def funcionarios(request):
+
+    # Total de funcionarios:
+    total_funcionarios = Funcionario.objects.count()
+
     search = request.GET.get("search")
 
     funcionarios = Funcionario.objects.all()
@@ -194,13 +249,26 @@ def funcionarios(request):
     paginator = Paginator(funcionarios, 10)
     numero_da_pagina = request.GET.get('p')
     funcionarios = paginator.get_page(numero_da_pagina)
-    return render(request, "cadastros/funcionarios/funcionarios.html", {"funcionarios": funcionarios, "search": search, "historico": ultimas_acoes_modulo(request.user, 'funcionarios')})
+    return render(request, "cadastros/funcionarios/funcionarios.html", {
+        "funcionarios": funcionarios, 
+        "search": search, 
+        "historico": ultimas_acoes_modulo(request.user, 'funcionarios'), 
+        "total_funcionarios": total_funcionarios,})
 
 @login_required
 def cadastrar_funcionario(request):
     if request.method == "POST":
         form = FuncionarioForm(request.POST)
         if form.is_valid():
+            email = form.cleaned_data['email']
+
+            if Usuario.objects.filter(email=email).exists():
+                form.add_error('email', 'Este e-mail já está cadastrado.')
+                return render(
+                    request,
+                    "cadastros/funcionarios/cadastrar_funcionario.html",
+                    {"form": form}
+                )
 
             func_user = Usuario.objects.create_user(
                 email=form.cleaned_data['email'],
@@ -212,49 +280,120 @@ def cadastrar_funcionario(request):
                 cnpj=None
             )
 
-            Funcionario.objects.create(
+            funcionario = Funcionario.objects.create(
                 user=func_user,
                 empresa=request.user,
                 nome=form.cleaned_data['nome'],
                 cpf=form.cleaned_data['cpf'],
                 telefone=form.cleaned_data['telefone'],
-                cargo=form.cleaned_data['cargo']
             )
 
-            return redirect("cadastros:funcionarios")
-
-    else:
-        form = FuncionarioForm()
-
-    return render(request, "cadastros/funcionarios/cadastrar_funcionario.html", {"form": form})
-
-@login_required
-def editar_funcionario(request, id_funcionario):
-    funcionario = get_object_or_404(Funcionario, id=id_funcionario)
-    if request.method == "POST":
-        form = FuncionarioForm(request.POST, instance=funcionario)
-        if form.is_valid():
-            funcionario = form.save()
+            messages.success(
+                request,
+                f"Funcionário <strong>{funcionario.nome}</strong> cadastrado com sucesso."
+            )
 
             registrar_acao(
                 request.user,
                 'funcionarios',
-                f"{funcionario.nome} editado"
+                f"{funcionario.nome} <strong>cadastrado</strong>"
+            )
+
+            return redirect("cadastros:funcionarios")
+    else:
+        form = FuncionarioForm()
+
+    return render(request, "cadastros/funcionarios/cadastrar_funcionario.html",{"form": form})
+    
+
+@login_required
+def editar_funcionario(request, id_funcionario):
+    funcionario = get_object_or_404(Funcionario, id=id_funcionario)
+
+    if request.method == "POST":
+        form = FuncionarioForm(request.POST, instance=funcionario)
+        if form.is_valid():
+            funcionario = form.save
+            funcionario.save()
+
+            messages.success(
+                request,
+                f"Funcionário <strong>{funcionario.nome}</strong> editado com sucesso."
+            )
+
+            registrar_acao(
+                request.user,
+                'funcionarios',
+                f"{funcionario.nome} <strong>editado</strong>"
             )
             return redirect("cadastros:funcionarios")
     else:
-        form = FuncionarioForm(instance=funcionario)
-    return render(request, "cadastros/funcionarios/editar_funcionario.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'funcionarios'), "funcionario": funcionario})
+        form = FuncionarioForm(
+            instance=funcionario,
+            initial={
+                'email': funcionario.user.email,
+            }
+        )
+
+    return render(
+        request,
+        "cadastros/funcionarios/editar_funcionario.html",
+        {
+            "form": form,
+            "funcionario": funcionario,
+            "historico": ultimas_acoes_modulo(request.user, 'funcionarios'),
+        }
+    )
 
 @login_required
 def excluir_funcionario(request, id_funcionario=0):
     if request.method == "POST":
         ids = request.POST.getlist("ids_selecionados")
-        Funcionario.objects.filter(id__in=ids).delete() 
+
+        quantidade = len(ids)
+
+        if quantidade > 0:
+            Funcionario.objects.filter(id__in=ids).delete() 
+
+            messages.success(
+                request,
+                f"Funcionário excluído com sucesso."
+            )
+            # REGISTRA A AÇÃO
+            registrar_acao(
+                usuario=request.user,
+                modulo='funcionarios',
+                descricao=f'{quantidade} funcionario(s) excluído(s)'
+            )
         return redirect('cadastros:funcionarios')
     else:
         funcionario = get_object_or_404(Funcionario, id=id_funcionario)
-        return render(request, "cadastros/funcionarios/confirma.html", {"funcionario": funcionario})
+        return render(request, "cadastros/funcionarios/confirma.html", {"funcionario": funcionario, "historico": ultimas_acoes_modulo(request.user, 'funcionarios')})
+    
+@login_required
+def excluir_vendedor(request, id_vendedor=0):
+    if request.method == "POST":
+        ids = request.POST.getlist("ids_selecionados")
+
+        quantidade = len(ids)
+
+        if quantidade > 0:
+            Vendedor.objects.filter(id__in=ids).delete() 
+
+            messages.success(
+                request,
+                f"Vendedor excluído com sucesso."
+            )
+            # REGISTRA A AÇÃO
+            registrar_acao(
+                usuario=request.user,
+                modulo='vendedores',
+                descricao=f'{quantidade} vendedor(es) excluído(s)'
+            )
+        return redirect('cadastros:vendedores')
+    else:
+        vendedor = get_object_or_404(Vendedor, id=id_vendedor)
+        return render(request, "cadastros/vendedores/confirma.html", {"vendedor": vendedor, "historico": ultimas_acoes_modulo(request.user, 'vendedores')})
 
 # ----------------------------------------------------------------------------------------
 
@@ -264,9 +403,8 @@ def vendedores(request):
     search = request.GET.get("search")
 
     vendedores = Vendedor.objects.all()
-
-    # Total de vendedores:
-    total_vendedores = Vendedor.objects.count()
+    
+    total_vendedores = vendedores.count()
 
     # Total vendedores cadastrados no mês:
     vendedores_mes = Vendedor.objects.filter(data_cadastro__month=now().month).count()
@@ -274,27 +412,28 @@ def vendedores(request):
     if search:
         filtros = (
             Q(nome__icontains=search) |
-            Q(id__icontains=search) 
+            Q(id__icontains=search) |
+            Q(user__email__icontains=search)
         )
-        if search.isdigit():
-            if len(search) >= 7:
-                filtros |= Q(cpf__icontains=search)
 
-            if len(search) >= 7:
-                filtros |= Q(telefone__icontains=search)
-            
+        if search.isdigit():
+            filtros |= Q(cpf__icontains=search)
+            filtros |= Q(telefone__icontains=search)
 
         vendedores = vendedores.filter(filtros)
 
+    # -------- PAGINAÇÃO --------
     paginator = Paginator(vendedores, 10)
     numero_da_pagina = request.GET.get('p')
     vendedores = paginator.get_page(numero_da_pagina)
+
     return render(request, "cadastros/vendedores/vendedores.html", {
-        "vendedores": vendedores, 
-        "search": search, 
+        "vendedores": vendedores,
+        "search": search,
         "historico": ultimas_acoes_modulo(request.user, 'vendedores'),
         "total_vendedores": total_vendedores,
-        "vendedores_mes": vendedores_mes})
+        "vendedores_mes": vendedores_mes,
+    })
 
 @login_required
 def cadastrar_vendedor(request):
@@ -303,10 +442,15 @@ def cadastrar_vendedor(request):
         if form.is_valid():
             vendedor = form.save()
 
+            messages.success(
+                request,
+                f"Vendedor <strong>{vendedor.nome}</strong> cadastrado com sucesso."
+            )
+
             registrar_acao(
                 request.user,
                 'vendedores',
-                f"{vendedor.nome} cadastrado"
+                f"{vendedor.nome} <strong>cadastrado</strong>"
             )
             return redirect("cadastros:vendedores")
     else:
@@ -322,10 +466,15 @@ def editar_vendedor(request, id_vendedor):
         if form.is_valid():
             vendedor = form.save()
 
+            messages.success(
+                request,
+                f"Vendedor <strong>{vendedor.nome}</strong> editado com sucesso."
+            )
+
             registrar_acao(
                 request.user,
                 'vendedores',
-                f"{vendedor.nome} editado"
+                f"{vendedor.nome} <strong>editado</strong>"
             )
             return redirect("cadastros:vendedores")
     else:
@@ -337,11 +486,26 @@ def editar_vendedor(request, id_vendedor):
 def excluir_vendedor(request, id_vendedor=0):
     if request.method == "POST":
         ids = request.POST.getlist("ids_selecionados")
-        Vendedor.objects.filter(id__in=ids).delete() 
+
+        quantidade = len(ids)
+
+        if quantidade > 0:
+            Vendedor.objects.filter(id__in=ids).delete() 
+
+            messages.success(
+                request,
+                f"Vendedor excluído com sucesso."
+            )
+            # REGISTRA A AÇÃO
+            registrar_acao(
+                usuario=request.user,
+                modulo='vendedores',
+                descricao=f'{quantidade} vendedor(es) excluído(s)'
+            )
         return redirect('cadastros:vendedores')
     else:
         vendedor = get_object_or_404(Vendedor, id=id_vendedor)
-        return render(request, "cadastros/vendedores/confirma.html", {"vendedor": vendedor})
+        return render(request, "cadastros/vendedores/confirma.html", {"vendedor": vendedor, "historico": ultimas_acoes_modulo(request.user, 'vendedores')})
     
 # FORNECEDOR -----------------------
 @login_required
@@ -384,10 +548,15 @@ def cadastrar_fornecedor(request):
         if form.is_valid():
             fornecedor = form.save()
 
+            messages.success(
+                request,
+                f"Fornecedor <strong>{fornecedor.nome}</strong> cadastrado com sucesso."
+            )
+
             registrar_acao(
                 request.user,
                 'fornecedores',
-                f"{fornecedor.nome} cadastrado"
+                f"{fornecedor.nome} <strong>cadastrado</strong>"
             )
             return redirect("cadastros:fornecedores")
     else:
@@ -402,10 +571,15 @@ def editar_fornecedor(request, id_fornecedor):
         if form.is_valid():
             fornecedor = form.save()
 
+            messages.success(
+                request,
+                f"Fornecedor <strong>{fornecedor.nome}</strong> editado com sucesso."
+            )
+
             registrar_acao(
                 request.user,
                 'fornecedores',
-                f"{fornecedor.nome} editado"
+                f"{fornecedor.nome} <strong>editado</strong>"
             )
             return redirect("cadastros:fornecedores")
     else:
@@ -416,11 +590,25 @@ def editar_fornecedor(request, id_fornecedor):
 def excluir_fornecedor(request, id_fornecedor=0):
     if request.method == "POST":
         ids = request.POST.getlist("ids_selecionados")
-        Fornecedor.objects.filter(id__in=ids).delete() 
+
+        quantidade = len(ids)
+
+        if quantidade > 0:
+            Fornecedor.objects.filter(id__in=ids).delete() 
+            messages.success(
+                request,
+                f"Fornecedor excluído com sucesso."
+            )
+            # REGISTRA A AÇÃO
+            registrar_acao(
+                usuario=request.user,
+                modulo='fornecedores',
+                descricao=f'{quantidade} fornecedor(es) excluído(s)'
+            )
         return redirect('cadastros:fornecedores')
     else:
         fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
-        return render(request, "cadastros/fornecedores/confirma.html", {"fornecedor": fornecedor})
+        return render(request, "cadastros/fornecedores/confirma.html", {"fornecedor": fornecedor, "historico": ultimas_acoes_modulo(request.user, 'fornecedores')})
     
 # ----------------------------------------------------------------------------------------
 
@@ -456,10 +644,15 @@ def cadastrar_categoria(request):
         if form.is_valid():
             categoria = form.save()
 
+            messages.success(
+                request,
+                f"Categoria <strong>{categoria.nome}</strong> cadastrada com sucesso."
+            )
+
             registrar_acao(
                 request.user,
                 'categorias',
-                f"{categoria.nome} cadastrado"
+                f"{categoria.nome} <strong>cadastrada</strong>"
             )
             return redirect("cadastros:categorias")
     else:
@@ -475,10 +668,15 @@ def editar_categoria(request, id_categoria):
         if form.is_valid():
             categoria = form.save()
 
+            messages.success(
+                request,
+                f"Categoria <strong>{categoria.nome}</strong> editada com sucesso."
+            )
+
             registrar_acao(
                 request.user,
                 'categorias',
-                f"{categoria.nome} editado"
+                f"{categoria.nome} <strong>editada</strong>"
             )
             return redirect("cadastros:categorias")
     else:
@@ -490,10 +688,25 @@ def editar_categoria(request, id_categoria):
 def excluir_categoria(request, id_categoria=0):
     if request.method == "POST":
         ids = request.POST.getlist("ids_selecionados")
-        Categoria_Produto.objects.filter(id__in=ids).delete() 
+
+        quantidade = len(ids)
+
+        if quantidade > 0:
+            Categoria_Produto.objects.filter(id__in=ids).delete() 
+
+            messages.success(
+                request,
+                f"Categoria excluída com sucesso."
+            )
+
+            registrar_acao(
+                usuario=request.user,
+                modulo='categorias',
+                descricao=f'{quantidade} categoria(s) excluída(s)'
+            ) 
         return redirect('cadastros:categorias')
     else:
         categoria = get_object_or_404(Categoria_Produto, id=id_categoria)
-        return render(request, "cadastros/categorias/confirma.html", {"categoria": categoria})
+        return render(request, "cadastros/categorias/confirma.html", {"categoria": categoria, "historico": ultimas_acoes_modulo(request.user, 'categorias')})
     
 # ----------------------------------------------------------------------------------------

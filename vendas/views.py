@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404,redirect
 from control.models import Pedidos_Venda
 from usuarios.models import Usuario
 from . forms import PedidosVendaForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponse
@@ -15,6 +15,7 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import A4
 from control.utils import registrar_acao, ultimas_acoes_modulo
+from django.contrib import messages
 
 #PEDIDOS
 @login_required
@@ -47,11 +48,15 @@ def registrar_pedido(request):
         form = PedidosVendaForm(request.POST)
         if form.is_valid():
             pedidos_venda = form.save()
+            messages.success(
+                request,
+                f"Pedido de {pedidos_venda.produto.nome} registrado com sucesso."
+            )
 
             registrar_acao(
                 request.user,
                 'pedidos_venda',
-                f"{pedidos_venda.nome} adicionado"
+                f"Pedido de {pedidos_venda.produto.nome} <strong>registrado</strong>"
             )
             return redirect("vendas:pedidos")
         else:
@@ -68,27 +73,45 @@ def editar_pedido(request, id_pedido):
         form = PedidosVendaForm(request.POST, instance=pedido)
         if form.is_valid():
             pedidos_venda = form.save()
+            messages.success(
+                request,
+                f"Pedido de {pedidos_venda.produto.nome} editado com sucesso."
+            )
 
             registrar_acao(
                 request.user,
                 'pedidos_venda',
-                f"{pedidos_venda.nome} editado"
+                f"{pedidos_venda.produto.nome} <strong>editado</strong>"
             )
             return redirect("vendas:pedidos")
     else:
         form = PedidosVendaForm(instance=pedido)
 
-    return render(request, "vendas/pedidos/editar_pedido.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'pedidos_venda'), "pedidos_venda": pedidos_venda})
+    return render(request, "vendas/pedidos/editar_pedido.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'pedidos_venda'), "pedido": pedido})
     
 @login_required
 def excluir_pedido(request, id_pedido=0):
     if request.method == "POST":
         ids = request.POST.getlist("ids_selecionados")
-        Pedidos_Venda.objects.filter(id__in=ids).delete() 
+
+        quantidade = len(ids)
+
+        if quantidade > 0:
+            Pedidos_Venda.objects.filter(id__in=ids).delete() 
+            messages.success(
+                request,
+                f"Pedido excluído com sucesso."
+            )
+            # REGISTRA A AÇÃO
+            registrar_acao(
+                usuario=request.user,
+                modulo='pedidos_venda',
+                descricao=f'{quantidade} pedido(s) excluído(s)'
+            )
         return redirect('vendas:pedidos')
     else:
         pedido = get_object_or_404(Pedidos_Venda, id=id_pedido)
-        return render(request, "vendas/pedidos/confirma.html", {"pedido": pedido})
+        return render(request, "vendas/pedidos/confirma.html", {"pedido": pedido, 'historico': ultimas_acoes_modulo(request.user, 'pedidos_venda')})
     
 #HISTÓRICO
 @login_required
