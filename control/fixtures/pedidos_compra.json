@@ -1,0 +1,62 @@
+[
+  {
+    "model": "control.pedidos_compra",
+    "pk": 1,
+    "fields": {
+      "produto": 1,
+      "fornecedor": 1,
+      "quantidade": 10,
+      "valor": "150.00",
+      "status": "concluido",
+      "data": "2025-12-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "control.pedidos_compra",
+    "pk": 2,
+    "fields": {
+      "produto": 2,
+      "fornecedor": 2,
+      "quantidade": 5,
+      "valor": "75.50",
+      "status": "aberto",
+      "data": "2025-12-02T11:30:00Z"
+    }
+  },
+  {
+    "model": "control.pedidos_compra",
+    "pk": 3,
+    "fields": {
+      "produto": 1,
+      "fornecedor": 3,
+      "quantidade": 20,
+      "valor": "300.00",
+      "status": "processando",
+      "data": "2025-12-03T09:15:00Z"
+    }
+  },
+  {
+    "model": "control.pedidos_compra",
+    "pk": 4,
+    "fields": {
+      "produto": 3,
+      "fornecedor": 4,
+      "quantidade": 12,
+      "valor": "120.00",
+      "status": "cancelado",
+      "data": "2025-12-04T14:20:00Z"
+    }
+  },
+  {
+    "model": "control.pedidos_compra",
+    "pk": 5,
+    "fields": {
+      "produto": 2,
+      "fornecedor": 5,
+      "quantidade": 8,
+      "valor": "90.00",
+      "status": "concluido",
+      "data": "2025-12-05T16:45:00Z"
+    }
+  }
+]

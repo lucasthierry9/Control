@@ -1,4 +1,4 @@
-{% extends "dashboard/base_dashboard.html" %}
+{% extends "control/base.html" %}
 {% block title %}Alterar Senha{% endblock title %}
 {% block content %}
 <div class="p-3" style="font-family: Inter;">
@@ -28,7 +28,7 @@
             <div class="text-danger">{{ form.new_password2.errors }}</div>
         </div>
 
-        <button class="mt-2" type="submit">Salvar nova senha</button>
+        <button class="mt-2" type="submit" style="background-color: #2563EB; color: white; font-size: 26px; border-radius: 10px; min-width: 200px; height: 55px;">Salvar nova senha</button>
     </form>
 </div>
 
@@ -42,6 +42,7 @@
     }
 
     button {
+        font-weight: 700;
         padding: 10px 15px;
         border: none;
         background: #2563eb;
@@ -51,3 +52,4 @@
     }
 </style>
 {% endblock content %}
+{% block footer %}{% endblock %}

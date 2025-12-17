@@ -1,4 +1,4 @@
-{% extends "dashboard/base_dashboard.html" %}
+{% extends "control/base.html" %}
 {% block title %}Alterar Senha Sucesso{% endblock title %}
 {% block content %}
 <h2>Senha alterada com sucesso!</h2>
@@ -7,3 +7,4 @@
 
 <a href="{% url 'usuarios:perfil' %}">Voltar ao perfil</a>
 {% endblock content %}
+{% block footer %}{% endblock %}

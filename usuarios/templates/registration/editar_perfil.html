@@ -1,4 +1,4 @@
-{% extends "dashboard/base_dashboard.html" %}
+{% extends "control/base.html" %}
 {% load static %}
 {% block title %}Perfil{% endblock title %}
 {% block content %}
@@ -54,8 +54,8 @@
                                 <input type="text" name="endereco" value="{{ usuario.endereco }}" placeholder="Rua Exemplo, 123 - Cidade/UF" style="font-family: 'Inter', sans-serif; width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px;" onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#d1d5db'">
                             </div>
                             <div class="col-12">
-                                <label style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #6B7280; font-weight: 500; display: block;">Logo</label>
-                                <input type="file" name="imagem_perfil" accept="image/*" style="font-family: 'Inter', sans-serif; font-size: 14px; width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px;">
+                                <label class="form-label" tyle="font-family: Inter; font-size: 0.85rem; color: #6B7280; font-weight: 500;">Imagem perfil:</label>
+                                {{ imagem_form.imagem_perfil }}
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <div style="text-align: right; margin-top: 20px;">
-                    <button type="submit" class="fs-4 w-100" style="background: #2563EB; color: white; font-weight: 700; border: none; border-radius: 8px; font-family: Inter; font-weight: 700; cursor:pointer; transition:0.2s; border-top-left-radius: 15px; border-bottom-left-radius: 15px;">Salvar alterações
+                    <button type="submit" class="fs-4 w-100" style="background: #2563EB; color: white; min-height: 50px; font-weight: 700; border: none; border-radius: 8px; font-family: Inter; font-weight: 700; cursor:pointer; transition:0.2s; border-radius: 15px;">Salvar alterações
                     </button>
                 </div>
             </div>
@@ -115,3 +115,4 @@
     </div>
 </form>
 {% endblock %}
+{% block footer %}{% endblock %}

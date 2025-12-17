@@ -1,6 +1,6 @@
 {% extends "control/base.html" %}
 {% load static %}
-{% block title %}Histórico de Vendas{% endblock title %}
+{% block title %}Histórico de Compras{% endblock title %}
 {% block content %}
 <div class="pt-3">
     <div class="row g-0" style="min-height: calc(100vh - 200px);">
@@ -8,7 +8,7 @@
         <div class="col-12 col-lg-10 px-4">
             <div class="d-flex align-items-center">
                 <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
-                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Histórico de Vendas</h1>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Histórico de Compras</h1>
             </div>
             <form id="filtros-form" method="GET">
                 <input type="hidden" name="search" value="{{ search|default:'' }}">
@@ -20,10 +20,10 @@
                 <table class="" style="width: 100%; border-collapse: separate; border-spacing: 0 8px; font-family: Inter, sans-serif; font-size: 16px;">
                     <thead>
                         <tr>
-                            <th class="py-2 ps-3" style="background-color: #2563EB; border-top-left-radius: 10px; border-bottom-left-radius: 10px; color: white; text-align: left; width: 250px;">Produto</th>
-                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Cliente</th>
-                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Vendedor</th>
-                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">Preço</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; border-top-left-radius: 10px; border-bottom-left-radius: 10px; color: white; text-align: left; width: 300px;">Produto</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Fornecedor</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 220px;">Quantidade</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">Valor</th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; border-top-right-radius: 10px; border-bottom-right-radius: 10px; color: white; text-align: left; width: 200px;">Data</th>
                         </tr>
                     </thead>
@@ -32,9 +32,9 @@
                         {% for pedido in pedidos|slice:":9" %}
                         <tr style="background-color: #EEEEEE;">
                             <td class="py-2 ps-3 fw-medium" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;">{{ pedido.produto }}</td>
-                            <td class="py-2 ps-3 fw-medium">{{ pedido.cliente }}</td>
-                            <td class="py-2 ps-3 fw-medium">{{ pedido.vendedor }}</td>
-                            <td class="py-2 ps-3 fw-medium">R$ {{ pedido.produto.preco }}</td>
+                            <td class="py-2 ps-3 fw-medium">{{ pedido.fornecedor }}</td>
+                            <td class="py-2 ps-3 fw-medium">{{ pedido.quantidade }}</td>
+                            <td class="py-2 ps-3 fw-medium">R$ {{ pedido.valor }}</td>
                             <td class="py-2 ps-3 fw-medium" style="border-top-right-radius: 10px; border-bottom-right-radius: 10px;">{{ pedido.data|date:"d/m/y" }} às {{ pedido.data|date:"H:i" }}</td>
                         </tr>
                         {% endfor %}
@@ -67,7 +67,7 @@
         <div class="col-12 col-lg-10 px-4">
             <div class="d-flex align-items-center">
                 <a href={% url 'index' %}><i class="fa-solid fa-chevron-left fs-4" style="color: black; margin-top: auto; margin-bottom: auto; margin-right: 6px;"></i></a>
-                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Histórico de Vendas</h1>
+                <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Histórico de Compras</h1>
             </div>
             <form id="filtros-form" method="GET">
                 <input type="hidden" name="search" value="{{ search|default:'' }}">
@@ -76,23 +76,17 @@
                 <input name="search" value="{{ search|default:'' }}" class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
             </form>
             <div style="display: flex; height: 100%; align-items: center; justify-content: center; font-family: Inter; font-weight: 700;">
-                Você não possui vendas concluídas.
+                Você não possui compras concluídas.
             </div>
         </div>   
         {% endif %}
         <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
             <div style="min-height: 60px;"></div>
             <div class="bg-white shadow" style="height: 100%; margin-top: 20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; padding: 15px;">
-                <p class="fw-bold" style="font-family: Inter; color: #2563EB; font-size: 18px; margin-bottom: 6px;">Ações Rápidas</p>
-                <div class="mt-2 ms-1">
-                    <a href="{% url 'dashboard:vendas' %}" class="d-block mb-2 text-decoration-none" style="color: #374151; font-family: Inter;">
-                        <i class="bi bi-cart2 me-1"></i> Ir para Dashboard Vendas
-                    </a>
-                </div>
-                <p class="fw-bold mt-3" style="font-family: Inter; color: #2563EB; font-size: 18px; margin-bottom: 6px;">Informações</p>
+                <p class="fw-bold" style="font-family: Inter; color: #2563EB; font-size: 18px; margin-bottom: 6px;">Informações</p>
                 <div class="mt-2 ms-1">
                     <h4 class="d-block mb-2" style="color: #374151; font-family: Inter; font-size: 18px;">
-                        Total de vendas concluídas: {{ total_vendas }}
+                        Total de compras concluídas: {{ total_compra }}
                     </h4>
                 </div>
             </div>
