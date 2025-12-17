@@ -313,7 +313,7 @@ def editar_funcionario(request, id_funcionario):
     if request.method == "POST":
         form = FuncionarioForm(request.POST, instance=funcionario)
         if form.is_valid():
-            funcionario = form.save
+            funcionario = form.save(commit=False)
             funcionario.save()
 
             messages.success(

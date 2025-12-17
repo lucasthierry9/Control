@@ -166,14 +166,7 @@ class FuncionarioForm(forms.ModelForm):
 
         botao_texto = "Registrar"
 
-        for field_name, field in self.fields.items():
-            if field_name == "senha":
-                field.widget.attrs.update({
-                    'class': 'form-control',
-                    'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;',
-                    'autocomplete': 'new-password',
-                })
-            else:
+        for field in self.fields.values():
                 field.widget.attrs.update({
                     'class': 'form-control',
                     'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;'
@@ -217,7 +210,6 @@ class FuncionarioEditarForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['grupo'].queryset = Group.objects.exclude(name='Empresa')
         botao_texto = "Salvar"
 
         for field_name, field in self.fields.items():

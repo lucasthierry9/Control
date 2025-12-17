@@ -72,7 +72,7 @@ def perfil(request):
 
     return render(request, template, context)
 
-@login_required
+@login_required 
 def editar_perfil(request, id_usuario):
     user = request.user
     funcionario = None
@@ -92,13 +92,14 @@ def editar_perfil(request, id_usuario):
             instance=usuario
         )
 
-        usuario.nome_fantasia = request.POST.get("nome_fantasia")
-        usuario.telefone = request.POST.get("telefone")
-        usuario.endereco = request.POST.get("endereco")
-        usuario.nome_admin = request.POST.get("nome_admin")
-        usuario.email_admin = request.POST.get("email_admin")
-        usuario.telefone_admin = request.POST.get("telefone_admin")
-        usuario.cpf_admin = request.POST.get("cpf_admin")
+        if user.tipo == 'empresa':
+            usuario.nome_fantasia = request.POST.get("nome_fantasia")
+            usuario.telefone = request.POST.get("telefone")
+            usuario.endereco = request.POST.get("endereco")
+            usuario.nome_admin = request.POST.get("nome_admin")
+            usuario.email_admin = request.POST.get("email_admin")
+            usuario.telefone_admin = request.POST.get("telefone_admin")
+            usuario.cpf_admin = request.POST.get("cpf_admin")
 
         if funcionario:
             funcionario.nome = request.POST.get("nome")
@@ -108,6 +109,7 @@ def editar_perfil(request, id_usuario):
             imagem_form.save()
 
         usuario.save()
+
         if funcionario:
             funcionario.save()
 
