@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from control.models import Pedidos_Venda
+from control.models import Pedidos_Venda, Funcionario
 from usuarios.models import Usuario
 from . forms import PedidosVendaForm
 from django.contrib.auth.decorators import login_required, permission_required
@@ -237,10 +237,17 @@ def exportar_pdf(request):
         leading=16,
     )
 
-    razao_social = request.user.razao_social
-    cnpj = request.user.cnpj
-    email = request.user.email
-    telefone = request.user.telefone
+    # DADOS DA EMPRESA (empresa ou funcionário)
+    if request.user.tipo == "empresa":
+        empresa = request.user
+    else:
+        funcionario = Funcionario.objects.filter(user=request.user).select_related("empresa").first()
+        empresa = funcionario.empresa if funcionario else None
+
+    razao_social = empresa.razao_social if empresa else ""
+    cnpj = empresa.cnpj if empresa else ""
+    email = empresa.email if empresa else ""
+    telefone = empresa.telefone if empresa else ""
 
     elements.append(Paragraph(f"<b>{razao_social}</b>", cabecalho_style))
     elements.append(Paragraph(cnpj, cabecalho_style))
@@ -358,11 +365,17 @@ def visualizar_pdf(request):
         spaceAfter=6,
         leading=16,
     )
+    # DADOS DA EMPRESA (empresa ou funcionário)
+    if request.user.tipo == "empresa":
+        empresa = request.user
+    else:
+        funcionario = Funcionario.objects.filter(user=request.user).select_related("empresa").first()
+        empresa = funcionario.empresa if funcionario else None
 
-    razao_social = request.user.razao_social
-    cnpj = request.user.cnpj
-    email = request.user.email
-    telefone = request.user.telefone
+    razao_social = empresa.razao_social if empresa else ""
+    cnpj = empresa.cnpj if empresa else ""
+    email = empresa.email if empresa else ""
+    telefone = empresa.telefone if empresa else ""
 
     elements.append(Paragraph(f"<b>{razao_social}</b>", cabecalho_style))
     elements.append(Paragraph(cnpj, cabecalho_style))
