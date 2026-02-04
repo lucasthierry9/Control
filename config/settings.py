@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +20,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zc2tdz%&r=w@vk&2(pzhiky)yw=)_)qutxsgc(pgir-^wd4z+r'
+#secret key modificada para acompanhar o tutorial do deploy
+
+# SECRET_KEY = os.environ.get('SECRET_KEY', 'sua-chave-secreta-muito-longa-e-segura-aqui') # Essa SECRET_KEY é vinculada a que está no ".env"
+# a secrete_key acima serve para o dar deploy do servidor com docker (descomente, e comente o outro para funcionar)
+# a secret_key abaixo server para rodar o projeto com django pelo terminal (runserver)
+
+SECRET_KEY = 'minha_grande_senha'
+# qualquer coisa entre as aspas vai fazer o site funcionar
 
 # SECURITY WARNING: don't run with debug turned on in production!
+#dados modificados para acompanhar o tutorial do deploy
+
+# DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+# o debug acima serve para trabalhar com deploy do projeto com docker
+# o debug abaixo serve para rodar o projeto com django pelo terminal (runserver)
+
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']  
+# essa configuração de allowed hosts serve para os dois, tanto com docker quanto com runserver
+# chatgpt diz que não é seguro, mas não importa já que é a configuração do tutorial do professor
 
 
 # Application definition
@@ -82,6 +97,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': os.environ.get('POSTGRES_DB', 'django_db'),
+#        'USER': os.environ.get('POSTGRES_USER', 'django_user'),
+#        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'bdcontrol1234'),
+#        'HOST': os.environ.get('DB_HOST', 'db'),
+#        'PORT': os.environ.get('DB_PORT', '5432'),
+#    }
+#}
+# O database acima serve para rodar o projeto com docker em um servidor
+# o database abaixo serve para rodar o projeto com django (runserver)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -128,6 +155,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+ # Adiicionar esse STATIC_ROOT é NECESSARIO para rodar o projeto com docker, e não interfere no django normal (runserver)
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / "media/"
