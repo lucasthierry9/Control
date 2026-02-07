@@ -4,19 +4,45 @@
 {% block title %}Cadastrar Cliente{% endblock title %}
 
 {% block content %}
-<div class="pt-3">
-    <div class="container" style="max-width: 100%;">
-        <div class="d-flex align-items-center">
-            <a href="{% url 'cadastros:clientes' %}">
-                <i class="fa-solid fa-chevron-left fs-4" style="color: black;"></i>
-            </a>
-            <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Cadastrar Cliente</h1>
-        </div>
-        <form method="post" style="margin: 0px;">
-            {% csrf_token %}
-            {% crispy form %}
-        </form>
-    </div>
-</div>
+<form method="post" id="cliente-form" style="margin: 0px;">
+    {% csrf_token %}
+    {% crispy form %}
+
+</form>
+
+<div id="msg" class="mt-3"></div>
+
+<script>
+document.getElementById("cliente-form").addEventListener("submit", function(e) {
+    e.preventDefault(); // impede recarregar a página
+
+    const form = this;
+    const formData = new FormData(form);
+
+    fetch("", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const msgDiv = document.getElementById("msg");
+
+        if (data.success) {
+            window.location.href = data.redirect_url; // redireciona para a página dos clientes após o cadastro
+            // msgDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`; //serve pra manter a página após o cadastro
+            form.reset(); // limpa o formulário
+        } else {
+            msgDiv.innerHTML = `<div class="alert alert-danger">Erro ao salvar. Verifique os campos.</div>`;
+            console.log(data.errors); // mostra erros no console
+        }
+    })
+    .catch(error => {
+        console.error("Erro:", error);
+    });
+});
+</script>
 {% endblock content %}
 {% block footer %}{% endblock %}

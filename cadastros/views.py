@@ -10,6 +10,10 @@ from django.db.models import Q
 from control.utils import registrar_acao, ultimas_acoes_modulo
 from django.utils.timezone import now
 
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
 #CLIENTES
 @login_required
 def clientes(request):
@@ -44,6 +48,7 @@ def clientes(request):
         "total_clientes": total_clientes,
         "clientes_mes": clientes_mes})
 
+# modificado para funcionar com AJAX. Json, Java Script Object Notation
 @login_required
 def cadastrar_cliente(request):
     if request.method == "POST":
@@ -51,21 +56,39 @@ def cadastrar_cliente(request):
         if form.is_valid():
             cliente = form.save()
 
-            messages.success(
-                request,
-                f"Cliente <strong>{cliente.nome}</strong> cadastrado com sucesso."
-            )
-
             registrar_acao(
                 request.user,
-                'clientes',
-                f"{cliente.nome} <strong>cadastrado</strong>"
+                "clientes",
+                f"{cliente.nome} cadastrado"
             )
-            return redirect("cadastros:clientes")
+
+            return JsonResponse({
+                "success": True,
+                "message": f"Cliente {cliente.nome} cadastrado com sucesso!"
+
+
+                
+            })
+        else:
+            return JsonResponse({
+                "success": False,
+                "errors": form.errors
+            })
+
     else:
         form = ClienteForm()
-    return render(request, "cadastros/clientes/cadastrar_cliente.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'clientes',)})
 
+    return render(
+        request,
+        "cadastros/clientes/cadastrar_cliente.html",
+        {
+            "form": form,
+            "historico": ultimas_acoes_modulo(request.user, 'clientes')
+        }
+    )
+
+
+@login_required
 def editar_cliente(request, id_cliente):
     cliente = get_object_or_404(Cliente, id=id_cliente)
 
@@ -73,22 +96,36 @@ def editar_cliente(request, id_cliente):
         form = ClienteForm(request.POST, instance=cliente)
         if form.is_valid():
             cliente = form.save()
-            messages.success(
-                request,
-                f"Cliente <strong>{cliente.nome}</strong> editado com sucesso."
-            )
 
             registrar_acao(
                 request.user,
-                'clientes',
-                f"{cliente.nome} <strong>editado</strong>"
+                "clientes",
+                f"{cliente.nome} editado"
             )
-            return redirect("cadastros:clientes")
+
+            return JsonResponse({
+                "success": True,
+                "message": f"Cliente {cliente.nome} editado com sucesso!",
+                "redirect_url": reverse("cadastros:clientes")  # ou detalhe/edição
+            })
+        else:
+            return JsonResponse({
+                "success": False,
+                "errors": form.errors
+            })
+
     else:
         form = ClienteForm(instance=cliente)
 
-    return render(request, "cadastros/clientes/editar_cliente.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'clientes'), "cliente": cliente})
-
+    return render(
+        request,
+        "cadastros/clientes/editar_cliente.html",
+        {
+            "form": form,
+            "cliente": cliente,
+            "historico": ultimas_acoes_modulo(request.user, "clientes")
+        }
+    )
 @login_required
 def excluir_cliente(request, id_cliente=0):
     if request.method == "POST":
