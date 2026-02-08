@@ -64,11 +64,10 @@ def cadastrar_cliente(request):
 
             return JsonResponse({
                 "success": True,
-                "message": f"Cliente {cliente.nome} cadastrado com sucesso!"
-
-
-                
+                "message": f"Cliente {cliente.nome} cadastrado com sucesso!",
+                #"redirect_url": reverse("cadastros:clientes")
             })
+        
         else:
             return JsonResponse({
                 "success": False,
@@ -106,7 +105,7 @@ def editar_cliente(request, id_cliente):
             return JsonResponse({
                 "success": True,
                 "message": f"Cliente {cliente.nome} editado com sucesso!",
-                "redirect_url": reverse("cadastros:clientes")  # ou detalhe/edição
+                
             })
         else:
             return JsonResponse({
@@ -189,6 +188,7 @@ def produtos(request):
 def cadastrar_produto(request):
     if request.method == "POST":
         form = ProdutoForm(request.POST, request.FILES)
+
         if form.is_valid():
             produto = form.save()
 
@@ -200,12 +200,34 @@ def cadastrar_produto(request):
             registrar_acao(
                 request.user,
                 'produtos',
-                f"{produto.nome} <strong>cadastrado</strong>"
+                f"{produto.nome} <strong>cadastrado</strong>."
             )
+
+            # Se for AJAX, retorna JSON
+            if request.headers.get("x-requested-with") == "XMLHttpRequest":
+                return JsonResponse({
+                    "success": True,
+                    "message": f"Produto {produto.nome} cadastrado com sucesso!"
+                })
+
+            # Se não for AJAX, mantém comportamento normal
             return redirect("cadastros:produtos")
+
+        else:
+            if request.headers.get("x-requested-with") == "XMLHttpRequest":
+                return JsonResponse({
+                    "success": False,
+                    "errors": form.errors
+                })
+
     else:
         form = ProdutoForm()
-    return render(request, "cadastros/produtos/cadastrar_produto.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'produtos',)})
+
+    return render(
+        request,
+        "cadastros/produtos/cadastrar_produto.html",
+        {"form": form, "historico": ultimas_acoes_modulo(request.user, 'produtos')}
+    )
 
 @login_required 
 def editar_produto(request, id_produto):
@@ -213,6 +235,7 @@ def editar_produto(request, id_produto):
 
     if request.method == "POST":
         form = ProdutoForm(request.POST, request.FILES, instance=produto)
+
         if form.is_valid():
             produto = form.save()
 
@@ -226,12 +249,34 @@ def editar_produto(request, id_produto):
                 'produtos',
                 f"{produto.nome} <strong>editado</strong>"
             )
+
+            if request.headers.get("x-requested-with") == "XMLHttpRequest":
+                return JsonResponse({
+                    "success": True,
+                    "message": f"Produto {produto.nome} editado com sucesso!"
+                })
+
             return redirect("cadastros:produtos")
+
+        else:
+            if request.headers.get("x-requested-with") == "XMLHttpRequest":
+                return JsonResponse({
+                    "success": False,
+                    "errors": form.errors
+                })
+
     else:
         form = ProdutoForm(instance=produto)
 
-    return render(request, "cadastros/produtos/editar_produto.html", {"form": form, "historico": ultimas_acoes_modulo(request.user, 'produtos'), "produto": produto})
-
+    return render(
+        request,
+        "cadastros/produtos/editar_produto.html",
+        {
+            "form": form,
+            "historico": ultimas_acoes_modulo(request.user, 'produtos'),
+            "produto": produto
+        }
+    )
 @login_required
 def excluir_produto(request, id_produto=0):
     if request.method == "POST":

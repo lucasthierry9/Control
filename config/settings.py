@@ -22,21 +22,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 #secret key modificada para acompanhar o tutorial do deploy
 
-# SECRET_KEY = os.environ.get('SECRET_KEY', 'sua-chave-secreta-muito-longa-e-segura-aqui') # Essa SECRET_KEY é vinculada a que está no ".env"
+SECRET_KEY = os.environ.get('SECRET_KEY', default='local') # Essa SECRET_KEY é vinculada a que está no ".env"
 # a secrete_key acima serve para o dar deploy do servidor com docker (descomente, e comente o outro para funcionar)
 # a secret_key abaixo server para rodar o projeto com django pelo terminal (runserver)
+# DEFAULT='LOCAL' RODA O PROJETO LOCALMENTE
 
-SECRET_KEY = 'minha_grande_senha'
+# SECRET_KEY = 'minha_grande_senha'
 # qualquer coisa entre as aspas vai fazer o site funcionar
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #dados modificados para acompanhar o tutorial do deploy
 
-# DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-# o debug acima serve para trabalhar com deploy do projeto com docker
+DEBUG = os.environ.get('DEBUG', True) == "true"
+# o debug acima serve para trabalhar com deploy do projeto com docker.
+#  Atualizado: o de cima serve para ambos (localmente e numa máquina virtual). Peguei essa dica de um projeto no git do professor Diego
 # o debug abaixo serve para rodar o projeto com django pelo terminal (runserver)
 
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']  
 # essa configuração de allowed hosts serve para os dois, tanto com docker quanto com runserver
@@ -100,11 +102,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': os.environ.get('POSTGRES_DB', 'django_db'),
-#        'USER': os.environ.get('POSTGRES_USER', 'django_user'),
-#        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'bdcontrol1234'),
-#        'HOST': os.environ.get('DB_HOST', 'db'),
-#        'PORT': os.environ.get('DB_PORT', '5432'),
+#        'NAME': os.environ.get('POSTGRES_DB'),
+#        'USER': os.environ.get('POSTGRES_USER'),
+#        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+#        'HOST': os.environ.get('DB_HOST'),
+#        'PORT': os.environ.get('DB_PORT'),
 #    }
 #}
 # O database acima serve para rodar o projeto com docker em um servidor

@@ -10,13 +10,47 @@
             <a href="{% url 'cadastros:produtos' %}">
                 <i class="fa-solid fa-chevron-left fs-4" style="color: black;"></i>
             </a>
-            <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Cadastrar Produto</h1>
+            <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Cadastrar produto</h1>
         </div>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% crispy form %}
-        </form>
-    </div>
-</div>
+
+<form method="post" id="produto-form" style="margin: 0px;">
+    {% csrf_token %}
+    {% crispy form %}
+
+</form>
+
+<div id="msg" class="mt-3"></div>
+
+<script>
+document.getElementById("produto-form").addEventListener("submit", function(e) {
+    e.preventDefault(); // impede recarregar a página
+
+    const form = this;
+    const formData = new FormData(form);
+
+    fetch("", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const msgDiv = document.getElementById("msg");
+
+        if (data.success) {
+            msgDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+            form.reset(); // limpa o formulário
+        } else {
+            msgDiv.innerHTML = `<div class="alert alert-danger">Erro ao salvar. Verifique os campos.</div>`;
+            console.log(data.errors); // mostra erros no console
+        }
+    })
+    .catch(error => {
+        console.error("Erro:", error);
+    });
+});
+</script>
 {% endblock content %}
 {% block footer %}{% endblock %}

@@ -12,7 +12,8 @@
             </a>
             <h1 style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Editar Cliente</h1>
         </div>
-        <form method="post" id="cliente-form" style="margin: 0px;">
+        
+<form method="post" id="cliente-form" style="margin: 0px;">
     {% csrf_token %}
     {% crispy form %}
    
@@ -39,10 +40,10 @@ document.getElementById("cliente-form").addEventListener("submit", function(e) {
         const msgDiv = document.getElementById("msg");
 
         if (data.success) {
-            // Se quiser redirecionar:
+            // redirecionar página
             // window.location.href = data.redirect_url;
 
-            // Ou, se preferir ficar na página:
+            // ficar na página:
             msgDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
         } else {
             msgDiv.innerHTML = `<div class="alert alert-danger">Erro ao salvar. Verifique os campos.</div>`;
