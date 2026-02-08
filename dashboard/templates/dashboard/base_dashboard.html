@@ -4,28 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FONTES / ICONES -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"><!--Font inter-->
+    <link rel="icon" type="image/x-icon" href="{% static 'control/assets/favicon.ico' %}">
+
+    <!-- DATATABLES -->
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+
+    <!-- STYLES -->
     <link href="{% static 'dashboard/css/styles.css' %}" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <title>{% block title %}{% endblock title %}</title>
+    <style>
+    /* Estilo padrão para os botões do menu */
+        .menu-button {
+            /* Garante que o texto dentro seja branco para o hover */
+            color: white !important; 
+            transition: background-color 0.2s ease; /* Transição suave para o efeito */
+        }
+
+        /* Estilo aplicado quando o mouse está sobre o botão (HOVER) */
+        .menu-button:hover {
+            background-color: #3f7cffff !important; /* Cor mais clara para simular o efeito selecionado */
+            /* Você pode querer mudar a cor do texto no hover também, se necessário: */
+            /* color: #FFFFFF !important; */
+        }
+        .menu-button.dropdown-toggle::after {
+        display: none;
+    }
+        /* 1. WebKit (Chrome, Safari, Edge, Opera) - Define a largura e estiliza */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px; /* ESSENCIAL: Define a largura da barra */
+        }
+
+        /* 2. Estiliza o "trilho" (Background) */
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background-color: #2563EB; /* A cor do seu Offcanvas */
+            border-radius: 10px;
+        }
+
+        /* 3. Estiliza o "polegar" (Thumb - a parte que rola) */
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ffffffff;
+            border-radius: 10px;
+        }
+                
+        /* 4. Estilo Firefox */
+        .custom-scrollbar {
+            scrollbar-width: thin; /* 'auto' ou 'thin' */
+            scrollbar-color: #ffffffff #2563EB; /* [cor do polegar] [cor do trilho] */
+        }
+    </style>
+    <title>{% block title %}{% endblock title %} - Control</title>
 </head>
 <body>
-    {% block header %}
+{% block header %}
     <header>
-        <nav id="c2" class="navbar navbar-expand-lg" style="background-color: #2563EB; padding: 10px; height: 80px; z-index: 1050;">
+        <nav id="c2" class="navbar navbar-expand-lg" style="background-color: #2563EB; padding: 10px; height: 80px;">
             <div class="container-fluid">
-                <!-- Toggle sidebar -->
-                <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" style="color:white;">
-                    <i class="fas fa-bars"></i>
-                </button>
                 <a class="navbar-brand" href={% url 'index' %} style="color: white; font-size: 36px; font-weight: 700; font-family: Inter;">Control</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button"data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -35,7 +77,7 @@
                                 Cadastros
                                 <i class="bi bi-chevron-down fs-6"></i>
                             </a>
-                             <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; min-width: 300px; padding: 15px 30px;">
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; min-width: 300px; padding: 15px 30px;">
                                 <div style="display: flex; justify-content: space-between;">
                                     <div>
                                         <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Cadastros</li>
@@ -47,7 +89,7 @@
                                     </div>
                                     <div>
                                         <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Ferramentas</li>
-                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'cadastros:categorias' %} style="font-weight: 500; margin: 0px; padding: 0px;">Categoria</a></li>
+                                        <li style=""><a class="dropdown-item" href={% url 'cadastros:categorias' %} style="font-weight: 500; margin: 0px; padding: 0px;">Categoria</a></li>
                                     </div>
                                 </div>
                             </ul>
@@ -57,11 +99,11 @@
                                 Vendas
                                 <i class="bi bi-chevron-down fs-6"></i>
                             </a>
-                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: lightgray; margin-top: 15px; font-size: 14px;">
-                                <li style="color: #2563EB; font-weight: 700; margin-left: 15px; margin-top: 5px;">Vendas</li>
-                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Pedidos</a></li>
-                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="font-weight: 500;">Histórico</a></li>
-                                <li><a class="dropdown-item" href={% url 'cadastros:clientes' %} style="color: #2563EB; font-weight: 700;">Ver relatório de vendas</a></li>
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; padding: 15px 30px;">
+                                <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Vendas</li>
+                                <li><a class="dropdown-item" href={% url 'vendas:pedidos' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Pedidos</a></li>
+                                <li><a class="dropdown-item" href={% url 'vendas:historico' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Histórico</a></li>
+                                <li><a class="dropdown-item" href={% url 'vendas:relatorio_vendas' %} style="color: #2563EB; font-weight: 700; padding: 0px; margin-top: 10px;">Ver relatório de vendas</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -69,10 +111,20 @@
                                 Estoque
                                 <i class="bi bi-chevron-down fs-6"></i>
                             </a>
-                            <ul class="dropdown-menu" data-bs-popper="static">
-                                <li><a class="dropdown-item" href="#">Funcional</a></li>
-                                <li></li>
-                                <li></li>
+                            <ul class="dropdown-menu" data-bs-popper="static" style="background-color: #EEEEEE; margin-top: 15px; font-size: 14px; min-width: 300px; padding: 15px 30px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px;">Estoque</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'estoque:movimentacoes' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Movimentações</a></li>
+                                        <li><a class="dropdown-item" href={% url 'estoque:verificacao' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Verificação</a></li>
+                                        <li><a class="dropdown-item" href={% url 'estoque:depositos' %} style="font-weight: 500; padding: 0px; margin-bottom: 5px;">Depósitos</a></li>
+                                    </div>
+                                    <div>
+                                        <li style="color: #2563EB; font-weight: 700; margin-bottom: 10px; margin-left: 5px;">Compras</li>
+                                        <li style="width: 50%;"><a class="dropdown-item" href={% url 'estoque:pedidos_compra' %} style="font-weight: 500; margin-left: 5px; padding: 0px; margin-bottom: 5px;">Pedidos Compra</a></li>
+                                        <li><a class="dropdown-item" href={% url 'estoque:historico_compra' %} style="font-weight: 500;  margin-left: 5px; padding: 0px;">Histórico Compra</a></li>
+                                    </div>
+                                </div>
                             </ul>
                         </li>
                     </ul>
@@ -80,105 +132,278 @@
                     <div class="d-flex gap-2">
                         <div class="dropdown">
                             <button class="btn btn-link text-white d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; font-family: Inter; font-weight: 700; text-decoration: none;">
-                                <i class="bi bi-person-circle fs-3"></i>
-                                <span style="margin-left: 6px;">{{ request.user.empresa }}</span>
+                                {% if request.user.imagem_perfil %}
+                                    <img src="{{ request.user.imagem_perfil.url }}" alt="Foto de Perfil" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%; padding: 0px; margin: 0px;">
+                                {% else %}
+                                    <i class="bi bi-person-circle fs-3"></i>
+                                {% endif %}
+                                <span style="margin-left: 5px;">{{ request.user.nome_fantasia }}</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><a class="dropdown-item" href={% url 'usuarios:perfil' %}><i class="bi bi-person me-2"></i> Meu perfil</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'usuarios:alterar_senha' %}">
+                                        <i class="bi bi-key me-2"></i> Alterar senha
+                                    </a>
+                                </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <form method="POST" action="{% url 'logout' %}">
-                                        {% csrf_token %}
-                                        <button class="dropdown-item" type="submit">Sair</button>
-                                    </form>
-                                </li>
+                                    <form method="POST" action="{% url 'logout' %}" class="m-0">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item d-flex align-items-center w-100" style="background: none; border: none; color: black;">
+                                        <i class="bi bi-box-arrow-right me-2"></i> Sair
+                                    </button>
+                                </form>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </nav>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="sidebarMenu"
+            style="background-color: #2563EB; width: 280px; font-family: Inter;">
+            
+            <div class="offcanvas-header" style="padding: 20px; border-bottom: 1px solid #3f7cffff">
+                <span id="sidebarOffcanvasLabel" style="color: rgb(232, 232, 240); font-size: 22px; font-weight: 700;">Control</span>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+
+            <div class="offcanvas-body d-flex flex-column p-0 custom-scrollbar" style="padding: 0px 20px;">
+                <div class="flex-grow-1" style="padding: 0px 12px;">
+                    <ul class="nav flex-column gap-1">
+                        <li class="nav-item">
+                            <button class="nav-link menu-button" type="button" data-bs-toggle="collapse" data-bs-target="#submenuCadastros" aria-expanded="false" aria-controls="submenuCadastros" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 8px; color: white; 
+                            text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s; cursor: pointer; border: none; background-color: transparent; width: 100%;">
+                                <span style="display: flex; align-items: center; gap: 12px;">
+                                    <i class="bi bi-plus-square" style="font-size: 18px;"></i></i>Cadastros
+                                </span>
+                                <i class="bi bi-chevron-down submenu-icon" style="transition: transform 0.3s; font-size: 12px; transform: rotate(0deg);"></i>
+                            </button>
+                            <div class="collapse" id="submenuCadastros" style="overflow: hidden; transition: max-height 0.3s;">
+                                <ul class="nav flex-column" style="padding-top: 4px;">
+                                    <li>
+                                        <a  class="menu-button" href="{% url 'cadastros:clientes' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Clientes
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'cadastros:produtos' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Produtos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'cadastros:funcionarios' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Funcionários
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'cadastros:vendedores' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Vendedores
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'cadastros:fornecedores' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Fornecedores
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link menu-button" type="button" data-bs-toggle="collapse" data-bs-target="#submenuVendas" aria-expanded="false" aria-expanded="false" aria-controls="submenuVendas" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 8px; color: white; 
+                            text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s; cursor: pointer; border: none; background-color: transparent; width: 100%;">
+                                <span style="display: flex; align-items: center; gap: 12px;">
+                                    <i class="bi bi-cart2" style="font-size: 18px;"></i>Vendas
+                                </span>
+                                <i class="bi bi-chevron-down submenu-icon" style="transition: transform 0.3s; font-size: 12px; transform: rotate(0deg);"></i>
+                            </button>
+                            <div class="collapse" id="submenuVendas" style="overflow: hidden; transition: max-height 0.3s;">
+                                <ul class="nav flex-column" style="padding-top: 4px;">
+                                    <li>
+                                        <a class="menu-button" href="{% url 'vendas:pedidos' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Pedidos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'vendas:historico' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Histórico
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'vendas:relatorio_vendas' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Relatório Vendas
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link menu-button" type="button" data-bs-toggle="collapse" data-bs-target="#submenuEstoque" aria-expanded="false" aria-controls="submenuEstoque" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 8px; color: white; 
+                            text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s; cursor: pointer; border: none; background-color: transparent; width: 100%;">
+                                <span style="display: flex; align-items: center; gap: 12px;">
+                                    <i class="bi bi-boxes" style="font-size: 18px;"></i></i>Estoque
+                                </span>
+                                <i class="bi bi-chevron-down submenu-icon" style="transition: transform 0.3s; font-size: 12px; transform: rotate(0deg);"></i>
+                            </button>
+                            <div class="collapse" id="submenuEstoque" style="overflow: hidden; transition: max-height 0.3s;">
+                                <ul class="nav flex-column" style="padding-top: 4px;">
+                                    <li>
+                                        <a class="menu-button" href="{% url 'estoque:movimentacoes' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px;">
+                                            Movimentações
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'estoque:verificacao' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Verificação
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'estoque:depositos' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Depósitos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'estoque:pedidos_compra' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Pedidos Compra
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu-button" href="{% url 'estoque:historico_compra' %}" style="display: block; padding: 10px 16px 10px 48px; color: white; text-decoration: none; 
+                                        font-size: 14px; transition: 0.2s; border-radius: 6px; ">
+                                            Histórico Compra
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="border-top: 1px solid #3f7cffff; padding: 16px; margin-top: auto; flex-shrink: 0;"> 
+                    <div class="dropdown">
+                        <div class="d-flex align-items-center justify-content-center menu-button dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="border-radius: 6px; padding: 6px 8px; cursor: pointer;">
+                            <div class="d-flex align-items-center gap-3">
+                                {% if request.user.imagem_perfil %}
+                                    <img src="{{ request.user.imagem_perfil.url }}" alt="Foto de Perfil" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%; padding: 0px; margin: 0px;">
+                                {% else %}
+                                    <i class="bi bi-person-circle" style="font-size: 45px; color: white;"></i>
+                                {% endif %}
+                                <div>
+                                    <div style="color: rgb(232, 232, 240); font-size: 14px; font-weight: 600; margin-bottom: 2px;">
+                                        {{ request.user.nome_fantasia }}
+                                    </div>
+                                    <div style="color: white; font-size: 12px;">
+                                        {{ request.user.email }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu mt-1 w-100" style="background-color: white;">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'usuarios:perfil' %}">
+                                    <i class="bi bi-person me-2"></i> Meu perfil
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" href="{% url 'usuarios:alterar_senha' %}">
+                                    <i class="bi bi-key me-2"></i> Alterar senha
+                                </a>
+                            </li>
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                <form method="POST" action="{% url 'logout' %}" class="m-0">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item d-flex align-items-center w-100" style="background: none; border: none; color: black;">
+                                        <i class="bi bi-box-arrow-right me-2"></i> Sair
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
     {% endblock header %}
-            <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            <div class="sb-sidenav-menu-heading">Interface</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Layouts
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Pages
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Authentication
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.html">Login</a>
-                                            <a class="nav-link" href="register.html">Register</a>
-                                            <a class="nav-link" href="password.html">Forgot Password</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Error
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">401 Page</a>
-                                            <a class="nav-link" href="404.html">404 Page</a>
-                                            <a class="nav-link" href="500.html">500 Page</a>
-                                        </nav>
-                                    </div>
-                                </nav>
-                            </div>
-                            <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
-                            </a>
-                            <a class="nav-link" href="tables.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
-                            </a>
-                        </div>
-                    </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
-                    </div>
-                </nav>
+<div class="pt-3">
+    <div class="row g-0" style="min-height: calc(100vh - 200px);">
+        <div class="col-12 col-lg-2 mt-4 mt-lg-0 ">
+            <div style="min-height: 60px;">
+                <h1 class="ps-4" style="font-family: Inter; font-weight: 700; color: #2563EB; margin: 0px; padding: 0px;">Dashboard</h1>
             </div>
-            <div id="layoutSidenav_content">
-                <main>
-                    {% block content %}{% endblock content %}
-                </main>
+            <div class="bg-white shadow" style="height: 100%; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
+                <ul class="nav flex-column p-3">
+                    <li class="nav-item">
+                        <a href="{% url 'dashboard:index' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="bi bi-grid-1x2-fill me-3"></i>Visão Geral
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard:vendas' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="bi bi-cart2 me-3"></i>Vendas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard:produtos' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="fa-solid fa-cube me-3"></i>Produtos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard:clientes' %}" class="d-block mb-2 text-decoration-none ms-3" style="color: black; font-weight: 700; font-family: Inter; font-size: 22px;">
+                            <i class="fa-solid fa-user me-3"></i>Clientes
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% block content %}{% endblock content %}
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="{% static 'dashboard/js/scripts.js' %} "></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="{% static 'dashboard/js/datatables-simple-demo.js' %} "></script>
+        {% block scripts %}{% endblock scripts %}
+
+    <script src="{% static 'dashboard/js/scripts.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+    <!-- Gráficos -->
+    <script src="{% static 'dashboard/assets/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'dashboard/assets/demo/chart-bar-demo.js' %}"></script>
+    <script src="{% static 'dashboard/assets/demo/chart-pie-demo.js' %}"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Script para rotação do ícone de seta
+        document.addEventListener('DOMContentLoaded', function() {
+            var buttons = document.querySelectorAll('.nav-item button[data-bs-toggle="collapse"]');
+            buttons.forEach(function(button) {
+                var targetId = button.getAttribute('data-bs-target');
+                var targetElement = document.querySelector(targetId);
+                var icon = button.querySelector('.submenu-icon');
+
+                if (targetElement) {
+                    targetElement.addEventListener('show.bs.collapse', function () {
+                        if (icon) icon.style.transform = 'rotate(180deg)';
+                    });
+                    targetElement.addEventListener('hide.bs.collapse', function () {
+                        if (icon) icon.style.transform = 'rotate(0deg)';
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

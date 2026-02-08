@@ -1,0 +1,152 @@
+[
+  {
+    "model": "control.deposito",
+    "pk": 1,
+    "fields": { "descricao": "Depósito Central" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 2,
+    "fields": { "descricao": "Depósito Norte" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 3,
+    "fields": { "descricao": "Depósito Sul" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 4,
+    "fields": { "descricao": "Depósito Este" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 5,
+    "fields": { "descricao": "Depósito Oeste" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 6,
+    "fields": { "descricao": "Depósito de Insumos" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 7,
+    "fields": { "descricao": "Depósito de Produtos Acabados" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 8,
+    "fields": { "descricao": "Depósito de Matéria-Prima" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 9,
+    "fields": { "descricao": "Almoxarifado Principal" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 10,
+    "fields": { "descricao": "Depósito de Expedição" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 11,
+    "fields": { "descricao": "Armazém Setor A" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 12,
+    "fields": { "descricao": "Armazém Setor B" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 13,
+    "fields": { "descricao": "Armazém Setor C" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 14,
+    "fields": { "descricao": "Câmara Fria 01" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 15,
+    "fields": { "descricao": "Câmara Fria 02" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 16,
+    "fields": { "descricao": "Depósito de Retorno" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 17,
+    "fields": { "descricao": "Depósito de Manutenção" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 18,
+    "fields": { "descricao": "Depósito Logístico" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 19,
+    "fields": { "descricao": "Setor de Embalagens" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 20,
+    "fields": { "descricao": "Depósito de Descartes" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 21,
+    "fields": { "descricao": "Silo de Grãos 01" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 22,
+    "fields": { "descricao": "Silo de Grãos 02" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 23,
+    "fields": { "descricao": "Depósito Temporário" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 24,
+    "fields": { "descricao": "Armazém de Peças" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 25,
+    "fields": { "descricao": "Depósito de Ferramentas" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 26,
+    "fields": { "descricao": "Estoque de Segurança" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 27,
+    "fields": { "descricao": "Depósito de Químicos" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 28,
+    "fields": { "descricao": "Pátio de Carga" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 29,
+    "fields": { "descricao": "Terminal de Descarga" }
+  },
+  {
+    "model": "control.deposito",
+    "pk": 30,
+    "fields": { "descricao": "Arquivo de Amostras" }
+  }
+]

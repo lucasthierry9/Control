@@ -1,12 +1,48 @@
 {% extends "control/base.html" %}
-{% load static crispy_forms_filters %}
+{% load static %}
+{% load crispy_forms_tags %}
 {% block title %}Cadastrar Cliente{% endblock title %}
 
 {% block content %}
-<h1 >Cadastrar Cliente:</h1>
-<form method="post">
+<form method="post" id="cliente-form" style="margin: 0px;">
     {% csrf_token %}
-    {{ form | crispy }}
-    <button type="submit" >Registrar</button>
+    {% crispy form %}
+
 </form>
+
+<div id="msg" class="mt-3"></div>
+
+<script>
+document.getElementById("cliente-form").addEventListener("submit", function(e) {
+    e.preventDefault(); // impede recarregar a página
+
+    const form = this;
+    const formData = new FormData(form);
+
+    fetch("", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const msgDiv = document.getElementById("msg");
+
+        if (data.success) {
+            window.location.href = data.redirect_url; // redireciona para a página dos clientes após o cadastro
+            // msgDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`; //serve pra manter a página após o cadastro
+            form.reset(); // limpa o formulário
+        } else {
+            msgDiv.innerHTML = `<div class="alert alert-danger">Erro ao salvar. Verifique os campos.</div>`;
+            console.log(data.errors); // mostra erros no console
+        }
+    })
+    .catch(error => {
+        console.error("Erro:", error);
+    });
+});
+</script>
 {% endblock content %}
+{% block footer %}{% endblock %}
