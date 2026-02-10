@@ -35,22 +35,30 @@
                             <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 320px;">Nome</th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 150px;">CPF</th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; color: white; text-align: left; width: 350px;">Endereço</th>
+                            <th class="py-2 ps-3" style="background-color: #2563EB; width: 10px;"></th>
                             <th class="py-2 ps-3" style="background-color: #2563EB; border-top-right-radius: 10px; border-bottom-right-radius: 10px; width: 10px;"></th>
-                            </tr>
+                        </tr>
                         </thead>
 
                         <tbody>
                             {% for cliente in clientes %}
                             <tr style="background-color: #EEEEEE;">
-                            <td class="ps-2" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; text-align: center;">
-                                <input type="checkbox" name="ids_selecionados" value="{{ cliente.id }}" style="height: 100%; vertical-align: middle; transform: scale(1.4);">
-                            </td>
+                                <td class="ps-2" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; text-align: center;">
+                                    <input type="checkbox" name="ids_selecionados" value="{{ cliente.id }}" style="height: 100%; vertical-align: middle; transform: scale(1.4);">
+                                </td>
 
-                            <td class="py-2 ps-1 fw-medium">{{ cliente.id }}</td>
-                            <td class="py-2 ps-3 fw-medium">{{ cliente.nome }}</td>
-                            <td class="py-2 ps-3 fw-medium">{{ cliente.cpf }}</td>
-                            <td class="py-2 ps-3 fw-medium">{{ cliente.logradouro }}{% if cliente.logradouro %},{% endif %} {{ cliente.numero }}</td>
-                            
+                                <td class="py-2 ps-1 fw-medium">{{ cliente.id }}</td>
+                                <td class="py-2 ps-3 fw-medium">{{ cliente.nome }}</td>
+                                <td class="py-2 ps-3 fw-medium">{{ cliente.cpf }}</td>
+                                <td class="py-2 ps-3 fw-medium">{{ cliente.logradouro }}{% if cliente.logradouro %},{% endif %} {{ cliente.numero }}</td>
+
+                                <td class="py-2 ps-3 fw-medium text-center">
+                                    <button type="button" class="btn btn-sm btn-info"
+                                        onclick="abrirModalCliente({{ cliente.id }})">
+                                        Ver detalhes
+                                    </button>
+                                </td>
+                                
                                 <td class="ps-3" style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: center; white-space: nowrap;">
                                     <!-- Botão Editar -->
                                     <a href="{% url 'cadastros:editar_cliente' cliente.id %}"
@@ -148,12 +156,62 @@
                 </div>
             </div>
         </div>    
+    </div> <!-- TABELA PRA DETALHAR O CLIENTE (JSON)-->
+    <div class="modal fade" id="modalCliente" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes do Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-conteudo-cliente">
+                        <p>Carregando...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>
+
+async function abrirModalCliente(clienteId) {
+    try {
+        const response = await fetch(`/cadastros/cliente/${clienteId}/detalhe`, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Erro HTTP: " + response.status);
+        }
+
+        const data = await response.json();
+
+        const container = document.getElementById("modal-conteudo-cliente");
+
+        container.innerHTML = `
+            <p><strong>Nome:</strong> ${data.nome}</p>
+            <p><strong>CPF:</strong> ${data.cpf}</p>
+            <p><strong>Email:</strong> ${data.email}</p>
+            <p><strong>Telefone:</strong> ${data.telefone}</p>
+            <p><strong>Endereço:</strong> ${data.logradouro}, ${data.numero} - ${data.bairro}</p>
+            <p><strong>Cidade:</strong> ${data.cidade} / ${data.estado}</p>
+        `;
+
+        const modal = new bootstrap.Modal(document.getElementById("modalCliente"));
+        modal.show();
+
+    } catch (error) {
+        console.error("Erro ao abrir modal:", error);
+        alert("Erro ao carregar detalhes do cliente. Veja o console.");
+    }
+}
+
+
 document.getElementById("form-excluir").addEventListener("submit", function (e) {
     e.preventDefault(); // não deixa a página recarregar
-
     const form = this;                 // o próprio form
     const dados = new FormData(form);  // pega os dados (ids + csrf)
 

@@ -47,6 +47,25 @@ def clientes(request):
         "historico": ultimas_acoes_modulo(request.user, 'clientes'), 
         "total_clientes": total_clientes,
         "clientes_mes": clientes_mes})
+@login_required
+def cliente_detalhe_json(request, id_cliente):
+    cliente = get_object_or_404(Cliente, id=id_cliente)
+    print(">>> ENTROU NA VIEW <<<")
+    data = {
+        "id": cliente.id,
+        "nome": cliente.nome,
+        "cpf": cliente.cpf,
+        "logradouro": cliente.logradouro,
+        "numero": cliente.numero,
+        "bairro": cliente.bairro,
+        "cidade": cliente.cidade,
+        "estado": cliente.estado,
+        "email": cliente.email,
+        "telefone": cliente.telefone,
+        # adiciona aqui o que quiser mostrar no modal
+    }
+
+    return JsonResponse(data)
 
 # modificado para funcionar com AJAX. Json, Java Script Object Notation
 @login_required

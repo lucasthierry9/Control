@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='local') # Essa SECRET_KEY é 
 # SECURITY WARNING: don't run with debug turned on in production!
 #dados modificados para acompanhar o tutorial do deploy
 
-DEBUG = os.environ.get('DEBUG', True) == "true"
+DEBUG = os.environ.get('DEBUG', default=True)
 # o debug acima serve para trabalhar com deploy do projeto com docker.
 #  Atualizado: o de cima serve para ambos (localmente e numa máquina virtual). Peguei essa dica de um projeto no git do professor Diego
 # o debug abaixo serve para rodar o projeto com django pelo terminal (runserver)
@@ -111,6 +111,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #}
 # O database acima serve para rodar o projeto com docker em um servidor
 # o database abaixo serve para rodar o projeto com django (runserver)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
