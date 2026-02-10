@@ -18,10 +18,10 @@
                     <input name="search" value="{{ search|default:'' }}" class="form-control rounded-5 border-2" style="border-color: #2563EB; max-width: 400px" type="search" placeholder="Pesquisar" aria-label="Search" />
                 </form>
                 
-                <form method="POST" action="{% url 'cadastros:excluir_cliente' %}">
+                <form method="POST" id="form-excluir" action="{% url 'cadastros:excluir_cliente' %}">
                     {% csrf_token %}
                     <div style="display: flex; justify-content: flex-end;">
-                        <button class="p-0" style="min-width: 35px; max-width: 35px; min-height: 35px; max-height: 35px; background-color: #2563EB; border: none; border-radius: 8px; align-items: center; text-align: center;">
+                        <button type ="submit" class="p-0 btn-excluir" style="min-width: 35px; max-width: 35px; min-height: 35px; max-height: 35px; background-color: #2563EB; border: none; border-radius: 8px; align-items: center; text-align: center;">
                             <i class="fa-solid fa-trash fs-5" style="color: white;"></i>
                         </button>
                     </div>
@@ -150,6 +150,30 @@
         </div>    
     </div>
 </div>
+<script>
+document.getElementById("form-excluir").addEventListener("submit", function (e) {
+    e.preventDefault(); // não deixa a página recarregar
 
+    const form = this;                 // o próprio form
+    const dados = new FormData(form);  // pega os dados (ids + csrf)
+
+    fetch(form.action, {
+        method: "POST",
+        body: dados,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    })
+    .then(response => response.json()) // recebe o JSON da view
+    .then(data => {
+    if (data.sucesso) {
+        alert("Cliente(s) excluído(s) com sucesso!");
+        location.reload(); // recarrega a página
+    }
+});
+        }
+    });
+});
+</script>
 {% endblock content %}
 {% block footer %}{% endblock %}

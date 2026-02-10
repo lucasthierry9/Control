@@ -145,6 +145,12 @@ def excluir_cliente(request, id_cliente=0):
                 modulo='clientes',
                 descricao=f'{quantidade} cliente(s) excluído(s)'
             )
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return JsonResponse({
+                "sucesso": True,
+                "ids": ids,
+                "quantidade": quantidade
+            })
         return redirect('cadastros:clientes')
     else:
         cliente = get_object_or_404(Cliente, id=id_cliente)
