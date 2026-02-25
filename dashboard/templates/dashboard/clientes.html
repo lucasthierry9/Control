@@ -1,0 +1,175 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load static %}
+{% block title %}Dashboard (Clientes){% endblock title %}
+{% block content %}
+<div class="col-12 col-lg-10 px-4 mx-auto px-3 px-lg-4 pt-2">
+    <div style="min-height: 60px;"></div>
+    <div style="background: #f0f6ff; border-radius: 20px; width: 100%; max-width: 1350px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); overflow: hidden; font-family: Inter; margin: auto;">
+        
+        <!-- Header do Card -->
+        <div class="d-flex align-items-center" style="background: #2563EB; padding: 25px 30px; border-bottom: 1px solid #f0f0f0; justify-content: space-between;">
+            <h2 style="color: white; font-size: 30px; font-weight: 700; margin: 0;">Clientes</h2>
+        </div>
+        <div class="p-4">
+            <div class="row g-3">
+
+                <!-- Faturamento -->
+                <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                    <div class="bg-white shadow-sm d-flex align-items-center p-3 h-100"
+                        style="border-radius: 12px; font-family: Inter;">
+                        <div class="me-3 p-3 d-flex align-items-center justify-content-center"style="width: 80px; height: 80px; background-color: #DBEAFE;border-radius: 12px;">
+                            <i class="fa-solid fa-user" style="font-size: 40px; color: #2563EB;"></i>
+                        </div>
+
+                        <div>
+                            <span style="font-size: 16px; font-weight: 600;">
+                                Clientes Cadastrados
+                            </span>
+                            <h2 style="font-weight: 700; margin: 0;">{{ total_clientes }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Produtos -->
+                <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                    <div class="bg-white shadow-sm d-flex align-items-center p-3 h-100"
+                        style="border-radius: 12px; font-family: Inter;">
+                        <div class="me-3 p-3"
+                            style="width: 80px; height: 80px; background-color: #DBEAFE; border-radius: 12px; display:flex; justify-content:center; align-items:center;">
+                            <i class="bi bi-star-fill" 
+                            style="font-size: 40px; color: #2563EB;"></i>
+                        </div>
+
+                        <div>
+                            <span style="font-size: 16px; font-weight: 600;">
+                                Cliente com mais pedidos
+                            </span>
+                            <h2 style="font-weight: 700; margin: 0;">{{ cliente_mais_pedidos|truncatewords:2 }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Clientes -->
+                <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                    <div class="bg-white shadow-sm d-flex align-items-center p-3 h-100"
+                        style="border-radius: 12px; font-family: Inter;">
+                        <div class="me-3 p-3" 
+                            style="width: 80px; height: 80px; background-color: #DBEAFE; border-radius: 12px; display:flex; justify-content:center; align-items:center;">
+                            <i class="fa-solid fa-circle-exclamation" 
+                            style="font-size: 40px; color: #2563EB;"></i>
+                        </div>
+
+                        <div>
+                            <span style="font-size: 16px; font-weight: 600;">
+                                Clientes Sem Pedido (%)
+                            </span>
+                            <h2 style="font-weight: 700; margin: 0;">{{ percentual_sem_pedido }}%</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 g-3">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white shadow-sm" style="height: 450px; border-radius: 12px;">
+                    <div class="d-flex align-items-center" style="background: white; padding: 5px 10px; border-bottom: 1px solid #f0f0f0; justify-content: space-between; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                        <h2 style="color: white; font-size: 14px; font-weight: 700; margin: 0; color: black;">Clientes cadastrados nas últimas 4 semanas:</h2>
+                    </div>
+                    <div style="padding: 15px; height: 430px;">
+                        <canvas id="clientesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="bg-white shadow-sm" style="height: 450px; border-radius: 12px; font-family: Inter;">
+                    <div class="d-flex align-items-center" style="background: white; padding: 5px 10px; border-bottom: 1px solid #f0f0f0; justify-content: space-between; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                        <h2 style="color: white; font-size: 14px; font-weight: 700; margin: 0; color: black;">Clientes com mais pedidos feitos:</h2>
+                    </div>
+                    <div style="padding: 15px; height: 430px;">
+                        <canvas id="topClientesChart" style="height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>            
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+// GRÁFICO CLIENTES CADASTRADOS POR SEMANA
+document.addEventListener("DOMContentLoaded", function () {
+
+    const labels = {{ labels_clientes_json|safe }};
+    const dados = {{ dados_clientes_json|safe }};
+
+    const ctx = document.getElementById('clientesChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Clientes cadastrados',
+                data: dados,
+                backgroundColor: '#2563EB',
+                borderRadius: 6,
+                minBarLength: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: true }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+
+});
+
+// GRÁFICO TOP 5 CLIENTES COM MAIS PEDIDOS
+document.addEventListener("DOMContentLoaded", function () {
+    const labelsTop = {{ labels_top_clientes_json|safe }};
+    const dadosTop = {{ dados_top_clientes_json|safe }};
+
+    const maxValor = Math.max(...dadosTop);
+
+    new Chart(document.getElementById('topClientesChart'), {
+        type: 'bar',
+        data: {
+            labels: labelsTop,
+            datasets: [{
+                label: 'Pedidos realizados',
+                data: dadosTop,
+                backgroundColor: '#2563eb',
+                minBarLength: 10
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: { display: false },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: maxValor + 2,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
+    });
+});
+</script>
+{% endblock scripts %}
+

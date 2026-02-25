@@ -1,0 +1,82 @@
+[
+    {
+        "model": "control.Categoria_Produto",
+        "pk": 1,
+        "fields": {
+            "nome": "Eletrônicos",
+            "descricao": "Dispositivos e acessórios eletrônicos"
+        }
+    },
+    {
+        "model": "control.Categoria_Produto",
+        "pk": 2,
+        "fields": {
+            "nome": "Informática",
+            "descricao": "Computadores e periféricos"
+        }
+    },
+    {
+        "model": "control.Categoria_Produto",
+        "pk": 3,
+        "fields": {
+            "nome": "Roupas",
+            "descricao": "Moda masculina e feminina"
+        }
+    },
+    {
+        "model": "control.Categoria_Produto",
+        "pk": 4,
+        "fields": {
+            "nome": "Acessórios",
+            "descricao": "Itens complementares de vestuário"
+        }
+    },
+    {
+        "model": "control.Categoria_Produto",
+        "pk": 5,
+        "fields": {
+            "nome": "Livros",
+            "descricao": "Livros físicos e digitais"
+        }
+    },
+    {
+        "model": "control.Categoria_Produto",
+        "pk": 6,
+        "fields": {
+            "nome": "Decoração",
+            "descricao": "Itens para casa"
+        }
+    },
+    {
+        "model": "control.Categoria_Produto",
+        "pk": 7,
+        "fields": {
+            "nome": "Alimentos",
+            "descricao": "Produtos alimentícios variados"
+        }
+    },
+    {
+        "model": "control.Categoria_Produto",
+        "pk": 8,
+        "fields": {
+            "nome": "Esportes",
+            "descricao": "Roupas e equipamentos esportivos"
+        }
+    },
+    {
+        "model": "control.Categoria_Produto",
+        "pk": 9,
+        "fields": {
+            "nome": "Ferramentas",
+            "descricao": "Ferramentas em geral"
+        }
+    },
+    {
+        "model": "control.Categoria_Produto",
+        "pk": 10,
+        "fields": {
+            "nome": "Cosméticos",
+            "descricao": "Produtos de beleza e cuidados pessoais"
+        }
+    }
+]

@@ -1,0 +1,332 @@
+[
+  {
+    "model": "control.produto",
+    "pk": 1,
+    "fields": {
+      "categoria": 1,
+      "nome": "Caderno Universitário 10 Matérias",
+      "preco": "25.50",
+      "imagem": "",
+      "data_cadastro": "2025-01-01T09:00:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 2,
+    "fields": {
+      "categoria": 2,
+      "nome": "Mouse Óptico Sem Fio 2.4GHz",
+      "preco": "49.99",
+      "imagem": "",
+      "data_cadastro": "2025-01-02T10:15:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 3,
+    "fields": {
+      "categoria": 3,
+      "nome": "Kit Café Gourmet Torra Média",
+      "preco": "35.00",
+      "imagem": "",
+      "data_cadastro": "2025-01-03T11:45:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 4,
+    "fields": {
+      "categoria": 1,
+      "nome": "Caneta Esferográfica Azul (Pacote 10)",
+      "preco": "12.90",
+      "imagem": "",
+      "data_cadastro": "2025-01-04T13:30:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 5,
+    "fields": {
+      "categoria": 2,
+      "nome": "Teclado Mecânico RGB",
+      "preco": "219.00",
+      "imagem": "",
+      "data_cadastro": "2025-01-05T15:00:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 6,
+    "fields": {
+      "categoria": 3,
+      "nome": "Azeite de Oliva Extra Virgem 500ml",
+      "preco": "39.50",
+      "imagem": "",
+      "data_cadastro": "2025-01-06T16:20:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 7,
+    "fields": {
+      "categoria": 1,
+      "nome": "Pasta Arquivo Zip-zap",
+      "preco": "7.80",
+      "imagem": "",
+      "data_cadastro": "2025-01-07T08:45:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 8,
+    "fields": {
+      "categoria": 2,
+      "nome": "Webcam HD 1080p com Microfone",
+      "preco": "145.00",
+      "imagem": "",
+      "data_cadastro": "2025-01-08T10:55:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 9,
+    "fields": {
+      "categoria": 3,
+      "nome": "Feijão Carioca 1kg",
+      "preco": "8.99",
+      "imagem": "",
+      "data_cadastro": "2025-01-09T12:35:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 10,
+    "fields": {
+      "categoria": 1,
+      "nome": "Lápis de Cor 24 Cores",
+      "preco": "29.90",
+      "imagem": "",
+      "data_cadastro": "2025-01-10T14:10:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 11,
+    "fields": {
+      "categoria": 2,
+      "nome": "Adaptador USB C para HDMI",
+      "preco": "75.00",
+      "imagem": "",
+      "data_cadastro": "2025-01-11T16:00:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 12,
+    "fields": {
+      "categoria": 3,
+      "nome": "Arroz Agulhinha Tipo 1 (5kg)",
+      "preco": "28.50",
+      "imagem": "",
+      "data_cadastro": "2025-01-12T17:30:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 13,
+    "fields": {
+      "categoria": 1,
+      "nome": "Clipes de Papel Galvanizado (Cx 100)",
+      "preco": "5.50",
+      "imagem": "",
+      "data_cadastro": "2025-01-13T09:30:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 14,
+    "fields": {
+      "categoria": 2,
+      "nome": "Fone de Ouvido Bluetooth TWS",
+      "preco": "99.90",
+      "imagem": "",
+      "data_cadastro": "2025-01-14T11:20:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 15,
+    "fields": {
+      "categoria": 3,
+      "nome": "Leite Integral UHT (Caixa 1L)",
+      "preco": "5.25",
+      "imagem": "",
+      "data_cadastro": "2025-01-15T13:40:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 16,
+    "fields": {
+      "categoria": 1,
+      "nome": "Post-it Amarelo 76x76mm (Bloco)",
+      "preco": "9.90",
+      "imagem": "",
+      "data_cadastro": "2025-01-16T15:15:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 17,
+    "fields": {
+      "categoria": 2,
+      "nome": "Hub USB 3.0 (4 Portas)",
+      "preco": "65.00",
+      "imagem": "",
+      "data_cadastro": "2025-01-17T17:00:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 18,
+    "fields": {
+      "categoria": 3,
+      "nome": "Açúcar Refinado 1kg",
+      "preco": "4.15",
+      "imagem": "",
+      "data_cadastro": "2025-01-18T09:10:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 19,
+    "fields": {
+      "categoria": 1,
+      "nome": "Marcador de Texto Neon (Kit 6 Cores)",
+      "preco": "18.50",
+      "imagem": "",
+      "data_cadastro": "2025-01-19T10:40:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 20,
+    "fields": {
+      "categoria": 2,
+      "nome": "Cabo de Rede Ethernet 10m",
+      "preco": "32.00",
+      "imagem": "",
+      "data_cadastro": "2025-01-20T12:50:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 21,
+    "fields": {
+      "categoria": 3,
+      "nome": "Macarrão Espaguete 500g",
+      "preco": "3.80",
+      "imagem": "",
+      "data_cadastro": "2025-01-21T14:30:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 22,
+    "fields": {
+      "categoria": 1,
+      "nome": "Corretivo Líquido Caneta",
+      "preco": "6.50",
+      "imagem": "",
+      "data_cadastro": "2025-01-22T16:15:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 23,
+    "fields": {
+      "categoria": 2,
+      "nome": "Pendrive 64GB USB 3.0",
+      "preco": "55.00",
+      "imagem": "",
+      "data_cadastro": "2025-01-23T17:50:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 24,
+    "fields": {
+      "categoria": 3,
+      "nome": "Óleo de Soja 900ml",
+      "preco": "7.99",
+      "imagem": "",
+      "data_cadastro": "2025-01-24T09:40:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 25,
+    "fields": {
+      "categoria": 1,
+      "nome": "Borracha Branca Plástica",
+      "preco": "2.50",
+      "imagem": "",
+      "data_cadastro": "2025-01-25T11:30:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 26,
+    "fields": {
+      "categoria": 2,
+      "nome": "Mochila para Notebook 15.6'",
+      "preco": "110.00",
+      "imagem": "",
+      "data_cadastro": "2025-01-26T13:00:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 27,
+    "fields": {
+      "categoria": 3,
+      "nome": "Sal Refinado 1kg",
+      "preco": "2.50",
+      "imagem": "",
+      "data_cadastro": "2025-01-27T15:20:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 28,
+    "fields": {
+      "categoria": 1,
+      "nome": "Etiquetas Adesivas Padrão (Pacote)",
+      "preco": "10.50",
+      "imagem": "",
+      "data_cadastro": "2025-01-28T17:10:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 29,
+    "fields": {
+      "categoria": 2,
+      "nome": "Cadeira Gamer Ergonômica",
+      "preco": "899.90",
+      "imagem": "",
+      "data_cadastro": "2025-01-29T09:55:00Z"
+    }
+  },
+  {
+    "model": "control.produto",
+    "pk": 30,
+    "fields": {
+      "categoria": 3,
+      "nome": "Refrigerante Cola 2L",
+      "preco": "8.75",
+      "imagem": "",
+      "data_cadastro": "2025-01-30T11:45:00Z"
+    }
+  }
+]

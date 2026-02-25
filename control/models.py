@@ -1,45 +1,41 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import BaseUserManager
-#adicionar super user pelo "/admin" no navegador
-class UsuarioManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError('O campo email é obrigatório')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_active', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superusuário precisa ter is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superusuário precisa ter is_superuser=True.')
-
-        return self.create_user(email, password, **extra_fields)
-#adicionar super user pelo "/admin" no navegador
-class Usuario(AbstractUser):
-    nome = models.CharField(max_length=50)
-    empresa = models.CharField(max_length=50)
-    cpf_cnpj = models.CharField(max_length=14, unique=True)
-    email = models.EmailField(max_length=255, unique=True)
-    telefone = models.CharField(max_length=11)
-    username = None
-    
-
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
-
-    objects = UsuarioManager()  # <---- adiciona o novo manager aqui
+from django.utils import timezone
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from usuarios.models import Usuario
+User = get_user_model()
 
 class Estado(models.Model):
-    estado = models.CharField(max_length=50)
+    ESTADOS_CHOICES = [
+    ('AC', 'AC'),
+    ('AL', 'AL'),
+    ('AM', 'AM'),
+    ('AP', 'AP'),
+    ('BA', 'BA'),
+    ('CE', 'CE'),
+    ('DF', 'DF'),
+    ('ES', 'ES'),
+    ('GO', 'GO'),
+    ('MA', 'MA'),
+    ('MG', 'MG'),
+    ('MS', 'MS'),
+    ('MT', 'MT'),
+    ('PA', 'PA'),
+    ('PB', 'PB'),
+    ('PE','PE'),
+    ('PI', 'PI'),
+    ('PR', 'PR'),
+    ('RJ', 'RJ'),
+    ('RN', 'RN'),
+    ('RO', 'RO'),
+    ('RR', 'RR'),
+    ('RS', 'RS'),
+    ('SC', 'SC'),
+    ('SE', 'SE'),
+    ('SP', 'SP'),
+    ('TO', 'TO'),
+    ]
+    estado = models.CharField(max_length=2, choices=ESTADOS_CHOICES)
 
     def __str__(self):
         return self.estado
@@ -61,6 +57,16 @@ class Bairro(models.Model):
 class Fornecedor(models.Model):
     nome = models.CharField(max_length=50)
     cpf_cnpj = models.CharField(max_length=14)
+    email = models.EmailField(max_length=254, default="")
+    telefone = models.CharField(max_length=11, default="")
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE, null=True, blank=True)
+    cidade = models.CharField(max_length=50, default="")
+    bairro = models.CharField(max_length=50, default="")
+    logradouro = models.CharField(max_length=100, default="")
+    numero = models.CharField(max_length=100, default="")
+    complemento = models.CharField(max_length=100, blank=True)
+    cep = models.CharField(max_length=8, default="")
+    data_cadastro = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = "Fornecedores"
@@ -68,39 +74,27 @@ class Fornecedor(models.Model):
     def __str__(self):
         return self.nome
 
-class Tel_Fornecedor(models.Model):
-    telefone = models.CharField(max_length=11)
-    fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE)
-
-class Email_Fornecedor(models.Model):
-    email = models.EmailField(max_length=254)
-    fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE)
-
 class Cliente(models.Model):
     nome = models.CharField(max_length=50)
     cpf = models.CharField(max_length=11)
-    estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
-    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE)
-    bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE)
-    logradouro = models.CharField(max_length=100)
-    número = models.CharField(max_length=100)
+    email = models.EmailField(max_length=254, default="")
+    telefone = models.CharField(max_length=11, default="")
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE, null=True, blank=True)
+    cidade = models.CharField(max_length=50, blank=True)
+    bairro = models.CharField(max_length=50, blank=True)
+    logradouro = models.CharField(max_length=100, blank=True)
+    numero = models.CharField(max_length=100, blank=True)
     complemento = models.CharField(max_length=100, blank=True)
-    cep = models.CharField(max_length=8)
+    cep = models.CharField(max_length=8, blank=True)
+    data_cadastro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.nome
 
-class Tel_Cliente(models.Model):
-    telefone = models.CharField(max_length=11)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-
-class Email_Cliente(models.Model):
-    email = models.EmailField(max_length=254)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-
 class Categoria_Produto(models.Model):
     nome = models.CharField(max_length=50)
-    descricao = models.TextField(max_length=100, blank=True)
+    descricao = models.CharField(max_length=200, blank=True)
+    
 
     @property
     def quantidade(self):
@@ -113,30 +107,47 @@ class Produto(models.Model):
     categoria = models.ForeignKey(Categoria_Produto, on_delete=models.CASCADE)
     nome = models.CharField(max_length=50)
     preco = models.DecimalField(max_digits=8, decimal_places=2)
-    imagem = models.ImageField(upload_to="imagens/")
-    quantidade = models.PositiveIntegerField(default=0)
+    imagem = models.ImageField(upload_to="imagens/", blank=True)
+    data_cadastro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.nome
 
 class Pedidos_Compra(models.Model):
+    STATUS = (
+        ('aberto', 'Em aberto'),
+        ('processando', 'Processando'),
+        ('concluido', 'Concluído'),
+        ('cancelado', 'Cancelado'),
+    )
+
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
     valor = models.DecimalField(max_digits=8, decimal_places=2)
-
+    status = models.CharField(max_length=20, choices=STATUS, default='aberto')
+    data = models.DateTimeField(default=timezone.now)
+    
 class Deposito(models.Model):
     descricao = models.CharField(max_length=50)
 
-class Tipos_Movimentacao(models.Model):
-    tipo = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.descricao
 
 class Movimentacao(models.Model):
-    tipo = models.ForeignKey(Tipos_Movimentacao, on_delete=models.CASCADE)
+    TIPO_MOVIMENTACAO = (
+        ('entrada', 'Entrada'),
+        ('saida', 'Saída'),
+    )
+
+    tipo = models.CharField(max_length=20, choices=TIPO_MOVIMENTACAO)
     deposito = models.ForeignKey(Deposito, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    dataehora = models.DateTimeField()
+    quantidade = models.IntegerField()
+    dataehora = models.DateTimeField(default=timezone.now)
     preco_custo = models.DecimalField(max_digits=8, decimal_places=2)
+    preco_compra = models.DecimalField(max_digits=8, decimal_places=2, null=True)
 
 class Estoque_Produto(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
@@ -146,41 +157,86 @@ class Estoque_Produto(models.Model):
 class Vendedor(models.Model):
     nome = models.CharField(max_length=50)
     cpf = models.CharField(max_length=11)
+    email = models.EmailField(max_length=254, default="")
+    telefone = models.CharField(max_length=11, default="")
+    data_cadastro = models.DateTimeField(auto_now_add=True)
+
     class Meta:
         verbose_name_plural = "Vendedores"
     def __str__(self):
         return self.nome
 
-class Tel_Vendedor(models.Model):
-    telefone = models.CharField(max_length=11)
-    vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
-
-class Email_Vendedor(models.Model):
-    email = models.EmailField(max_length=254)
-    vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
-
 class Pedidos_Venda(models.Model):
+    STATUS = (
+        ('aberto', 'Em aberto'),
+        ('processando', 'Processando'),
+        ('concluido', 'Concluído'),
+        ('cancelado', 'Cancelado'),
+    )
+
+    TIPO_PAGAMENTO = (
+    ('pix', 'Pix'),
+    ('dinheiro', 'Dinheiro'),
+    ('credito', 'Cartão de Crédito'),
+    ('debito', 'Cartão de Débito'),
+    ('boleto', 'Boleto'),
+    )
+
+    TIPO_FRETE = (
+    ('cif', 'CIF - Frete Incluso'),
+    ('fob', 'FOB - Frete por Conta do Cliente'),
+    ('retirar', 'Retirar no Local'),
+    )
+
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
-    bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
-    logradouro = models.CharField(max_length=100)
-    numero = models.CharField(max_length=7)
-    pagamento = models.CharField(max_length=20)
+    pagamento = models.CharField(max_length=20, choices=TIPO_PAGAMENTO)
+    data = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=20, choices=STATUS, default='aberto')
+    peso = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+    valor_frete = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    frete = models.CharField(max_length=30, choices=TIPO_FRETE, blank=True)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE, null=True, blank=True)
+    cidade = models.CharField(max_length=50, blank=True)
+    bairro = models.CharField(max_length=50, blank=True)
+    logradouro = models.CharField(max_length=100, blank=True)
+    numero = models.CharField(max_length=7, blank=True)
+    complemento = models.CharField(max_length=100, blank=True)
+    cep = models.CharField(max_length=8, blank=True)
+
+
+    def total(self):
+        return self.produto.preco * self.quantidade
 
 class Funcionario(models.Model):
-    nome = models.CharField(max_length=50)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="perfil_funcionario")
+    empresa = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="funcionarios")
+    nome = models.CharField(max_length=100)
     cpf = models.CharField(max_length=11)
+    telefone = models.CharField(max_length=20, blank=True)
     cargo = models.CharField(max_length=50)
+    
 
     def __str__(self):
-        return self.nome
+        return f"{self.nome} ({self.cargo})"
+    
+    
+class HistoricoAcao(models.Model):
+    MODULOS = (
+        ('clientes', 'Clientes'),
+        ('produtos', 'Produtos'),
+        ('vendedores', 'Vendedores'),
+        ('funcionarios', 'Funcionarios'),
+        ('categorias', 'Categorias'),
+        ('fornecedores', 'Fornecedores'),
+    )
 
-class Tel_Funcionario(models.Model):
-    telefone = models.CharField(max_length=11)
-    funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    modulo = models.CharField(max_length=20, choices=MODULOS)
+    descricao = models.CharField(max_length=255)
+    criado_em = models.DateTimeField(auto_now_add=True)
 
-class Email_Funcionario(models.Model):
-    email = models.EmailField(max_length=254)
-    funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"[{self.modulo}] {self.descricao}"
