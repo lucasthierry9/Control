@@ -68,6 +68,35 @@
                     </div>
                 </div>
             </div>
+            {% if alertas_estoque %}
+            <div class="mt-4 p-3" style="background-color: #fff7ed; border: 1px solid #fed7aa; border-left: 5px solid #f97316; border-radius: 12px; font-family: Inter;">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <div>
+                        <h3 class="mb-1" style="color: #9a3412; font-size: 20px; font-weight: 700;">
+                            <i class="fa-solid fa-triangle-exclamation me-2"></i>Alerta de estoque
+                        </h3>
+                        <p class="mb-0" style="color: #7c2d12;">
+                            {{ produtos_sem_estoque }} zerado(s) e {{ produtos_estoque_baixo }} baixo(s), com até {{ limite_estoque_baixo }} unidades.
+                        </p>
+                    </div>
+                    <a href="{% url 'estoque:verificacao' %}" class="btn btn-sm" style="background-color: #f97316; color: white; font-weight: 700;">
+                        Verificar estoque
+                    </a>
+                </div>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2 mt-2">
+                    {% for produto in alertas_estoque %}
+                    <div class="col">
+                        <div class="bg-white p-2 d-flex justify-content-between align-items-center" style="border-radius: 8px; color: #374151;">
+                            <span class="text-truncate me-2">{{ produto.nome }}</span>
+                            <strong style="color: {% if produto.total_estoque <= 0 %}#dc2626{% else %}#ea580c{% endif %}; white-space: nowrap;">
+                                {{ produto.total_estoque }} un.
+                            </strong>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
             <div class="row mt-4 g-3">
             <div class="col-12 col-lg-6">
                 <div class="bg-white shadow-sm" style="height: 450px; border-radius: 12px;">
