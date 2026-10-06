@@ -213,6 +213,7 @@ def vendas(request):
 def produtos(request):
 
     total_produtos = Produto.objects.count()
+    limite_estoque_baixo = 5
 
     # Obter filtros
     ano = request.GET.get('ano')
@@ -235,7 +236,7 @@ def produtos(request):
             (produtos_sem_pedido / total_produtos) * 100, 2
         )
 
-    produtos_sem_estoque = (
+    produtos_com_saldo = (
         Produto.objects
         .annotate(
             total_estoque=Coalesce(
@@ -243,8 +244,12 @@ def produtos(request):
                 0
             )
         )
-        .filter(total_estoque__lte=0)
-        .count()
+    )
+
+    produtos_sem_estoque = produtos_com_saldo.filter(total_estoque__lte=0)
+    produtos_estoque_baixo = produtos_com_saldo.filter(
+        total_estoque__gt=0,
+        total_estoque__lte=limite_estoque_baixo,
     )
 
     # TOP 5 PRODUTOS MAIS VENDIDOS
@@ -286,7 +291,14 @@ def produtos(request):
 
     return render(request, 'dashboard/produtos.html', {
         "total_produtos": total_produtos,
-        "produtos_sem_estoque": produtos_sem_estoque,
+        "produtos_sem_estoque": produtos_sem_estoque.count(),
+        "produtos_estoque_baixo": produtos_estoque_baixo.count(),
+        "limite_estoque_baixo": limite_estoque_baixo,
+        "alertas_estoque": list(
+            produtos_com_saldo
+            .filter(total_estoque__lte=limite_estoque_baixo)
+            .order_by('total_estoque', 'nome')[:10]
+        ),
         
         "labels_produtos_json": json.dumps(labels_produtos),
         "dados_produtos_json": json.dumps(dados_produtos),
