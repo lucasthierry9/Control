@@ -34,7 +34,7 @@ class PedidosVendaForm(forms.ModelForm):
                 'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;'
             })
         
-        # Campos select
+        # Campos de seleção
         select_fields = ['cliente', 'vendedor', 'produto', 'pagamento',]
         for field_name in select_fields:
             if field_name in self.fields:
@@ -43,14 +43,14 @@ class PedidosVendaForm(forms.ModelForm):
                     'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;'
                 })
         
-        # Labels personalizados
+        # Rótulos personalizados
         self.fields['cliente'].empty_label = 'Selecione um cliente'
         self.fields['vendedor'].empty_label = 'Selecione um vendedor'
         self.fields['produto'].empty_label = 'Selecione um produto'
         self.fields['pagamento'].empty_label = 'Selecione'
         self.fields['frete'].empty_label = 'Selecione'
         
-        # Placeholders
+        # Textos de exemplo nos campos
         self.fields['peso'].widget.attrs['placeholder'] = 'Kg'
         self.fields['valor_frete'].widget.attrs['placeholder'] = 'R$'
         
@@ -116,7 +116,7 @@ class PedidosVendaForm(forms.ModelForm):
                 Column('status', css_class='col-12'),
             ),
             
-            # Botão Submit
+            # Botão de envio
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
