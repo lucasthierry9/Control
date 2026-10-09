@@ -30,7 +30,7 @@ class MovimentacaoForm(forms.ModelForm):
                 'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;'
             })
 
-        # Campos select
+        # Campos de seleção
         select_fields = ['tipo']
         for field_name in select_fields:
             if field_name in self.fields:
@@ -64,7 +64,7 @@ class MovimentacaoForm(forms.ModelForm):
                 Column('dataehora', css_class='col-12 col-md-6'),
             ),
             
-            # Botão Submit
+            # Botão de envio
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
@@ -103,7 +103,7 @@ class DepositoForm(forms.ModelForm):
                 Column('descricao', css_class='col-12 col-md-6 mt-2'),
             ),
             
-            # Botão Submit
+            # Botão de envio
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
@@ -139,7 +139,7 @@ class Pedidos_CompraForm(forms.ModelForm):
                 'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;'
             })
         
-        # Campos select
+        # Campos de seleção
         select_fields = ['fornecedor', 'produto',]
         for field_name in select_fields:
             if field_name in self.fields:
@@ -148,7 +148,7 @@ class Pedidos_CompraForm(forms.ModelForm):
                     'style': 'background-color: #EEEEEE; border: none; border-radius: 8px; height: 45px;'
                 })
         
-        # Labels personalizados
+        # Rótulos personalizados
         self.fields['fornecedor'].empty_label = 'Selecione um fornecedor'
         
         self.helper = FormHelper()
@@ -173,7 +173,7 @@ class Pedidos_CompraForm(forms.ModelForm):
                 Column('status', css_class='col-12 col-md-6'),
             ),
             
-            # Botão Submit
+            # Botão de envio
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),

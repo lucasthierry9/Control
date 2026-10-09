@@ -79,7 +79,7 @@ class ClienteForm(forms.ModelForm):
                 Column('complemento', css_class='col-6 col-md-4'),
             ),
             
-            # Botão Submit
+            # Botão de envio
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
@@ -135,7 +135,7 @@ class ProdutoForm(forms.ModelForm):
                 Column('imagem', css_class='col-12 col-md-6'),
             ),
             
-            # Botão Submit
+            # Botão de envio
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
@@ -287,7 +287,7 @@ class VendedorForm(forms.ModelForm):
                 Column('telefone', css_class='col-12 col-md-6'),
             ),
             
-            # Botão Submit
+            # Botão de envio
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
@@ -366,7 +366,7 @@ class FornecedorForm(forms.ModelForm):
                 Column('complemento', css_class='col-6 col-md-4'),
             ),
             
-            # Botão Submit
+            # Botão de envio
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
@@ -408,7 +408,7 @@ class CategoriaForm(forms.ModelForm):
                 Column('descricao', css_class='col-12 col-md-6 mb-1'),
             ),
             
-            # Botão Submit
+            # Botão de envio
             Div(
                 Submit('submit', botao_texto, css_class='btn', css_id='btn-registrar',
                        style='background-color: #2563EB; color: white; font-family: Inter; font-weight: 700; font-size: 26px; border-radius: 10px; min-width: 300px; height: 55px;'),
