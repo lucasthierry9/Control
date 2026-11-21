@@ -1,13 +1,13 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from control.models import Cliente, Produto, Funcionario, Vendedor, Fornecedor, Categoria_Produto
-from control.forms import ClienteForm, ProdutoForm, FuncionarioForm, VendedorForm, FornecedorForm, CategoriaForm
+from control.forms import ClienteForm, ProdutoForm, FuncionarioForm, FuncionarioEditarForm, VendedorForm, FornecedorForm, CategoriaForm
 from usuarios.models import Usuario
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
-from control.utils import registrar_acao, ultimas_acoes_modulo
+from control.utils import registrar_acao, ultimas_acoes_modulo, empresa_do_usuario, filtrar_empresa
 from django.utils.timezone import now
 
 from django.urls import reverse
@@ -19,7 +19,7 @@ from django.http import JsonResponse
 def clientes(request):
     search = request.GET.get("search")
 
-    clientes = Cliente.objects.all()
+    clientes = filtrar_empresa(Cliente.objects.all(), request.user)
 
     # Total de clientes:
     total_clientes = Cliente.objects.count()
@@ -49,8 +49,7 @@ def clientes(request):
         "clientes_mes": clientes_mes})
 @login_required
 def cliente_detalhe_json(request, id_cliente):
-    cliente = get_object_or_404(Cliente, id=id_cliente)
-    print(">>> ENTROU NA VIEW <<<")
+    cliente = get_object_or_404(filtrar_empresa(Cliente.objects.all(), request.user), id=id_cliente)
     data = {
         "id": cliente.id,
         "nome": cliente.nome,
@@ -59,7 +58,7 @@ def cliente_detalhe_json(request, id_cliente):
         "numero": cliente.numero,
         "bairro": cliente.bairro,
         "cidade": cliente.cidade,
-        "estado": cliente.estado,
+        "estado": str(cliente.estado) if cliente.estado_id else "",
         "email": cliente.email,
         "telefone": cliente.telefone,
         # adiciona aqui o que quiser mostrar no modal
@@ -73,7 +72,9 @@ def cadastrar_cliente(request):
     if request.method == "POST":
         form = ClienteForm(request.POST)
         if form.is_valid():
-            cliente = form.save()
+            cliente = form.save(commit=False)
+            cliente.empresa = empresa_do_usuario(request.user)
+            cliente.save()
 
             registrar_acao(
                 request.user,
@@ -108,7 +109,7 @@ def cadastrar_cliente(request):
 
 @login_required
 def editar_cliente(request, id_cliente):
-    cliente = get_object_or_404(Cliente, id=id_cliente)
+    cliente = get_object_or_404(filtrar_empresa(Cliente.objects.all(), request.user), id=id_cliente)
 
     if request.method == "POST":
         form = ClienteForm(request.POST, instance=cliente)
@@ -182,10 +183,10 @@ def excluir_cliente(request, id_cliente=0):
 def produtos(request):
     search = request.GET.get("search")
 
-    produtos = Produto.objects.all()
+    produtos = filtrar_empresa(Produto.objects.all(), request.user)
 
     # Total de produtos:
-    total_produtos = Produto.objects.count()
+    total_produtos = produtos.count()
 
     # Total produtos cadastrados no mês:
     produtos_mes = Produto.objects.filter(data_cadastro__month=now().month).count()
@@ -215,7 +216,9 @@ def cadastrar_produto(request):
         form = ProdutoForm(request.POST, request.FILES)
 
         if form.is_valid():
-            produto = form.save()
+            produto = form.save(commit=False)
+            produto.empresa = empresa_do_usuario(request.user)
+            produto.save()
 
             messages.success(
                 request,
@@ -256,7 +259,7 @@ def cadastrar_produto(request):
 
 @login_required 
 def editar_produto(request, id_produto):
-    produto = get_object_or_404(Produto, id=id_produto)
+    produto = get_object_or_404(filtrar_empresa(Produto.objects.all(), request.user), id=id_produto)
 
     if request.method == "POST":
         form = ProdutoForm(request.POST, request.FILES, instance=produto)
@@ -334,13 +337,15 @@ def excluir_produto(request, id_produto=0):
 # FUNCIONÁRIOS
 @login_required
 def funcionarios(request):
+    if request.user.tipo != 'empresa':
+        from django.core.exceptions import PermissionDenied
+        raise PermissionDenied
 
     # Total de funcionarios:
-    total_funcionarios = Funcionario.objects.count()
+    funcionarios = filtrar_empresa(Funcionario.objects.all(), request.user)
+    total_funcionarios = funcionarios.count()
 
     search = request.GET.get("search")
-
-    funcionarios = Funcionario.objects.all()
 
     if search:
         filtros = (
@@ -364,6 +369,9 @@ def funcionarios(request):
 
 @login_required
 def cadastrar_funcionario(request):
+    if request.user.tipo != 'empresa':
+        from django.core.exceptions import PermissionDenied
+        raise PermissionDenied
     if request.method == "POST":
         form = FuncionarioForm(request.POST)
         if form.is_valid():
@@ -393,6 +401,7 @@ def cadastrar_funcionario(request):
                 nome=form.cleaned_data['nome'],
                 cpf=form.cleaned_data['cpf'],
                 telefone=form.cleaned_data['telefone'],
+                cargo=form.cleaned_data['cargo'],
             )
 
             messages.success(
@@ -415,13 +424,23 @@ def cadastrar_funcionario(request):
 
 @login_required
 def editar_funcionario(request, id_funcionario):
-    funcionario = get_object_or_404(Funcionario, id=id_funcionario)
+    if request.user.tipo != 'empresa':
+        from django.core.exceptions import PermissionDenied
+        raise PermissionDenied
+    funcionario = get_object_or_404(filtrar_empresa(Funcionario.objects.all(), request.user), id=id_funcionario)
 
     if request.method == "POST":
-        form = FuncionarioForm(request.POST, instance=funcionario)
+        form = FuncionarioEditarForm(request.POST, instance=funcionario)
         if form.is_valid():
             funcionario = form.save(commit=False)
             funcionario.save()
+            email = form.cleaned_data.get('email')
+            senha = form.cleaned_data.get('senha')
+            if email:
+                funcionario.user.email = email
+            if senha:
+                funcionario.user.set_password(senha)
+            funcionario.user.save()
 
             messages.success(
                 request,
@@ -435,7 +454,7 @@ def editar_funcionario(request, id_funcionario):
             )
             return redirect("cadastros:funcionarios")
     else:
-        form = FuncionarioForm(
+        form = FuncionarioEditarForm(
             instance=funcionario,
             initial={
                 'email': funcionario.user.email,
@@ -460,7 +479,11 @@ def excluir_funcionario(request, id_funcionario=0):
         quantidade = len(ids)
 
         if quantidade > 0:
-            Funcionario.objects.filter(id__in=ids).delete() 
+            selecionados = filtrar_empresa(Funcionario.objects.filter(id__in=ids), request.user)
+            selecionados.update() if False else None
+            for funcionario in selecionados:
+                funcionario.user.is_active = False
+                funcionario.user.save(update_fields=['is_active'])
 
             messages.success(
                 request,
@@ -509,7 +532,7 @@ def excluir_vendedor(request, id_vendedor=0):
 def vendedores(request):
     search = request.GET.get("search")
 
-    vendedores = Vendedor.objects.all()
+    vendedores = filtrar_empresa(Vendedor.objects.all(), request.user)
     
     total_vendedores = vendedores.count()
 
@@ -520,7 +543,7 @@ def vendedores(request):
         filtros = (
             Q(nome__icontains=search) |
             Q(id__icontains=search) |
-            Q(user__email__icontains=search)
+            Q(email__icontains=search)
         )
 
         if search.isdigit():
@@ -547,7 +570,9 @@ def cadastrar_vendedor(request):
     if request.method == "POST":
         form = VendedorForm(request.POST)
         if form.is_valid():
-            vendedor = form.save()
+            vendedor = form.save(commit=False)
+            vendedor.empresa = empresa_do_usuario(request.user)
+            vendedor.save()
 
             messages.success(
                 request,
@@ -566,7 +591,7 @@ def cadastrar_vendedor(request):
 
 @login_required 
 def editar_vendedor(request, id_vendedor):
-    vendedor = get_object_or_404(Vendedor, id=id_vendedor)
+    vendedor = get_object_or_404(filtrar_empresa(Vendedor.objects.all(), request.user), id=id_vendedor)
 
     if request.method == "POST":
         form = VendedorForm(request.POST, instance=vendedor)
@@ -619,7 +644,7 @@ def excluir_vendedor(request, id_vendedor=0):
 def fornecedores(request):
     search = request.GET.get("search")
 
-    fornecedores = Fornecedor.objects.all()
+    fornecedores = filtrar_empresa(Fornecedor.objects.all(), request.user)
 
     # Total de fornecedores:
     total_fornecedores = Fornecedor.objects.count()
@@ -653,7 +678,9 @@ def cadastrar_fornecedor(request):
     if request.method == "POST":
         form = FornecedorForm(request.POST)
         if form.is_valid():
-            fornecedor = form.save()
+            fornecedor = form.save(commit=False)
+            fornecedor.empresa = empresa_do_usuario(request.user)
+            fornecedor.save()
 
             messages.success(
                 request,
@@ -672,7 +699,7 @@ def cadastrar_fornecedor(request):
 
 @login_required  
 def editar_fornecedor(request, id_fornecedor):
-    fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
+    fornecedor = get_object_or_404(filtrar_empresa(Fornecedor.objects.all(), request.user), id=id_fornecedor)
     if request.method == "POST":
         form = FornecedorForm(request.POST, instance=fornecedor)
         if form.is_valid():
@@ -724,11 +751,10 @@ def excluir_fornecedor(request, id_fornecedor=0):
 def categorias(request):
 
     # Total de categorias:
-    total_categorias = Categoria_Produto.objects.count()
+    categorias = filtrar_empresa(Categoria_Produto.objects.all(), request.user)
+    total_categorias = categorias.count()
 
     search = request.GET.get("search")
-
-    categorias = Categoria_Produto.objects.all()
 
     if search:
         categorias = categorias.filter(
@@ -749,7 +775,9 @@ def cadastrar_categoria(request):
     if request.method == "POST":
         form = CategoriaForm(request.POST)
         if form.is_valid():
-            categoria = form.save()
+            categoria = form.save(commit=False)
+            categoria.empresa = empresa_do_usuario(request.user)
+            categoria.save()
 
             messages.success(
                 request,
@@ -768,7 +796,7 @@ def cadastrar_categoria(request):
 
 @login_required
 def editar_categoria(request, id_categoria):
-    categoria = get_object_or_404(Categoria_Produto, id=id_categoria)
+    categoria = get_object_or_404(filtrar_empresa(Categoria_Produto.objects.all(), request.user), id=id_categoria)
 
     if request.method == "POST":
         form = CategoriaForm(request.POST, instance=categoria)

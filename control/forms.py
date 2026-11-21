@@ -199,9 +199,11 @@ class FuncionarioForm(forms.ModelForm):
         
 
 class FuncionarioEditarForm(forms.ModelForm):
+    email = forms.EmailField(label="Email", required=False)
+    senha = forms.CharField(label="Nova senha", required=False, widget=forms.PasswordInput)
     class Meta:
         model = Funcionario
-        fields = ['nome', 'telefone', 'cargo'] 
+        fields = ['nome', 'telefone', 'cargo', 'email', 'senha']
         labels = {
             'nome': 'Nome completo',
             'telefone': 'Telefone',
