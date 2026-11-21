@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator
 from django.db.models import Sum
 from django.db.models import Q
-from control.utils import registrar_acao, ultimas_acoes_modulo
+from control.utils import registrar_acao, ultimas_acoes_modulo, empresa_do_usuario, filtrar_empresa
 from django.contrib import messages
 
 #MOVIMENTAÇÕES
@@ -19,7 +19,7 @@ def movimentacoes(request):
 
     search = request.GET.get("search")
     
-    movimentacoes = Movimentacao.objects.all()
+    movimentacoes = filtrar_empresa(Movimentacao.objects.all(), request.user)
 
     if search:
         movimentacoes = movimentacoes.filter(
@@ -46,7 +46,9 @@ def adicionar_movimentacao(request):
     if request.method == "POST":
         form = MovimentacaoForm(request.POST)
         if form.is_valid():
-            mov = form.save()
+            mov = form.save(commit=False)
+            mov.empresa = empresa_do_usuario(request.user)
+            mov.save()
 
             # Atualiza o estoque automaticamente
             estoque, created = Estoque_Produto.objects.get_or_create(
@@ -74,7 +76,7 @@ def adicionar_movimentacao(request):
 
 @login_required
 def editar_movimentacao(request, id_movimentacao):
-    movimentacao = get_object_or_404(Movimentacao, id=id_movimentacao)
+    movimentacao = get_object_or_404(filtrar_empresa(Movimentacao.objects.all(), request.user), id=id_movimentacao)
 
     if request.method == "POST":
         form = MovimentacaoForm(request.POST, instance=movimentacao)
@@ -86,9 +88,9 @@ def editar_movimentacao(request, id_movimentacao):
                 'movimentacoes',
                 f"{movimentacao.produto.nome} - {movimentacao.tipo} editado"
             )
-            return redirect("estoque:pedidos_compra")
+            return redirect("estoque:movimentacoes")
     else:
-        form = Pedidos_CompraForm(instance=movimentacao)
+        form = MovimentacaoForm(instance=movimentacao)
 
     return render(request, "vendas/pedidos/editar_pedido.html", {"form": form, 'historico': ultimas_acoes_modulo(request.user, 'movimentacoes'), "movimentacao": movimentacao})
 
@@ -171,7 +173,7 @@ def depositos(request):
 
     search = request.GET.get("search")
 
-    depositos = Deposito.objects.all()
+    depositos = filtrar_empresa(Deposito.objects.all(), request.user)
 
     if search:
         depositos = depositos.filter(
@@ -190,7 +192,9 @@ def adicionar_deposito(request):
     if request.method == "POST":
         form = DepositoForm(request.POST)
         if form.is_valid():
-            depositos = form.save()
+            depositos = form.save(commit=False)
+            depositos.empresa = empresa_do_usuario(request.user)
+            depositos.save()
 
             messages.success(
                 request,
@@ -209,7 +213,7 @@ def adicionar_deposito(request):
 
 @login_required
 def editar_deposito(request, id_deposito):
-    deposito = get_object_or_404(Deposito, id=id_deposito)
+    deposito = get_object_or_404(filtrar_empresa(Deposito.objects.all(), request.user), id=id_deposito)
 
     if request.method == "POST":
         form = DepositoForm(request.POST, instance=deposito)
@@ -223,7 +227,7 @@ def editar_deposito(request, id_deposito):
             registrar_acao(
                 request.user,
                 'depositos',
-                f"{deposito.nome} <strong>editado</strong>"
+                f"{deposito.descricao} <strong>editado</strong>"
             )
             return redirect("estoque:depositos")
     else:
@@ -264,7 +268,7 @@ def pedidos_compra(request):
 
     search = request.GET.get("search")
 
-    pedidos_compra = Pedidos_Compra.objects.filter(status__in=['aberto', 'processando'])
+    pedidos_compra = filtrar_empresa(Pedidos_Compra.objects.all(), request.user).filter(status__in=['aberto', 'processando'])
 
     if search:
         pedidos_compra = pedidos_compra.filter(
@@ -286,7 +290,9 @@ def adicionar_pedidos_compra(request):
     if request.method == "POST":
         form = Pedidos_CompraForm(request.POST)
         if form.is_valid():
-            pedidos_compra = form.save()
+            pedidos_compra = form.save(commit=False)
+            pedidos_compra.empresa = empresa_do_usuario(request.user)
+            pedidos_compra.save()
             messages.success(
                 request,
                 f"Pedido de <strong>{pedidos_compra.produto.nome}</strong> cadastrado com sucesso."
@@ -304,7 +310,7 @@ def adicionar_pedidos_compra(request):
 
 @login_required
 def editar_pedido_compra(request, id_pedido):
-    pedido_compra = get_object_or_404(Pedidos_Compra, id=id_pedido)
+    pedido_compra = get_object_or_404(filtrar_empresa(Pedidos_Compra.objects.all(), request.user), id=id_pedido)
 
     if request.method == "POST":
         form = Pedidos_CompraForm(request.POST, instance=pedido_compra)
