@@ -14,7 +14,7 @@ from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import A4
-from control.utils import registrar_acao, ultimas_acoes_modulo
+from control.utils import registrar_acao, ultimas_acoes_modulo, empresa_do_usuario, filtrar_empresa
 from django.contrib import messages
 
 #PEDIDOS
@@ -26,7 +26,7 @@ def pedidos(request):
 
     search = request.GET.get("search")
 
-    pedidos = Pedidos_Venda.objects.filter(status__in=['aberto', 'processando'])
+    pedidos = filtrar_empresa(Pedidos_Venda.objects.all(), request.user).filter(status__in=['aberto', 'processando'])
 
     if search:
         pedidos = pedidos.filter(
@@ -47,7 +47,9 @@ def registrar_pedido(request):
     if request.method == "POST":
         form = PedidosVendaForm(request.POST)
         if form.is_valid():
-            pedidos_venda = form.save()
+            pedidos_venda = form.save(commit=False)
+            pedidos_venda.empresa = empresa_do_usuario(request.user)
+            pedidos_venda.save()
             messages.success(
                 request,
                 f"Pedido de {pedidos_venda.produto.nome} registrado com sucesso."
@@ -67,7 +69,7 @@ def registrar_pedido(request):
 
 @login_required
 def editar_pedido(request, id_pedido):
-    pedido = get_object_or_404(Pedidos_Venda, id=id_pedido)
+    pedido = get_object_or_404(filtrar_empresa(Pedidos_Venda.objects.all(), request.user), id=id_pedido)
 
     if request.method == "POST":
         form = PedidosVendaForm(request.POST, instance=pedido)
@@ -122,7 +124,7 @@ def historico(request):
 
     search = request.GET.get("search")
 
-    pedidos = Pedidos_Venda.objects.filter(status__in=['concluido', 'cancelado'])
+    pedidos = filtrar_empresa(Pedidos_Venda.objects.all(), request.user).filter(status__in=['concluido', 'cancelado'])
 
     if search:
         pedidos = pedidos.filter(
@@ -148,13 +150,17 @@ def relatorio_vendas(request):
     mes = request.GET.get("mes")
     search = request.GET.get("search")
 
-    pedidos = Pedidos_Venda.objects.filter(status__in=['concluido'])
+    pedidos = filtrar_empresa(Pedidos_Venda.objects.all(), request.user).filter(status='concluido')
 
-    if ano and ano.isdigit():
+    if ano and ano.isdigit() and len(ano) == 4:
         pedidos = pedidos.filter(data__year=ano)
+    else:
+        ano = None
 
-    if mes and mes.isdigit():
+    if mes and mes.isdigit() and 1 <= int(mes) <= 12:
         pedidos = pedidos.filter(data__month=mes)
+    else:
+        mes = None
 
 
     if search:
@@ -190,13 +196,17 @@ def exportar_pdf(request):
     mes = request.GET.get("mes")
     search = request.GET.get("search")
 
-    pedidos = Pedidos_Venda.objects.all()
+    pedidos = filtrar_empresa(Pedidos_Venda.objects.filter(status='concluido'), request.user)
 
     #FILTROS
-    if ano:
+    if ano and ano.isdigit() and len(ano) == 4:
         pedidos = pedidos.filter(data__year=ano)
-    if mes:
+    else:
+        ano = None
+    if mes and mes.isdigit() and 1 <= int(mes) <= 12:
         pedidos = pedidos.filter(data__month=mes)
+    else:
+        mes = None
     if search:
         pedidos = pedidos.filter(
             Q(produto__nome__icontains=search) |
@@ -290,9 +300,9 @@ def exportar_pdf(request):
             str(p.produto),
             str(p.cliente),
             str(p.vendedor),
-            f"R$ {p.produto.preco:.2f}",
+            f"R$ {(p.preco_unitario or p.produto.preco):.2f}",
             p.quantidade,
-            f"R$ {(p.produto.preco * p.quantidade):.2f}",
+            f"R$ {p.total():.2f}",
             timezone.localtime(p.data).strftime("%d/%m/%Y %H:%M"),
         ])
 
@@ -326,12 +336,16 @@ def visualizar_pdf(request):
     mes = request.GET.get("mes")
     search = request.GET.get("search")
 
-    pedidos = Pedidos_Venda.objects.all()
+    pedidos = filtrar_empresa(Pedidos_Venda.objects.filter(status='concluido'), request.user)
 
-    if ano:
+    if ano and ano.isdigit() and len(ano) == 4:
         pedidos = pedidos.filter(data__year=ano)
-    if mes:
+    else:
+        ano = None
+    if mes and mes.isdigit() and 1 <= int(mes) <= 12:
         pedidos = pedidos.filter(data__month=mes)
+    else:
+        mes = None
     if search:
         pedidos = pedidos.filter(
             Q(produto__nome__icontains=search) |
@@ -418,9 +432,9 @@ def visualizar_pdf(request):
             str(p.produto),
             str(p.cliente),
             str(p.vendedor),
-            f"R$ {p.produto.preco:.2f}",
+            f"R$ {(p.preco_unitario or p.produto.preco):.2f}",
             p.quantidade,
-            f"R$ {(p.produto.preco * p.quantidade):.2f}",
+            f"R$ {p.total():.2f}",
             timezone.localtime(p.data).strftime("%d/%m/%Y %H:%M"),
         ])
 
@@ -453,13 +467,17 @@ def exportar_excel(request):
     mes = request.GET.get("mes")
     search = request.GET.get("search")
 
-    pedidos = Pedidos_Venda.objects.all()
+    pedidos = filtrar_empresa(Pedidos_Venda.objects.filter(status='concluido'), request.user)
 
     #FILTROS
-    if ano:
+    if ano and ano.isdigit() and len(ano) == 4:
         pedidos = pedidos.filter(data__year=ano)
-    if mes:
+    else:
+        ano = None
+    if mes and mes.isdigit() and 1 <= int(mes) <= 12:
         pedidos = pedidos.filter(data__month=mes)
+    else:
+        mes = None
     if search:
         pedidos = pedidos.filter(
             Q(produto__nome__icontains=search) |
@@ -500,9 +518,9 @@ def exportar_excel(request):
             str(pedido.produto),
             str(pedido.cliente),
             str(pedido.vendedor),
-            float(pedido.produto.preco),
+            float(pedido.preco_unitario or pedido.produto.preco),
             pedido.quantidade,
-            float(pedido.produto.preco * pedido.quantidade),
+            float(pedido.total()),
             data_local.strftime("%d/%m/%Y %H:%M"),
         ])
 

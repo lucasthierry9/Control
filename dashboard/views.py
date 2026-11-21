@@ -8,16 +8,17 @@ from control.models import Pedidos_Venda, Produto, Cliente, Pedidos_Compra, Esto
 import json
 from django.utils.timezone import now
 from decimal import Decimal
+from control.utils import filtrar_empresa
 
 @login_required
 def index(request):
 
     # CARDS
-    total_produtos = Produto.objects.count()
-    total_clientes = Cliente.objects.count()
-    total_vendas = Pedidos_Venda.objects.filter(status__iexact='concluido').count()
+    total_produtos = filtrar_empresa(Produto.objects.all(), request.user).count()
+    total_clientes = filtrar_empresa(Cliente.objects.all(), request.user).count()
+    vendas_concluidas = filtrar_empresa(Pedidos_Venda.objects.all(), request.user).filter(status__iexact='concluido')
+    total_vendas = vendas_concluidas.count()
 
-    vendas_concluidas = Pedidos_Venda.objects.filter(status__iexact='concluido')
 
     faturamento = vendas_concluidas.aggregate(
         total=Sum(
@@ -99,10 +100,11 @@ def index(request):
 @login_required
 def vendas(request):
     # Vendas concluídas:
-    total_vendas = Pedidos_Venda.objects.filter(status='concluido').count()
+    vendas_qs = filtrar_empresa(Pedidos_Venda.objects.all(), request.user)
+    total_vendas = vendas_qs.filter(status='concluido').count()
 
     # Vendedor com mais vendas realizadas
-    vendedor_vendas = Pedidos_Venda.objects.filter(status='concluido').values('vendedor__id', 'vendedor__nome' ).annotate(total_quantidade=Sum('quantidade')).order_by('-total_quantidade')
+    vendedor_vendas = vendas_qs.filter(status='concluido').values('vendedor__id', 'vendedor__nome' ).annotate(total_quantidade=Sum('quantidade')).order_by('-total_quantidade')
     
     # Valores padrão
     nome_vendedor = "Nenhum"
@@ -114,7 +116,7 @@ def vendas(request):
         quantidade_vendedor = vendedor_mais_vendas['total_quantidade']
 
     # Valor mais alto em uma venda
-    maior_venda = Pedidos_Venda.objects.filter(status='concluido').annotate(valor_total=ExpressionWrapper(F('produto__preco') * F('quantidade'),
+    maior_venda = vendas_qs.filter(status='concluido').annotate(valor_total=ExpressionWrapper(F('produto__preco') * F('quantidade'),
         output_field=DecimalField(max_digits=10, decimal_places=2))).order_by('-valor_total').first()
     
     if maior_venda:
@@ -163,10 +165,10 @@ def vendas(request):
     # Gráfico linha vendas mensais
     ano = request.GET.get('ano')
 
-    vendas_mensais_qs = Pedidos_Venda.objects.filter(status='concluido')
+    vendas_mensais_qs = vendas_qs.filter(status='concluido')
 
     # Se tiver filtro de ano, usa ele
-    if ano:
+    if ano and ano.isdigit() and len(ano) == 4:
         vendas_mensais_qs = vendas_mensais_qs.filter(data__year=int(ano))
     else:
         # Se NÃO tiver ano, pega últimos 12 meses

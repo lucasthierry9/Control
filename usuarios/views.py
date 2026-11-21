@@ -78,6 +78,10 @@ def editar_perfil(request, id_usuario):
     funcionario = None
 
     usuario = get_object_or_404(Usuario, id=id_usuario)
+    if usuario != request.user:
+        if request.user.tipo != 'empresa' or not Funcionario.objects.filter(user=usuario, empresa=request.user).exists():
+            from django.core.exceptions import PermissionDenied
+            raise PermissionDenied
 
     if user.tipo == 'empresa':
         template = 'registration/editar_perfil.html'
