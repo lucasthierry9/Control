@@ -59,9 +59,9 @@ class Bairro(models.Model):
 class Fornecedor(models.Model):
     empresa = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, related_name="fornecedores")
     nome = models.CharField(max_length=50)
-    cpf_cnpj = models.CharField(max_length=14)
-    email = models.EmailField(max_length=254, default="")
-    telefone = models.CharField(max_length=11, default="")
+    cpf_cnpj = models.CharField(max_length=14, blank=True, default="")
+    email = models.EmailField(max_length=254, blank=True, default="")
+    telefone = models.CharField(max_length=11, blank=True, default="")
     estado = models.ForeignKey(Estado, on_delete=models.CASCADE, null=True, blank=True)
     cidade = models.CharField(max_length=50, default="")
     bairro = models.CharField(max_length=50, default="")

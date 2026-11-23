@@ -300,7 +300,19 @@ class VendedorForm(forms.ModelForm):
 class FornecedorForm(forms.ModelForm):
     class Meta:
         model = Fornecedor
-        fields = "__all__"
+        fields = [
+            "nome",
+            "email",
+            "cpf_cnpj",
+            "telefone",
+            "cep",
+            "estado",
+            "cidade",
+            "bairro",
+            "logradouro",
+            "numero",
+            "complemento",
+        ]
         labels = {
             "nome": "Nome completo",
             "email": "Email",
@@ -331,7 +343,18 @@ class FornecedorForm(forms.ModelForm):
             })
         
         # Campos não obrigatórios
-        optional_fields = ['cep', 'estado', 'cidade', 'bairro', 'logradouro', 'numero', 'complemento',]
+        optional_fields = [
+            'email',
+            'cpf_cnpj',
+            'telefone',
+            'cep',
+            'estado',
+            'cidade',
+            'bairro',
+            'logradouro',
+            'numero',
+            'complemento',
+        ]
         for field_name in optional_fields:
             if field_name in self.fields:
                 self.fields[field_name].required = False
