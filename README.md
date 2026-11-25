@@ -49,13 +49,21 @@ Pré-requisitos: Python 3.11 com pip e uma cópia do repositório. Execute os co
    python manage.py migrate
    ```
 
-4. Inicie o servidor de desenvolvimento:
+4. Para popular sua conta com registros fictícios e testar o site e os gráficos do dashboard, execute:
+
+   ```sh
+   python manage.py load_demo_data --email seu-email@exemplo.com
+   ```
+
+   Informe o e-mail da conta da empresa (ou do funcionário vinculado a ela). O comando pode ser repetido sem duplicar os dados de demonstração.
+
+5. Inicie o servidor de desenvolvimento:
 
    ```sh
    python manage.py runserver
    ```
 
-5. Acesse <http://127.0.0.1:8000/> e utilize a opção de cadastro para criar sua conta. Para acessar o painel `/admin/`, crie também um administrador com `python manage.py createsuperuser`.
+6. Acesse <http://127.0.0.1:8000/> e utilize a opção de cadastro para criar sua conta. Para acessar o painel `/admin/`, crie também um administrador com `python manage.py createsuperuser`.
 
 O `runserver` é destinado ao desenvolvimento. A configuração atual permite execução local com SQLite sem arquivo `.env`.
 
